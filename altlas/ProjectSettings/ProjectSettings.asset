@@ -4,7 +4,7 @@
 PlayerSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 15
-  productGUID: 00000000000000000000000000000000
+  productGUID: 9970f6d0b0c53b54fa7928f078316538
   AndroidProfiler: 0
   AndroidFilterTouchesWhenObscured: 0
   AndroidEnableSustainedPerformanceMode: 0
@@ -91,7 +91,7 @@ PlayerSettings:
   visibleInBackground: 1
   allowFullscreenSwitch: 1
   graphicsJobMode: 0
-  fullscreenMode: 1
+  fullscreenMode: 3
   xboxSpeechDB: 0
   xboxEnableHeadOrientation: 0
   xboxEnableGuest: 0
@@ -302,6 +302,7 @@ PlayerSettings:
   - m_BuildTarget: Standalone
     m_Enabled: 1
     m_Devices:
+    - None
     - OpenVR
   - m_BuildTarget: Tizen
     m_Enabled: 0
@@ -699,7 +700,7 @@ PlayerSettings:
     Purchasing: 0
     UNet: 0
     Unity_Ads: 0
-  facebookSdkVersion: 
+  facebookSdkVersion: 7.9.4
   apiCompatibilityLevel: 2
   cloudProjectId: 
   projectName: 
