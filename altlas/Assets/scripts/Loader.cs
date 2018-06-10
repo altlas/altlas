@@ -6,6 +6,7 @@ using System.Xml.Serialization; //Needed for XML Functionality
 using System.IO;
 using System.Xml.Linq; //Needed for XDocument
 using UnityEngine.SceneManagement;
+using System.Text.RegularExpressions;
 
 public class Loader : MonoBehaviour {
 
@@ -76,7 +77,7 @@ public class Loader : MonoBehaviour {
     string coordinate;
     string title;
     string source;
-    int[] imageSize;
+    int[] imageSize = new int[2];
     string property;
     string description;
     string category;
@@ -167,9 +168,16 @@ public class Loader : MonoBehaviour {
 
                 node = item.SelectSingleNode("datafield[@tag=\"300\"]/subfield[@code=\"c\"]");
                 if (node != null) {
-                    string[] parts = node.InnerText.Split(' ');
-                    imageSize[0] = int.Parse(parts[0]);
-                    imageSize[1] = int.Parse(parts[2]);
+                    string pattern = @"(\d+)";
+                    int i = 0;
+                    foreach (Match m in Regex.Matches(node.InnerText, pattern))
+                    {   
+                        if(i == 2){
+                            i = 0;
+                        }
+                        imageSize[i] = int.Parse(m.Groups[1].Value);
+                        i ++;
+                    }
                 }
 
                 node = item.SelectSingleNode("datafield[@tag=\"500\"]/subfield[@code=\"a\"]");
