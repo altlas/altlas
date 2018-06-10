@@ -5,15 +5,15 @@ using UnityEngine;
 
 public class cordsParser : MonoBehaviour {
 
-	// Use this for initialization
-	float[] Start (String cords) {
+  // Use this for initialization
+  float[] Start (String cords) {
     return parse(cords);
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+  }
+  
+  // Update is called once per frame
+  void Update () {
+  
+  }
 
   float[] parse(String cords){
       String pattern = @"(\d+)";
