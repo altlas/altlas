@@ -6,8 +6,7 @@ using UnityEngine;
 public class cordsParser : MonoBehaviour {
 
   // Use this for initialization
-  float[] Start (String cords) {
-    return parse(cords);
+  void Start () {
   }
   
   // Update is called once per frame
@@ -15,15 +14,15 @@ public class cordsParser : MonoBehaviour {
   
   }
 
-  float[] parse(String cords){
-      String pattern = @"(\d+)";
+  float[] parse(string cords){
+      string pattern = @"(\d+)";
       int i = 0;
       float upperLeftLongitute = 0;
       float upperLeftLatitute = 0;
       float lowerRightLongitute = 0;
       float lowerRightLatitute = 0;
       foreach (Match m in Regex.Matches(cords, pattern)) {
-        int value = Int32.Parse(m.Groups[1].Value);
+        int value = int.Parse(m.Groups[1].Value);
         switch(i){
           case 0:
             upperLeftLongitute += value;
