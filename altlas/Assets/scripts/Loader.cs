@@ -144,9 +144,61 @@ public class Loader : MonoBehaviour {
                 if (node != null)
                     language = node.InnerText;
 
+                node = item.SelectSingleNode("datafield[@tag=\"225\"]/subfield[@code=\"c\"]");
+                if (node != null)
+                    coordinate = node.InnerText;
+                
+                node = item.SelectSingleNode("datafield[@tag=\"245\"]/subfield[@code=\"a\"]");
+                if (node != null)
+                    title = node.InnerText;
+                node = item.SelectSingleNode("datafield[@tag=\"245\"]/subfield[@code=\"b\"]");
+                if (node != null)
+                    title = title + "\n " + node.InnerText;
+                
+                node = item.SelectSingleNode("datafield[@tag=\"260\"]/subfield[@code=\"a\"]");
+                if (node != null)
+                    source = node.InnerText;
+                node = item.SelectSingleNode("datafield[@tag=\"260\"]/subfield[@code=\"b\"]");
+                if (node != null)
+                    source = source + "\n " + node.InnerText;
+                node = item.SelectSingleNode("datafield[@tag=\"260\"]/subfield[@code=\"c\"]");
+                if (node != null)
+                    source = source + "\n " + node.InnerText;
+
+                node = item.SelectSingleNode("datafield[@tag=\"300\"]/subfield[@code=\"c\"]");
+                if (node != null) {
+                    string[] parts = node.InnerText.Split(' ');
+                    imageSize[0] = int.Parse(parts[0]);
+                    imageSize[1] = int.Parse(parts[2]);
+                }
+
+                node = item.SelectSingleNode("datafield[@tag=\"500\"]/subfield[@code=\"a\"]");
+                if (node != null)
+                    property = node.InnerText;
+
+                node = item.SelectSingleNode("datafield[@tag=\"520\"]/subfield[@code=\"a\"]");
+                if (node != null)
+                    description = node.InnerText;
+
+                category = "TODO";
+                subCategory = "TODO";
+
+                node = item.SelectSingleNode("datafield[@tag=\"651\"]/subfield[@code=\"a\"]");
+                if (node != null)
+                    location = node.InnerText;
+                node = item.SelectSingleNode("datafield[@tag=\"651\"]/subfield[@code=\"a\"][2]");
+                if (node != null)
+                    location = location + "\n " + node.InnerText;
+                node = item.SelectSingleNode("datafield[@tag=\"651\"]/subfield[@code=\"a\"][3]");
+                if (node != null)
+                    location = location + "\n " + node.InnerText;
+                node = item.SelectSingleNode("datafield[@tag=\"651\"]/subfield[@code=\"a\"][4]");
+                if (node != null)
+                    location = location + "\n " + node.InnerText;
+
+
                 data.Add(new MapClass(year, language, coordinate, title, source, imageSize, property, description, category, subCategory, location, id));
-                Debug.Log("JAHR: " + year);
-                Debug.Log("Sprache: " + language);
+                Debug.Log("LOCATION: " + location);
             }
 
             iteration++;

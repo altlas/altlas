@@ -7,18 +7,13 @@ public class MapGenerator : MonoBehaviour {
     public Transform map;
     private float DRAWER_HOR_LEN = 0.36f;
     private float DRAWER_VER_LEN = 0.44f;
-    private Loader loader;
+    
 
-    List<MapClass> allMaps = new List<MapClass>();
+    List<MapClass> allMaps = new List<MapClass>(); 
+    //now you can use private Loader loader = GetComponent<Loader>(); and access with loader.data[i]
 
     // Use this for initialization
     void Start () {
-        loader = GetComponent<Loader>();
-        if (loader.data.Count != 0)
-        {
-            Debug.Log("XML data of first: " + loader.data[0].m_year);
-        }
-
         MapClass map1 = new MapClass(1960, "language", "coordinate", "title", "source", new int[] { 21, 21 }, "property", "description", "astronomie", "astronomie", "location", "HK 1305");
         MapClass map2 = new MapClass(1960, "language2", "coordinate2", "title2", "source2", new int[] { 21, 21 }, "property2", "description2", "geografische_regionen", "landkarten", "location2", "HK 0188");
         MapClass[] maps = { map1, map1, map2 };
