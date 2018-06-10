@@ -54,6 +54,10 @@ public class MapClass : MonoBehaviour {
     }
 
     public string idToTexturePath(string id, string category, string subcategory) {
+        if (!id.StartsWith("HK ")) {
+            return null;
+        }
+
         string path = "/models/maps/"+ category.ToLower();
         if (!category.Equals(subcategory)) {
             path += "/" + subcategory.ToLower();
