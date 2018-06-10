@@ -76,6 +76,6 @@ public class cordsParser : MonoBehaviour {
       if(cords[36] == 'S'){
         lowerRightLatitute = - lowerRightLatitute;
       }
-      return[upperLeftLongitute, lowerRightLongitute, upperLeftLatitute, lowerRightLongitute];
+      return new float[]{upperLeftLongitute, lowerRightLongitute, upperLeftLatitute, lowerRightLongitute};
   }
 }
