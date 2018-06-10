@@ -203,7 +203,7 @@ public class Loader : MonoBehaviour {
                 if (node != null)
                     description = node.InnerText;
 
-                int tempID = getIndexOfMap(id);
+                int tempID = getIndexOfMap(id) + 1;
                 if (tempID < 27)
                 {
                     int indexSum = 0;
@@ -216,25 +216,38 @@ public class Loader : MonoBehaviour {
                             if (tempID == indexSum)
                             {
                                 subCategory = subCategoryInside[i][j];
+                                category = mainCategory[i];
                                 break;
                             }
                         }
-                    }                                               
-                    category = mainCategory[i];
+                    }                                            
+                    
                 }
 
-                node = item.SelectSingleNode("datafield[@tag=\"651\"]/subfield[@code=\"a\"]");
+                node = item.SelectSingleNode("datafield[@tag=\"651\"][1]/subfield[@code=\"a\"]");
                 if (node != null)
                     location = node.InnerText;
-                node = item.SelectSingleNode("datafield[@tag=\"651\"]/subfield[@code=\"a\"][2]");
+                node = item.SelectSingleNode("datafield[@tag=\"651\"][2]/subfield[@code=\"a\"]");
                 if (node != null)
-                    location = location + "\n " + node.InnerText;
+                    location = location + node.InnerText;
                 node = item.SelectSingleNode("datafield[@tag=\"651\"]/subfield[@code=\"a\"][3]");
                 if (node != null)
-                    location = location + "\n " + node.InnerText;
+                    location = location + node.InnerText;
                 node = item.SelectSingleNode("datafield[@tag=\"651\"]/subfield[@code=\"a\"][4]");
                 if (node != null)
-                    location = location + "\n " + node.InnerText;
+                    location = location + node.InnerText;
+
+                /*var nodeList = item.SelectNodes("datafield[@tag=\"651\"]/subfield[@code=\"a\"]");
+                if (nodeList != null)
+                {   
+                    location = "";
+                    foreach (XmlNode n in nodeList)
+                    {
+                        location = location + "\n " + n.InnerText;
+                    }
+                }*/
+ 
+
 
 
                 data.Add(new MapClass(year, language, coordinate, title, source, imageSize, property, description, category, subCategory, location, id));
