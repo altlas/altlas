@@ -66,7 +66,6 @@ public class MapClass : MonoBehaviour {
         }
         picName += realID.ToString() + ".jpg";
         path += picName;
-        Debug.Log(path);
         return path;
     }
 
@@ -82,8 +81,6 @@ public class MapClass : MonoBehaviour {
             texture = new Texture2D(1, 1);
             texture.LoadImage(fileData);
         }
-
-        Debug.Log(appFilePath);
         return texture;
     }
 

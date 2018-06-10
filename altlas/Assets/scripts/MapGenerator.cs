@@ -5,8 +5,8 @@ using UnityEngine;
 public class MapGenerator : MonoBehaviour {
 
     public Transform map;
-    private float DRAWER_HOR_LEN = 0.36f;
-    private float DRAWER_VER_LEN = 0.44f;
+    private float DRAWER_HOR_LEN = 0.12f;
+    private float DRAWER_VER_LEN = 0.54f;
 
     List<MapClass> allMaps = new List<MapClass>();
     List<MapClass> astronomie = new List<MapClass>();
@@ -30,7 +30,7 @@ public class MapGenerator : MonoBehaviour {
         MapClass map2 = new MapClass(1960, "language2", "coordinate2", "title2", "source2", new int[] { 21, 21 }, "property2", "description2", "geografische_regionen", "landkarten", "location2", "HK 0188");
         MapClass[] maps = { map1, map1, map2 };
         MapClass[][] maps2 = { maps, maps, maps};
-        spawnStacksInCorner(new Vector3(-0.7105434f, 1.267f, 0.4124395f), DRAWER_HOR_LEN, DRAWER_VER_LEN, maps2);
+        spawnStacksInRow(new Vector3(-0.7105434f, 1.267f, 0.4124395f), DRAWER_HOR_LEN, DRAWER_VER_LEN, maps2);
     }
 
     public void spawnInArea(Vector3 leftCorner,MapClass[] maps, float horLength, float verLength, float xOffset, float zOffset) {
@@ -71,6 +71,17 @@ public class MapGenerator : MonoBehaviour {
                     spawnAsStack(new Vector3(newX, y, newZ), stacks[2 * i + k]);
                 }
             }
+        }
+    }
+
+    public void spawnStacksInRow(Vector3 leftCorner, float horLength, float verLength, MapClass[][] stacks) {
+        float x = leftCorner.x;
+        float z = leftCorner.z;
+        float y = leftCorner.y;
+        for (int i = 0; i < stacks.Length; i++) {
+            float newX = x - horLength/2;
+            float newZ = z + (stacks.Length-i)* verLength/stacks.Length;
+            spawnAsStack(new Vector3(newX, y, newZ), stacks[i]);
         }
     }
 
