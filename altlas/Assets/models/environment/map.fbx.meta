@@ -1,0 +1,110 @@
+fileFormatVersion: 2
+guid: b356db40c60ec7249be3bcaa29967afb
+ModelImporter:
+  serializedVersion: 22
+  fileIDToRecycleName:
+    100000: //RootNode
+    400000: //RootNode
+    2100000: Mappa_Madagascar_old
+    2300000: //RootNode
+    3300000: //RootNode
+    4300000: Mappa_Madagascar_old
+    4300002: Mappa_Madagascar_old.001
+    7400000: Mappa_Madagascar_old|Cube.001Action
+    7400002: Mappa_Madagascar_old|Cube.002Action
+    7400004: Mappa_Madagascar_old|EmptyAction
+    7400006: Mappa_Madagascar_old|globe_standAction
+    7400008: Mappa_Madagascar_old|globeAction
+    7400010: Mappa_Madagascar_old|Mappa_Madagascar_oldAction
+    7400012: Mappa_Madagascar_old|Sphere.001Action
+    7400014: Mappa_Madagascar_old.001|Cube.001Action
+    7400016: Mappa_Madagascar_old.001|Cube.002Action
+    7400018: Mappa_Madagascar_old.001|EmptyAction
+    7400020: Mappa_Madagascar_old.001|globe_standAction
+    7400022: Mappa_Madagascar_old.001|globeAction
+    7400024: Mappa_Madagascar_old.001|Mappa_Madagascar_oldAction
+    7400026: Mappa_Madagascar_old.001|Mappa_Madagascar_oldAction.001
+    7400028: Mappa_Madagascar_old.001|Sphere.001Action
+    9500000: //RootNode
+    13700000: //RootNode
+  externalObjects: {}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
