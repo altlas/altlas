@@ -123,6 +123,21 @@ public class Loader : MonoBehaviour {
         return false;
     }
 
+    int getIndexOfMap(string mapID)
+    {
+        for (int i = 0; i < selectedMaps.GetLength(0); i++)
+        {
+            for (int j = 0; j < selectedMaps[i].Length; j++)
+            {
+                if (selectedMaps[i][j] == mapID)
+                {
+                    return i;
+                }
+            }
+        }
+        return 27;
+    }
+
     IEnumerator AssignData()
 	{
         Debug.Log("Assignstart \n");
@@ -180,8 +195,25 @@ public class Loader : MonoBehaviour {
                 if (node != null)
                     description = node.InnerText;
 
-                category = "TODO";
-                subCategory = "TODO";
+                int tempID = getIndexOfMap(id);
+                if (tempID < 27)
+                {
+                    int indexSum = 0;
+                    int i;
+                    for (i = 0; i < subCategoryInside.GetLength(0); i++)
+                    {
+                        for (int j = 0; j < subCategoryInside[i].Length; j++)
+                        {
+                            indexSum++;
+                            if (tempID == indexSum)
+                            {
+                                subCategory = subCategoryInside[i][j];
+                                break;
+                            }
+                        }
+                    }                                               
+                    category = mainCategory[i];
+                }
 
                 node = item.SelectSingleNode("datafield[@tag=\"651\"]/subfield[@code=\"a\"]");
                 if (node != null)
@@ -200,7 +232,7 @@ public class Loader : MonoBehaviour {
                 data.Add(new MapClass(year, language, coordinate, title, source, imageSize, property, description, category, subCategory, location, id));
                 Debug.Log("LOCATION: " + location);
             }
-
+            
             iteration++;
         }
 
