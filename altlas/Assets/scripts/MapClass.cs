@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MapClass : MonoBehaviour
-{
+public class MapClass : MonoBehaviour {
     public int m_year;
     public string m_language;
     public string m_coordinate;
@@ -17,13 +16,11 @@ public class MapClass : MonoBehaviour
     public string m_location;
     public string m_id;
     public Texture2D texture;
-
+  
 
     public MapClass(int year, string language, string coordinate,
         string title, string source, int[] imageSize, string property,
-        string description, string category, string subCategory, string location, string id)
-    {
-
+        string description, string category, string subCategory, string location, string id) {
         m_year = year;
         m_language = language;
         m_coordinate = coordinate;
@@ -55,7 +52,7 @@ public class MapClass : MonoBehaviour
         m_id = reference.m_id;
         texture = reference.texture;
     }
-        
+
     public string idToTexturePath(string id, string category, string subcategory) {
         string path = "/models/maps/"+ category.ToLower();
         if (!category.Equals(subcategory)) {
@@ -64,8 +61,7 @@ public class MapClass : MonoBehaviour
         string picName = "/HK";
         string rawId = id.Substring(2);
         int realID = int.Parse(rawId);
-        if (realID < 1000)
-        {
+        if (realID < 1000) {
             picName += "0";
         }
         picName += realID.ToString() + ".jpg";
