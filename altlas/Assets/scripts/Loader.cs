@@ -152,25 +152,30 @@ public class Loader : MonoBehaviour {
 
             if (idExistsInMap(id))
             {
+                year = 0;
                 node = item.SelectSingleNode("datafield[@tag=\"841\"]/subfield[@code=\"b\"]");
                 if (node != null)
                     year = int.Parse(node.InnerText);
 
+                language = "";
                 node = item.SelectSingleNode("datafield[@tag=\"041\"]/subfield[@code=\"a\"]");
                 if (node != null)
                     language = node.InnerText;
 
+                coordinate = "";
                 node = item.SelectSingleNode("datafield[@tag=\"225\"]/subfield[@code=\"c\"]");
                 if (node != null)
                     coordinate = node.InnerText;
-                
+
+                title = "";
                 node = item.SelectSingleNode("datafield[@tag=\"245\"]/subfield[@code=\"a\"]");
                 if (node != null)
                     title = node.InnerText;
                 node = item.SelectSingleNode("datafield[@tag=\"245\"]/subfield[@code=\"b\"]");
                 if (node != null)
                     title = title + "\n " + node.InnerText;
-                
+
+                source = "";
                 node = item.SelectSingleNode("datafield[@tag=\"260\"]/subfield[@code=\"a\"]");
                 if (node != null)
                     source = node.InnerText;
@@ -181,6 +186,8 @@ public class Loader : MonoBehaviour {
                 if (node != null)
                     source = source + "\n " + node.InnerText;
 
+                imageSize[0] = 0;
+                imageSize[1] = 0;
                 node = item.SelectSingleNode("datafield[@tag=\"300\"]/subfield[@code=\"c\"]");
                 if (node != null) {
                     string pattern = @"(\d+)";
@@ -195,14 +202,18 @@ public class Loader : MonoBehaviour {
                     }
                 }
 
+                property = "";
                 node = item.SelectSingleNode("datafield[@tag=\"500\"]/subfield[@code=\"a\"]");
                 if (node != null)
                     property = node.InnerText;
 
+                description = "";
                 node = item.SelectSingleNode("datafield[@tag=\"520\"]/subfield[@code=\"a\"]");
                 if (node != null)
                     description = node.InnerText;
 
+                category = "";
+                subCategory = "";
                 int tempID = getIndexOfMap(id) + 1;
                 if (tempID < 27)
                 {
@@ -224,34 +235,24 @@ public class Loader : MonoBehaviour {
                     
                 }
 
+                location = "";
                 node = item.SelectSingleNode("datafield[@tag=\"651\"][1]/subfield[@code=\"a\"]");
                 if (node != null)
                     location = node.InnerText;
                 node = item.SelectSingleNode("datafield[@tag=\"651\"][2]/subfield[@code=\"a\"]");
                 if (node != null)
                     location = location + node.InnerText;
-                node = item.SelectSingleNode("datafield[@tag=\"651\"]/subfield[@code=\"a\"][3]");
+                node = item.SelectSingleNode("datafield[@tag=\"651\"][3]/subfield[@code=\"a\"]");
                 if (node != null)
                     location = location + node.InnerText;
-                node = item.SelectSingleNode("datafield[@tag=\"651\"]/subfield[@code=\"a\"][4]");
+                node = item.SelectSingleNode("datafield[@tag=\"651\"][4]/subfield[@code=\"a\"]");
                 if (node != null)
                     location = location + node.InnerText;
-
-                /*var nodeList = item.SelectNodes("datafield[@tag=\"651\"]/subfield[@code=\"a\"]");
-                if (nodeList != null)
-                {   
-                    location = "";
-                    foreach (XmlNode n in nodeList)
-                    {
-                        location = location + "\n " + n.InnerText;
-                    }
-                }*/
- 
-
-
+                node = item.SelectSingleNode("datafield[@tag=\"651\"][5]/subfield[@code=\"a\"]");
+                if (node != null)
+                    location = location + node.InnerText;
 
                 data.Add(new MapClass(year, language, coordinate, title, source, imageSize, property, description, category, subCategory, location, id));
-                Debug.Log("LOCATION: " + location);
             }
             
             iteration++;
