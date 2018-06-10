@@ -154,8 +154,13 @@ public class Loader : MonoBehaviour {
             {
                 year = 0;
                 node = item.SelectSingleNode("datafield[@tag=\"841\"]/subfield[@code=\"b\"]");
-                if (node != null)
-                    year = int.Parse(node.InnerText);
+                if (node != null){
+                    string pattern = @"(\d+)";
+                    int i = 0;
+                    foreach (Match m in Regex.Matches(node.InnerText, pattern)){
+                        year = int.Parse(m.Groups[1].Value);
+                    }
+                }
 
                 language = "";
                 node = item.SelectSingleNode("datafield[@tag=\"041\"]/subfield[@code=\"a\"]");
@@ -251,7 +256,6 @@ public class Loader : MonoBehaviour {
                 node = item.SelectSingleNode("datafield[@tag=\"651\"][5]/subfield[@code=\"a\"]");
                 if (node != null)
                     location = location + node.InnerText;
-
                 data.Add(new MapClass(year, language, coordinate, title, source, imageSize, property, description, category, subCategory, location, id));
             }
             

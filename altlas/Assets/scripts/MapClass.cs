@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Text.RegularExpressions;
 
 public class MapClass : MonoBehaviour {
     public int m_year;
@@ -58,15 +59,7 @@ public class MapClass : MonoBehaviour {
         if (!category.Equals(subcategory)) {
             path += "/" + subcategory.ToLower();
         }
-        string picName = "/HK";
-        string rawId = id.Substring(2);
-        int realID = int.Parse(rawId);
-        if (realID < 1000) {
-            picName += "0";
-        }
-        picName += realID.ToString() + ".jpg";
-        path += picName;
-        Debug.Log(path);
+        path += "/" + Regex.Replace(id, @"\s+", "") + ".jpg";
         return path;
     }
 
@@ -81,10 +74,7 @@ public class MapClass : MonoBehaviour {
             fileData = System.IO.File.ReadAllBytes(appFilePath);
             texture = new Texture2D(1, 1);
             texture.LoadImage(fileData);
-            Debug.Log("I am Inside!");
         }
-
-        Debug.Log(appFilePath);
         return texture;
     }
 

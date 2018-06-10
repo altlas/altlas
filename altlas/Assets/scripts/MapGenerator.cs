@@ -7,30 +7,41 @@ public class MapGenerator : MonoBehaviour {
     public Transform map;
     private float DRAWER_HOR_LEN = 0.36f;
     private float DRAWER_VER_LEN = 0.44f;
-
-    List<MapClass> allMaps = new List<MapClass>();
+    private Loader loader;
 
     // Use this for initialization
     void Start () {
-        
 
-        MapClass map1 = new MapClass(1960, "language", "coordinate", "title", "source", new int[] { 21, 21 }, "property", "description", "astronomie", "astronomie", "location", "HK 1305");
-        MapClass map2 = new MapClass(1960, "language2", "coordinate2", "title2", "source2", new int[] { 21, 21 }, "property2", "description2", "geografische_regionen", "landkarten", "location2", "HK 0188");
-        MapClass[] maps = { map1, map1, map2 };
-        MapClass[][] maps2 = { maps, maps, maps};
-        spawnStacksInCorner(new Vector3(-0.7105434f, 1.267f, 0.4124395f), DRAWER_HOR_LEN, DRAWER_VER_LEN, maps2);
+
+        loader = GetComponent<Loader>();
+        if (loader.data.Count != 0)
+        {
+          Debug.Log("XML data of first: " + loader.data[0].m_year);
+        }
+
+        //MapClass map1 = new MapClass(1960, "language", "coordinate", "title", "source", new int[] { 21, 21 }, "property", "description", "astronomie", "astronomie", "location", "HK 1305");
+        //MapClass map2 = new MapClass(1960, "language2", "coordinate2", "title2", "source2", new int[] { 21, 21 }, "property2", "description2", "geografische_regionen", "landkarten", "location2", "HK 0188");
+        //MapClass[] maps = { map1, map1, map2 };
+        //MapClass[][] maps2 = { maps, maps, maps};
+        //spawnStacksInCorner(new Vector3(-0.7105434f, 1.267f, 0.4124395f), DRAWER_HOR_LEN, DRAWER_VER_LEN, maps2);
+        spawnInArea(new Vector3(-0.7105434f, 1.267f, 0.4124395f), 1f, 1f, 1f, 1f);
     }
 
-    public void spawnInArea(Vector3 leftCorner,MapClass[] maps, float horLength, float verLength, float xOffset, float zOffset) {
+    public void spawnInArea(Vector3 leftCorner, float horLength, float verLength, float xOffset, float zOffset) {
         float x = leftCorner.x;
         float z = leftCorner.z;
         float y = leftCorner.y;
 
-        for (int i = 0; i < maps.Length; i++) {
+        foreach(MapClass map in loader.data){
             float newX = x - Random.Range(xOffset, horLength);
             float newZ = z + Random.Range(zOffset, verLength);
-            spawnMap(new Vector3(newX, y, newZ), maps[i]);
+            spawnMap(new Vector3(newX, y, newZ), map);
         }
+        /*for (int i = 0; i < loader.data.Length; i++) {
+            float newX = x - Random.Range(xOffset, horLength);
+            float newZ = z + Random.Range(zOffset, verLength);
+            spawnMap(new Vector3(newX, y, newZ), loader.data[i]);
+        }*/
     }
 
     public void spawnMap(Vector3 position, MapClass mapData)
@@ -47,7 +58,7 @@ public class MapGenerator : MonoBehaviour {
         }
     }
 
-    public void spawnStacksInCorner(Vector3 leftCorner, float horLength, float verLength, MapClass[][] stacks) {
+    /*public void spawnStacksInCorner(Vector3 leftCorner, float horLength, float verLength, MapClass[][] stacks) {
         float x = leftCorner.x;
         float z = leftCorner.z;
         float y = leftCorner.y;
@@ -60,6 +71,6 @@ public class MapGenerator : MonoBehaviour {
                 }
             }
         }
-    }
+    }*/
 
 }
