@@ -18,10 +18,12 @@ public class MapClass : MonoBehaviour
     public string m_id;
     public Texture2D texture;
 
+
     public MapClass(int year, string language, string coordinate,
         string title, string source, int[] imageSize, string property,
         string description, string category, string subCategory, string location, string id)
     {
+
         m_year = year;
         m_language = language;
         m_coordinate = coordinate;
@@ -53,12 +55,10 @@ public class MapClass : MonoBehaviour
         m_id = reference.m_id;
         texture = reference.texture;
     }
-
-    public string idToTexturePath(string id, string category, string subcategory)
-    {
-        string path = "/models/maps/" + category.ToLower();
-        if (!category.Equals(subcategory))
-        {
+        
+    public string idToTexturePath(string id, string category, string subcategory) {
+        string path = "/models/maps/"+ category.ToLower();
+        if (!category.Equals(subcategory)) {
             path += "/" + subcategory.ToLower();
         }
         string picName = "/HK";
