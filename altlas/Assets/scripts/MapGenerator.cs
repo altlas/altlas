@@ -9,17 +9,25 @@ public class MapGenerator : MonoBehaviour {
     private float DRAWER_VER_LEN = 0.44f;
 
     List<MapClass> allMaps = new List<MapClass>();
+    List<MapClass> astronomie = new List<MapClass>();
+    List<MapClass> weltkarten = new List<MapClass>();
+    List<MapClass> geografisch = new List<MapClass>();
+    List<MapClass> physisch = new List<MapClass>();
+    List<MapClass> geologisch = new List<MapClass>();
+    List<MapClass> gewaesser = new List<MapClass>();
+    List<MapClass> politisch = new List<MapClass>();
+    List<MapClass> infrastruktur = new List<MapClass>();
+    List<MapClass> forschungsreisen = new List<MapClass>();
+    List<MapClass> kolonie = new List<MapClass>();
+    List<MapClass> geschichte = new List<MapClass>();
+    List<MapClass> bauplaene = new List<MapClass>();
 
-	// Use this for initialization
-	void Start () {
-        foreach (MapClass map in allMaps) {
-            //TO DO: spawn map depending on category
-        }
 
-        MapClass map1 = new MapClass();
-        MapClass map2 = new MapClass();
-        map1.initiate(1960, "language", "coordinate", "title", "source", new int[]{21, 21}, "property", "description", "astronomie", "astronomie", "location", "HK 1305");
-        map2.initiate(1960, "language2", "coordinate2", "title2", "source2", new int[] { 21, 21 }, "property2", "description2", "geografische_regionen", "landkarten", "location2", "HK 0188");
+    // Use this for initialization
+    void Start () {
+
+        MapClass map1 = new MapClass(1960, "language2", "coordinate2", "title2", "source2", new int[] { 21, 21 }, "property2", "description2", "geografische_regionen", "landkarten", "location2", "HK 0188");
+        MapClass map2 = new MapClass(1960, "language", "coordinate", "title", "source", new int[]{21, 21}, "property", "description", "astronomie", "astronomie", "location", "HK 1305");
         MapClass[] maps = { map1, map1, map2 };
         MapClass[][] maps2 = { maps, maps, maps};
         spawnStacksInCorner(new Vector3(-0.7105434f, 1.267f, 0.4124395f), DRAWER_HOR_LEN, DRAWER_VER_LEN, maps2);

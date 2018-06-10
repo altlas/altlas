@@ -27,7 +27,7 @@ public class MapClass : MonoBehaviour {
 		
 	}
 
-    public void initiate(int year, string language, string coordinate,
+    public MapClass(int year, string language, string coordinate,
         string title, string source, int[] imageSize, string property,
         string description, string category, string subCategory, string location, string id) {
         m_year = year;
@@ -90,7 +90,6 @@ public class MapClass : MonoBehaviour {
             fileData = System.IO.File.ReadAllBytes(appFilePath);
             texture = new Texture2D(1, 1);
             texture.LoadImage(fileData);
-            Debug.Log("I am Inside!");
         }
 
         Debug.Log(appFilePath);
