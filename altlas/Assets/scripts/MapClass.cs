@@ -17,15 +17,6 @@ public class MapClass : MonoBehaviour {
     public string m_id;
     public Texture2D texture;
 
-    // Use this for initialization
-    void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 
     public MapClass(int year, string language, string coordinate,
         string title, string source, int[] imageSize, string property,
