@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class MapGenerator : MonoBehaviour {
@@ -13,22 +14,29 @@ public class MapGenerator : MonoBehaviour {
 
     private float DRAWER_Z_POSITION = 0.37f;
     private float STARTING_DRAWER_X_POSITION = 0.70f;
-    private float STARTING_DRAWER_Y_POSITION = 0.8f;
+    private float STARTING_DRAWER_Y_POSITION = 0.64f;
+    private float MAPS_Y_OFFSET = 0.01f;
+
+    /* TODO: make this to acceptable code and not hardcoded like this */
 
     List<MapClass> allMaps = new List<MapClass>();
-    List<MapClass> astronomie = new List<MapClass>();
-    List<MapClass> weltkarten = new List<MapClass>();
-    List<MapClass> geografisch = new List<MapClass>();
-    List<MapClass> physisch = new List<MapClass>();
-    List<MapClass> geologisch = new List<MapClass>();
-    List<MapClass> gewaesser = new List<MapClass>();
-    List<MapClass> politisch = new List<MapClass>();
-    List<MapClass> infrastruktur = new List<MapClass>();
-    List<MapClass> forschungsreisen = new List<MapClass>();
-    List<MapClass> kolonie = new List<MapClass>();
-    List<MapClass> geschichte = new List<MapClass>();
-    List<MapClass> bauplaene = new List<MapClass>();
 
+    List<MapClass>[,] categories = {
+        {new List<MapClass>(),null, null, null}, //astronomie
+        {new List<MapClass>(),null, null, null}, //welkarten
+        {new List<MapClass>(), new List<MapClass>(), new List<MapClass>(),new List<MapClass>()}, //kontinentkarten, landkarten, stadtplan, inselkarte...
+        {new List<MapClass>(), new List<MapClass>(), new List<MapClass>(), null},
+        {new List<MapClass>(), new List<MapClass>(), new List<MapClass>(),new List<MapClass>()},
+        {new List<MapClass>(), new List<MapClass>(), new List<MapClass>(),new List<MapClass>()},
+        {new List<MapClass>(), new List<MapClass>(), new List<MapClass>(),new List<MapClass>()},
+        {new List<MapClass>(), new List<MapClass>(), new List<MapClass>(), null},
+        {new List<MapClass>(),null, null, null},
+        {new List<MapClass>(),null, null, null},
+        {new List<MapClass>(),null, null, null},
+        {new List<MapClass>(), null, null, null }
+    };
+
+    int[] numbOfSubs = { 1, 1, 4, 3, 3, 4, 4, 3 ,1,1,1,1};
     string[] category = new string[12] {
         "astronomie",
         "weltkarten",
@@ -43,32 +51,174 @@ public class MapGenerator : MonoBehaviour {
         "geschichtskarte",
         "bauplaene"
     };
+    string[][] subCategoryInside = new string[12][]{
+        new string[]{ "" },
+        new string[]{ "" },
+        new string[]{ "kontinentkarten", "landkarten", "stadtplan", "inselkarte" },
+        new string[]{ "vulkankarte", "hochgebirge", "gebirge" },
+        new string[]{ "topographische_karte", "bodenkarten", "relief" },
+        new string[]{ "meerarten", "flusskarte", "hafenkarte", "kueste" },
+        new string[]{ "verwaltungskarte", "politische_karte", "Katasterpläne", "kreiskarte" },
+        new string[]{ "verkehrskarten", "eisenbahn", "militaerkartographie" },
+        new string[]{ "" },
+        new string[]{ "" },
+        new string[]{ "" },
+        new string[]{ "" }
+    };
 
-    
+
+
 
     // Use this for initialization
-    void Start () {
-
-
+    void Start() {
+        
         MapClass map1 = new MapClass(1960, "language", "coordinate", "title", "source", new int[] { 21, 21 }, "property", "description", "astronomie", "astronomie", "location", "HK 1305");
         MapClass map2 = new MapClass(1960, "language2", "coordinate2", "title2", "source2", new int[] { 21, 21 }, "property2", "description2", "geografische_regionen", "landkarten", "location2", "HK 0188");
         MapClass[] maps = { map1, map1, map2 };
-        MapClass[][] maps2 = { maps, maps, maps, maps};
-        for (int i = 0; i< 12; i++) 
-        spawnMap(map1, category[i]);
-        //spawnStacksInRow(new Vector3(-0.007092f - DRAWER_X_OFFSET, 1.267f, 0.005999998f + DRAWER_Z_OFFSET), DRAWER_HOR_LEN, DRAWER_VER_LEN, maps2);
+        MapClass[][] maps2 = { maps, maps, maps, maps };
+        /* for (int i = 0; i < 12; i++)
+            spawnRowInDrawer(maps2, category[i]); */
+        allMaps.Add(map1);
+        allMaps.Add(map2);
 
-        /*for (int x = 0; x < 4; x++)
-        {
-            for (int y = 0; y < 3; y++) {
-                spawnRowInDrawer(maps2, category[2*x +y]);
+        foreach (MapClass map in allMaps) {
+            switch (map.m_category) {
+                case "astronomie":
+                    categories[0,0].Add(map);
+                    break;
+                case "weltkarten":
+                    categories[1,0].Add(map);
+                    break;
+                case "geografische_regionen":
+                    switch (map.m_subCategory) {
+                        case "kontinentkarten":
+                            categories[2,0].Add(map);
+                            break;
+                        case "landkarten":
+                            categories[2,1].Add(map);
+                            break;
+                        case "stadtplan":
+                            categories[2,2].Add(map);
+                            break;
+                        case "inselkarte":
+                            categories[2,3].Add(map);
+                            break;
+                    }
+                    break;
+                case "physisch":
+                    switch (map.m_subCategory)
+                    {
+                        case "vulkankarte":
+                            categories[3,0].Add(map);
+                            break;
+                        case "hochgebirge":
+                            categories[3,1].Add(map);
+                            break;
+                        case "gebirge":
+                            categories[3,2].Add(map);
+                            break;
+                    }
+                    break;
+                case "geologisch":
+                    switch (map.m_subCategory)
+                    {
+                        case "topographische_karte":
+                            categories[4,0].Add(map);
+                            break;
+                        case "bodenkarten":
+                            categories[4,1].Add(map);
+                            break;
+                        case "relief":
+                            categories[4,2].Add(map);
+                            break;
+                    }
+                    break;
+                case "gewaesser":
+                    switch (map.m_subCategory)
+                    {
+                        case "meerarten":
+                            categories[5,0].Add(map);
+                            break;
+                        case "flusskarte":
+                            categories[5,1].Add(map);
+                            break;
+                        case "hafenkarte":
+                            categories[5,2].Add(map);
+                            break;
+                        case "kueste":
+                            categories[5,3].Add(map);
+                            break;
+                    }
+                    break;
+                case "politische_oekonomische_regionen":
+                    switch (map.m_subCategory)
+                    {
+                        case "verwaltungskarte":
+                            categories[6,0].Add(map);
+                            break;
+                        case "politische_karte":
+                            categories[6,1].Add(map);
+                            break;
+                        case "Katasterpläne":
+                            categories[6,2].Add(map);
+                            break;
+                        case "kreiskarte":
+                            categories[6,3].Add(map);
+                            break;
+                    }
+                    break;
+                case "infrastruktur":
+                    switch (map.m_subCategory)
+                    {
+                        case "verkehrskarten":
+                            categories[7,0].Add(map);
+                            break;
+                        case "eisenbahn":
+                            categories[7,1].Add(map);
+                            break;
+                        case "militaerkartographie":
+                            categories[7,2].Add(map);
+                            break;
+                    }
+                    break;
+                case "forschungsreisen":
+                    categories[8,0].Add(map);
+                    break;
+                case "koloniekarte":
+                    categories[9,0].Add(map);
+                    break;
+                case "geschichtskarte":
+                    categories[10,0].Add(map);
+                    break;
+                case "bauplaene":
+                    categories[11,0].Add(map);
+                    break;
             }
-        }*/
-        //spawnRowInDrawer(maps2, "astronomie");
+        }
+        for (int i = 0; i < categories.GetLength(0); i++) {
+            MapClass[][] catData = new MapClass[numbOfSubs[i]][];
+            for (int k = 0; null != categories[i, k]; k++) {
+                MapClass[] subCatData = new MapClass[categories[i, k].Count];
+                Debug.Log(categories[i, k].Count);
+                Debug.Log("i" +i);
+                Debug.Log("k" +k);
+                int j = 0;
+                foreach (MapClass map in categories[i, k]) {
+                    subCatData[j] = map;
+                    j++;
+                }
+                catData[k] = subCatData;
+            }
+            
+            spawnRowInDrawer(catData, category[i]);
+        }
 
     } 
 
-    public void spawnMap(MapClass mapData, string category)
+    /**
+     * only use this for single placements 
+     * */
+    private void spawnMap(MapClass mapData, string category)
     {
         var MapToSpawn = Instantiate(map,getDrawerVectorByCategory(category), Quaternion.identity).GetComponent<MapClass>();
         MapToSpawn.copyFrom(mapData);
@@ -78,7 +228,7 @@ public class MapGenerator : MonoBehaviour {
 
     public void spawnMap(Vector3 position, MapClass mapData, string category)
     {
-        var MapToSpawn = Instantiate(map, getDrawerVectorByCategory(category), Quaternion.identity).GetComponent<MapClass>();
+        var MapToSpawn = Instantiate(map, position, Quaternion.identity).GetComponent<MapClass>();
         MapToSpawn.copyFrom(mapData);
         MapToSpawn.GetComponent<Renderer>().material.mainTexture = mapData.texture;
         MapToSpawn.transform.parent = getDrawerObjectFromCategory(category).transform;
@@ -87,6 +237,7 @@ public class MapGenerator : MonoBehaviour {
     public void spawnAsStack(Vector3 position, MapClass[] mapData, string category) {
         for (int i = 0; i < mapData.Length; i++)
         {
+            position.y = position.y + i * MAPS_Y_OFFSET;
             spawnMap(position, mapData[i], category);
         }
     }
@@ -138,7 +289,7 @@ public class MapGenerator : MonoBehaviour {
                 return GameObject.Find("01");
             case "gewaesser":
                 return GameObject.Find("11");
-            case "apolitisch_oekonomische_regionen":
+            case "politische_oekonomische_regionen":
                 return GameObject.Find("21");
             case "infrastruktur":
                 return GameObject.Find("31");
@@ -169,7 +320,7 @@ public class MapGenerator : MonoBehaviour {
                 return new int[] { 0, 1 };
                 case "gewaesser":
                 return new int[] { 1, 1 };
-                case "apolitisch_oekonomische_regionen":
+                case "politische_oekonomische_regionen":
                 return new int[] { 2, 1 };
                 case "infrastruktur":
                 return new int[] { 3, 1 };
