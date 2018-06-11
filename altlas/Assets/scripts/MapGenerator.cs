@@ -36,40 +36,12 @@ public class MapGenerator : MonoBehaviour {
         {new List<MapClass>(), null, null, null }
     };
 
-    string[] category = new string[12] {
-        "astronomie",
-        "weltkarten",
-        "geografische_regionen",
-        "physisch",
-        "geologisch",
-        "gewaesser",
-        "politische_oekonomische_regionen",
-        "infrastruktur",
-        "forschungsreisen",
-        "koloniekarte",
-        "geschichtskarte",
-        "bauplaene"
-    };
+    Dictionary<string, Dictionary<string, List<MapClass>>> subCats = new Dictionary<string, Dictionary<string, List<MapClass>>>();
 
-   string[][] subCategoryInside = new string[12][]{
-        new string[]{ "" },
-        new string[]{ "" },
-        new string[]{ "kontinentkarten", "landkarten", "stadtplan", "inselkarte" },
-        new string[]{ "vulkankarte", "hochgebirge", "gebirge" },
-        new string[]{ "topographische_karte", "bodenkarten", "relief" },
-        new string[]{ "meerarten", "flusskarte", "hafenkarte", "kueste" },
-        new string[]{ "verwaltungskarte", "politische_karte", "Katasterpläne", "kreiskarte" },
-        new string[]{ "verkehrskarten", "eisenbahn", "militaerkartographie" },
-        new string[]{ "" },
-        new string[]{ "" },
-        new string[]{ "" },
-        new string[]{ "" }
-    };
-
-
-    Dictionary<string, Dictionary<string, List<MapClass>>> sortedMaps = new Dictionary<string, Dictionary<string, List<MapClass>>>();
-
-   
+    /*Dictionary<string, List<List<MapClass>>> subCats = new Dictionary<string, List<List<MapClass>>> {
+        { "astronomie", new List<List<MapClass>>{new List<MapClass>()}},
+        { "astronomie", new List<List<MapClass>>{new List<MapClass>()}},
+    };*/
 
 
 
@@ -82,135 +54,36 @@ public class MapGenerator : MonoBehaviour {
         MapClass[] maps = { map1, map1, map2 };
         MapClass[][] maps2 = { maps, maps, maps, maps };
         for (int i = 0; i < 12; i++) {
-            /*allMaps.Add(map1);
+            allMaps.Add(map1);
             allMaps.Add(map2);
-            allMaps.Add(map3);*/
-            spawnRowInDrawer(maps2, category[i]);
-
+            allMaps.Add(map3);
         }
-
+        
+        //Create Dic for every category / subcategory
         foreach (MapClass map in allMaps) {
-            switch (map.m_category) {
-                case "astronomie":
-                    categories[0,0].Add(map);
-                    break;
-                case "weltkarten":
-                    categories[1,0].Add(map);
-                    break;
-                case "geografische_regionen":
-                    switch (map.m_subCategory) {
-                        case "kontinentkarten":
-                            categories[2,0].Add(map);
-                            break;
-                        case "landkarten":
-                            categories[2,1].Add(map);
-                            break;
-                        case "stadtplan":
-                            categories[2,2].Add(map);
-                            break;
-                        case "inselkarte":
-                            categories[2,3].Add(map);
-                            break;
-                    }
-                    break;
-                case "physisch":
-                    switch (map.m_subCategory)
-                    {
-                        case "vulkankarte":
-                            categories[3,0].Add(map);
-                            break;
-                        case "hochgebirge":
-                            categories[3,1].Add(map);
-                            break;
-                        case "gebirge":
-                            categories[3,2].Add(map);
-                            break;
-                    }
-                    break;
-                case "geologisch":
-                    switch (map.m_subCategory)
-                    {
-                        case "topographische_karte":
-                            categories[4,0].Add(map);
-                            break;
-                        case "bodenkarten":
-                            categories[4,1].Add(map);
-                            break;
-                        case "relief":
-                            categories[4,2].Add(map);
-                            break;
-                    }
-                    break;
-                case "gewaesser":
-                    switch (map.m_subCategory)
-                    {
-                        case "meerarten":
-                            categories[5,0].Add(map);
-                            break;
-                        case "flusskarte":
-                            categories[5,1].Add(map);
-                            break;
-                        case "hafenkarte":
-                            categories[5,2].Add(map);
-                            break;
-                        case "kueste":
-                            categories[5,3].Add(map);
-                            break;
-                    }
-                    break;
-                case "politische_oekonomische_regionen":
-                    switch (map.m_subCategory)
-                    {
-                        case "verwaltungskarte":
-                            categories[6,0].Add(map);
-                            break;
-                        case "politische_karte":
-                            categories[6,1].Add(map);
-                            break;
-                        case "Katasterpläne":
-                            categories[6,2].Add(map);
-                            break;
-                        case "kreiskarte":
-                            categories[6,3].Add(map);
-                            break;
-                    }
-                    break;
-                case "infrastruktur":
-                    switch (map.m_subCategory)
-                    {
-                        case "verkehrskarten":
-                            categories[7,0].Add(map);
-                            break;
-                        case "eisenbahn":
-                            categories[7,1].Add(map);
-                            break;
-                        case "militaerkartographie":
-                            categories[7,2].Add(map);
-                            break;
-                    }
-                    break;
-                case "forschungsreisen":
-                    categories[8,0].Add(map);
-                    break;
-                case "koloniekarte":
-                    categories[9,0].Add(map);
-                    break;
-                case "geschichtskarte":
-                    categories[10,0].Add(map);
-                    break;
-                case "bauplaene":
-                    categories[11,0].Add(map);
-                    break;
+            if (!subCats.ContainsKey(map.m_category)) {
+                subCats.Add(map.m_category, new Dictionary<string, List<MapClass>>());
             }
+            Dictionary<string, List<MapClass>> dicToAddTo = subCats[map.m_category];
+            if (!subCats[map.m_category].ContainsKey(map.m_subCategory))
+            {
+                dicToAddTo.Add(map.m_subCategory, new List<MapClass>());
+            }
+            List<MapClass> listToAddTo = dicToAddTo[map.m_subCategory];
+            dicToAddTo[map.m_subCategory].Add(map);
         }
-        for (int i = 0; i < categories.GetLength(0); i++) {
+
+
+        foreach (KeyValuePair<string, Dictionary<string, List<MapClass>>> domCat in subCats)
+        {
+            // do something with entry.Value or entry.Key
             List<List<MapClass>> catData = new List<List<MapClass>>();
-            for (int k = 0; k < categories.GetLength(1); k++) {
-                if (categories[i, k] != null) {
-                    catData.Add(categories[i,k]);
-                }
+            foreach (KeyValuePair<string, List<MapClass>> subCat in subCats[domCat.Key])
+            {
+                // do something with entry.Value or entry.Key
+                catData.Add(subCat.Value);
             }
-            spawnRowInDrawer(catData, category[i]);
+            spawnRowInDrawer(catData, domCat.Key);
         }
 
     } 
