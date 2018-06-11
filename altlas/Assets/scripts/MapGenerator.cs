@@ -10,7 +10,7 @@ public class MapGenerator : MonoBehaviour {
     private float DRAWER_VER_LEN = 0.54f;
     private float DRAWER_SHORT_X_DIS = 0.3f;
     private float DRAWER_LONG_X_DIS = 1.4f;
-    private float DRAWER_Y_DIS = 0.0024f;
+    private float DRAWER_Y_DIS = 0.24f;
 
     private float DRAWER_Z_POSITION = 0.37f;
     private float STARTING_DRAWER_X_POSITION = 0.70f;
@@ -36,7 +36,6 @@ public class MapGenerator : MonoBehaviour {
         {new List<MapClass>(), null, null, null }
     };
 
-    int[] numbOfSubs = { 1, 1, 4, 3, 3, 4, 4, 3 ,1,1,1,1};
     string[] category = new string[12] {
         "astronomie",
         "weltkarten",
@@ -78,15 +77,17 @@ public class MapGenerator : MonoBehaviour {
     void Start() {
 
         MapClass map1 = new MapClass(1960, "language", "coordinate", "title", "source", new int[] { 21, 21 }, "property", "description", "astronomie", "astronomie", "location", "HK 1305");
-        MapClass map2 = new MapClass(1960, "language2", "coordinate2", "title2", "source2", new int[] { 21, 21 }, "property2", "description2", "geografische_regionen", "landkarten", "location2", "HK 0188");
+        MapClass map2 = new MapClass(1960, "language2", "coordinate2", "title2", "source2", new int[] { 21, 21 }, "property2", "description2", "bauplaene", "bauplaene", "location2", "HK 0188");
         MapClass map3 = new MapClass(1960, "language2", "coordinate2", "title2", "source2", new int[] { 21, 21 }, "property2", "description2", "geografische_regionen", "landkarten", "location2", "HK 0188");
         MapClass[] maps = { map1, map1, map2 };
         MapClass[][] maps2 = { maps, maps, maps, maps };
-        for (int i = 0; i < 6; i++) {
-            allMaps.Add(map1);
+        for (int i = 0; i < 12; i++) {
+            /*allMaps.Add(map1);
             allMaps.Add(map2);
+            allMaps.Add(map3);*/
+            spawnRowInDrawer(maps2, category[i]);
+
         }
-            //spawnRowInDrawer(maps2, category[i]); 
 
         foreach (MapClass map in allMaps) {
             switch (map.m_category) {
@@ -322,7 +323,7 @@ public class MapGenerator : MonoBehaviour {
      * */
     public Vector3 getDrawerVectorByIndex(int x, int y) {
         float newX = STARTING_DRAWER_X_POSITION - (x % 2) * DRAWER_SHORT_X_DIS;
-        float newY = STARTING_DRAWER_Y_POSITION - y * DRAWER_SHORT_X_DIS;
+        float newY = STARTING_DRAWER_Y_POSITION - y * DRAWER_Y_DIS;
         if (x > 1)
             newX -= DRAWER_LONG_X_DIS;
         return new Vector3(newX, newY, DRAWER_Z_POSITION);
