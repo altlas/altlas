@@ -19,10 +19,10 @@ public class MapData{
   public string m_id;
   public Texture2D texture;
 
-  public MapData(int year, string language, string coordinate, 
-                    string title, string source, int[] imageSize, 
-                    string property, string description, 
-                    string category, string subCategory, 
+  public MapData(int year, string language, string coordinate,
+                    string title, string source, int[] imageSize,
+                    string property, string description,
+                    string category, string subCategory,
                     string location, string id) {
     m_year = year;
     m_language = language;

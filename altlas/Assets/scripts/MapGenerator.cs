@@ -92,7 +92,7 @@ public class MapGenerator : MonoBehaviour {
     /**
      * Spawns map in drawer which its category is assigned to. use this method for single placements of a map
      * mapData: the data the map object will have
-     * category: the drawer which contains all maps of this category 
+     * category: the drawer which contains all maps of this category
      */
     private void spawnMap(MapData mapData, string category)
     {
@@ -188,11 +188,11 @@ public class MapGenerator : MonoBehaviour {
     }
 
     /**
-     * Will spawn multiple map stacks aligned in a row 
+     * Will spawn multiple map stacks aligned in a row
      * horLength: width of area
      * verLength: height of area
      * stacks: stacks of maps to spawn, first dimension: category, second: subcategories belonging to category
-     * category: drawer which its category is assigned to where row should spawn 
+     * category: drawer which its category is assigned to where row should spawn
      * */
     public void spawnStacksInRow(float horLength, float verLength, MapData[][] stacks, string category) {
         for (int i = 0; i < stacks.Length; i++) {
@@ -203,11 +203,11 @@ public class MapGenerator : MonoBehaviour {
     }
 
     /**
-     * Will spawn multiple map stacks aligned in a row 
+     * Will spawn multiple map stacks aligned in a row
      * horLength: width of area
      * verLength: height of area
      * stacks: stacks of maps to spawn, first dimension: category, second: subcategories belonging to category
-     * category: drawer which its category is assigned to where row should spawn 
+     * category: drawer which its category is assigned to where row should spawn
      * */
     public void spawnStacksInRow(float horLength, float verLength, List<List<MapData>> stacks, string category)
     {
@@ -308,7 +308,7 @@ public class MapGenerator : MonoBehaviour {
                 case "forschungsreisen":
                 return new int[] { 0, 2 };
                 case "koloniekarte":
-                return new int[] { 1, 2 }; 
+                return new int[] { 1, 2 };
                 case "geschichtskarte":
                 return new int[] { 2, 2 };
                 case "bauplaene":
