@@ -80,8 +80,10 @@ public class MapGenerator : MonoBehaviour {
      * initializes subCats
     */
     private void sortMaps() {
-        // Create Dic for every category / subcategory
-         foreach (MapData map in loader.data)
+        if (once && loader.finishedLoading)
+        {
+            // Create Dic for every category / subcategory
+            foreach (MapData map in loader.data)
             {
                 if (!subCats.ContainsKey(map.m_category))
                 {
@@ -95,6 +97,7 @@ public class MapGenerator : MonoBehaviour {
                 List<MapData> listToAddTo = dicToAddTo[map.m_subCategory];
                 dicToAddTo[map.m_subCategory].Add(map);
             }
+        }
     }
     /**
      * Spawns map at given position without being bound to the movement of a drawer
