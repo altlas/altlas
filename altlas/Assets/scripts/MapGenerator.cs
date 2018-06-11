@@ -17,80 +17,84 @@ public class MapGenerator : MonoBehaviour {
     private float STARTING_DRAWER_Y_POSITION = 0.6f;
     private float MAPS_Y_OFFSET = 0.01f;
 
-    /* TODO: make this to acceptable code and not hardcoded like this */
+    private Vector3 DESK_FREE_AREA_LEFT_CORNER = new Vector3(-0.7105434f, 0.85f, 0.4124395f);
+    private float DESK_FREE_AREA_LENGTH = 0.4f;
 
     List<MapClass> allMaps = new List<MapClass>();
 
-    List<MapClass>[,] categories = {
-        {new List<MapClass>(),null, null, null}, //astronomie
-        {new List<MapClass>(),null, null, null}, //welkarten
-        {new List<MapClass>(), new List<MapClass>(), new List<MapClass>(),new List<MapClass>()}, //kontinentkarten, landkarten, stadtplan, inselkarte...
-        {new List<MapClass>(), new List<MapClass>(), new List<MapClass>(), null},
-        {new List<MapClass>(), new List<MapClass>(), new List<MapClass>(),new List<MapClass>()},
-        {new List<MapClass>(), new List<MapClass>(), new List<MapClass>(),new List<MapClass>()},
-        {new List<MapClass>(), new List<MapClass>(), new List<MapClass>(),new List<MapClass>()},
-        {new List<MapClass>(), new List<MapClass>(), new List<MapClass>(), null},
-        {new List<MapClass>(),null, null, null},
-        {new List<MapClass>(),null, null, null},
-        {new List<MapClass>(),null, null, null},
-        {new List<MapClass>(), null, null, null }
-    };
-
     Dictionary<string, Dictionary<string, List<MapClass>>> subCats = new Dictionary<string, Dictionary<string, List<MapClass>>>();
-
-    /*Dictionary<string, List<List<MapClass>>> subCats = new Dictionary<string, List<List<MapClass>>> {
-        { "astronomie", new List<List<MapClass>>{new List<MapClass>()}},
-        { "astronomie", new List<List<MapClass>>{new List<MapClass>()}},
-    };*/
-
-
-
     // Use this for initialization
     void Start() {
-
         MapClass map1 = new MapClass(1960, "language", "coordinate", "title", "source", new int[] { 21, 21 }, "property", "description", "astronomie", "astronomie", "location", "HK 1305");
         MapClass map2 = new MapClass(1960, "language2", "coordinate2", "title2", "source2", new int[] { 21, 21 }, "property2", "description2", "bauplaene", "bauplaene", "location2", "HK 0188");
         MapClass map3 = new MapClass(1960, "language2", "coordinate2", "title2", "source2", new int[] { 21, 21 }, "property2", "description2", "geografische_regionen", "landkarten", "location2", "HK 0188");
+        MapClass map4 = new MapClass(1960, "language2", "coordinate2", "title2", "source2", new int[] { 21, 21 }, "property2", "description2", "geografische_regionen", "inselkarte", "location2", "HK 0188");
+        MapClass map5 = new MapClass(1960, "language2", "coordinate2", "title2", "source2", new int[] { 21, 21 }, "property2", "description2", "geografische_regionen", "kontinent", "location2", "HK 0188");
+        MapClass map6 = new MapClass(1960, "language2", "coordinate2", "title2", "source2", new int[] { 21, 21 }, "property2", "description2", "geografische_regionen", "stadtplan", "location2", "HK 0188");
         MapClass[] maps = { map1, map1, map2 };
         MapClass[][] maps2 = { maps, maps, maps, maps };
-        for (int i = 0; i < 12; i++) {
+        for (int i = 0; i < 7; i++) {
             allMaps.Add(map1);
             allMaps.Add(map2);
             allMaps.Add(map3);
-        }
-        
-        //Create Dic for every category / subcategory
-        foreach (MapClass map in allMaps) {
-            if (!subCats.ContainsKey(map.m_category)) {
-                subCats.Add(map.m_category, new Dictionary<string, List<MapClass>>());
-            }
-            Dictionary<string, List<MapClass>> dicToAddTo = subCats[map.m_category];
-            if (!subCats[map.m_category].ContainsKey(map.m_subCategory))
-            {
-                dicToAddTo.Add(map.m_subCategory, new List<MapClass>());
-            }
-            List<MapClass> listToAddTo = dicToAddTo[map.m_subCategory];
-            dicToAddTo[map.m_subCategory].Add(map);
+            allMaps.Add(map4);
+            allMaps.Add(map5);
+            allMaps.Add(map6);
         }
 
+        sortMaps();
+        spawnInArea(DESK_FREE_AREA_LEFT_CORNER, maps, DESK_FREE_AREA_LENGTH, DESK_FREE_AREA_LENGTH);
 
         foreach (KeyValuePair<string, Dictionary<string, List<MapClass>>> domCat in subCats)
         {
-            // do something with entry.Value or entry.Key
             List<List<MapClass>> catData = new List<List<MapClass>>();
             foreach (KeyValuePair<string, List<MapClass>> subCat in subCats[domCat.Key])
             {
-                // do something with entry.Value or entry.Key
                 catData.Add(subCat.Value);
             }
             spawnRowInDrawer(catData, domCat.Key);
         }
 
-    } 
+    }
 
     /**
-     * only use this for single placements 
+     * initializes subCats
+    */
+    private void sortMaps() {
+        // Create Dic for every category / subcategory
+         foreach (MapClass map in allMaps)
+            {
+                if (!subCats.ContainsKey(map.m_category))
+                {
+                    subCats.Add(map.m_category, new Dictionary<string, List<MapClass>>());
+                }
+                Dictionary<string, List<MapClass>> dicToAddTo = subCats[map.m_category];
+                if (!subCats[map.m_category].ContainsKey(map.m_subCategory))
+                {
+                    dicToAddTo.Add(map.m_subCategory, new List<MapClass>());
+                }
+                List<MapClass> listToAddTo = dicToAddTo[map.m_subCategory];
+                dicToAddTo[map.m_subCategory].Add(map);
+            }
+    }
+
+    /**
+     * Spawns map at given position without being bound to the movement of a drawer
+     * position: the position the map object should be spawned in the scene
+     * mapData: the data the map object will have
      * */
+    private void spawnMap(Vector3 position, MapClass mapData)
+    {
+        var MapToSpawn = Instantiate(map, position, Quaternion.identity).GetComponent<MapClass>();
+        MapToSpawn.copyFrom(mapData);
+        MapToSpawn.GetComponent<Renderer>().material.mainTexture = mapData.texture;
+    }
+
+    /**
+     * Spawns map in drawer which its category is assigned to. use this method for single placements of a map
+     * mapData: the data the map object will have
+     * category: the drawer which contains all maps of this category 
+     */
     private void spawnMap(MapClass mapData, string category)
     {
         var MapToSpawn = Instantiate(map,getDrawerVectorByCategory(category), Quaternion.identity).GetComponent<MapClass>();
@@ -99,6 +103,12 @@ public class MapGenerator : MonoBehaviour {
         MapToSpawn.transform.parent = getDrawerObjectFromCategory(category).transform;
     }
 
+    /**
+     * Spawns map in drawer which its category is assigned to. use this method if you want to spread map objects over a certain area
+     * position: the position the map object should be spawned in the scene
+     * mapData: the data the map object will have
+     * category: the drawer which contains all maps of this category.
+     */
     public void spawnMap(Vector3 position, MapClass mapData, string category)
     {
         var MapToSpawn = Instantiate(map, position, Quaternion.identity).GetComponent<MapClass>();
@@ -107,6 +117,54 @@ public class MapGenerator : MonoBehaviour {
         MapToSpawn.transform.parent = getDrawerObjectFromCategory(category).transform;
     }
 
+    /**
+     * randomly spreads given maps over a certain 2D area = horLength * verLength
+     * leftCorner: left corner of area
+     * maps: the data the map objects will have
+     * horLength: width of area
+     * verLength: height of area
+     */
+    public void spawnInArea(Vector3 leftCorner, MapClass[] maps, float horLength, float verLength)
+    {
+        float x = leftCorner.x;
+        float z = leftCorner.z;
+        float y = leftCorner.y;
+
+        for (int i = 0; i < maps.Length; i++)
+        {
+            float newX = x - Random.Range(0, horLength);
+            float newZ = z + Random.Range(0, verLength);
+            spawnMap(new Vector3(newX, y, newZ), maps[i]);
+        }
+    }
+
+    /**
+     * randomly spreads given maps over a certain 2D area = horLength * verLength
+     * leftCorner: left corner of area
+     * maps: the data the map objects will have
+     * horLength: width of area
+     * verLength: height of area
+     */
+    public void spawnInArea(Vector3 leftCorner, List<MapClass> maps, float horLength, float verLength)
+    {
+        float x = leftCorner.x;
+        float z = leftCorner.z;
+        float y = leftCorner.y;
+
+        foreach (MapClass map in maps)
+        {
+            float newX = x - Random.Range(0, horLength);
+            float newZ = z + Random.Range(0, verLength);
+            spawnMap(new Vector3(newX, y, newZ), map);
+        }
+    }
+
+    /**
+     * Will spawn given maps as a stack at a given position.
+     * position: the position the map object should be spawned in the scene
+     * mapData: the data the map object will have
+     * category: the drawer which contains all maps of this category.
+     * */
     public void spawnAsStack(Vector3 position, MapClass[] mapData, string category) {
         for (int i = 0; i < mapData.Length; i++)
         {
@@ -115,6 +173,12 @@ public class MapGenerator : MonoBehaviour {
         }
     }
 
+    /**
+     * Will spawn given maps as a stack in the drawer
+     * position: the position the map object should be spawned in the scene
+     * mapData: the data the map object will have
+     * category: the drawer which contains all maps of this category
+     * */
     public void spawnAsStack(Vector3 position, List<MapClass> mapData, string category)
     {
         foreach (MapClass map in mapData)
@@ -124,10 +188,13 @@ public class MapGenerator : MonoBehaviour {
         }
     }
 
-    public Vector3 getDrawerVectorByCategory(string category) {
-        return getDrawerVectorByIndex(getDrawerIndexByCategory(category)[0], getDrawerIndexByCategory(category)[1]);
-    }
-
+    /**
+     * Will spawn multiple map stacks aligned in a row 
+     * horLength: width of area
+     * verLength: height of area
+     * stacks: stacks of maps to spawn, first dimension: category, second: subcategories belonging to category
+     * category: drawer which its category is assigned to where row should spawn 
+     * */
     public void spawnStacksInRow(float horLength, float verLength, MapClass[][] stacks, string category) {
         float x = getDrawerVectorByCategory(category).x;
         float z = getDrawerVectorByCategory(category).z;
@@ -139,6 +206,13 @@ public class MapGenerator : MonoBehaviour {
         }
     }
 
+    /**
+     * Will spawn multiple map stacks aligned in a row 
+     * horLength: width of area
+     * verLength: height of area
+     * stacks: stacks of maps to spawn, first dimension: category, second: subcategories belonging to category
+     * category: drawer which its category is assigned to where row should spawn 
+     * */
     public void spawnStacksInRow(float horLength, float verLength, List<List<MapClass>> stacks, string category)
     {
         float x = getDrawerVectorByCategory(category).x;
@@ -154,41 +228,24 @@ public class MapGenerator : MonoBehaviour {
         }
     }
 
-    public void spawnStacksInRow(float horLength, float verLength, List<MapClass>[] stacks, string category)
-    {
-        float x = getDrawerVectorByCategory(category).x;
-        float z = getDrawerVectorByCategory(category).z;
-        float y = getDrawerVectorByCategory(category).y;
-        for (int i = 0; i < stacks.GetLength(0); i++)
-        {
-            float newX = x - horLength / 2;
-            float newZ = z + (stacks.GetLength(0) - i) * verLength / stacks.GetLength(0);
-            spawnAsStack(new Vector3(newX, y, newZ), stacks[i], category);
-            i++;
-        }
-    }
-
+    /**
+     * spawnStackInRow with fixed drawer length
+     * */
     public void spawnRowInDrawer(MapClass[][] stacks, string category) {
         int x = getDrawerIndexByCategory(category)[0];
         int y= getDrawerIndexByCategory(category)[1];
         spawnStacksInRow(DRAWER_HOR_LEN, DRAWER_VER_LEN, stacks, category);
     }
 
+    /**
+     * spawnStackInRow with fixed drawer length
+     * */
     public void spawnRowInDrawer(List<List<MapClass>> stacks, string category)
     {
         int x = getDrawerIndexByCategory(category)[0];
         int y = getDrawerIndexByCategory(category)[1];
         spawnStacksInRow(DRAWER_HOR_LEN, DRAWER_VER_LEN, stacks, category);
     }
-
-    public void spawnRowInDrawer(List<MapClass>[] stacks, string category)
-    {
-        int x = getDrawerIndexByCategory(category)[0];
-        int y = getDrawerIndexByCategory(category)[1];
-        spawnStacksInRow(DRAWER_HOR_LEN, DRAWER_VER_LEN, stacks, category);
-    }
-
-
 
     /**
      * x e {0,3}
@@ -200,6 +257,10 @@ public class MapGenerator : MonoBehaviour {
         if (x > 1)
             newX -= DRAWER_LONG_X_DIS;
         return new Vector3(newX, newY, DRAWER_Z_POSITION);
+    }
+
+    public Vector3 getDrawerVectorByCategory(string category) {
+        return getDrawerVectorByIndex(getDrawerIndexByCategory(category)[0], getDrawerIndexByCategory(category)[1]);
     }
 
     public GameObject getDrawerObjectFromCategory(string category) {
