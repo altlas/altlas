@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.1273174, g: 0.13414761, b: 0.12107885, a: 1}
+  m_IndirectSpecularColor: {r: 0.12731704, g: 0.13414727, b: 0.121078536, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -497,6 +497,8 @@ GameObject:
   m_Component:
   - component: {fileID: 274287444}
   - component: {fileID: 274287443}
+  - component: {fileID: 274287446}
+  - component: {fileID: 274287445}
   m_Layer: 0
   m_Name: GameObject
   m_TagString: Untagged
@@ -529,6 +531,42 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &274287445
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 274287442}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0e49ccf1b0ec1f4b809152232059ab2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  data: []
+--- !u!114 &274287446
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 274287442}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c32a57a6a8c877f43ba1d8bf79b314b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_year: 0
+  m_language: 
+  m_coordinate: 
+  m_title: 
+  m_source: 
+  m_imageSize: 
+  m_property: 
+  m_description: 
+  m_category: 
+  m_subCategory: 
+  m_location: 
+  m_id: 
+  texture: {fileID: 0}
 --- !u!4 &283747311 stripped
 Transform:
   m_PrefabParentObject: {fileID: 400000, guid: 497d5bd5c2bf07c4f8ae97865a45ad87, type: 3}
