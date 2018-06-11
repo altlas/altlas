@@ -24,33 +24,11 @@ public class MapGenerator : MonoBehaviour {
     private Vector3 DESK_FREE_AREA_LEFT_CORNER = new Vector3(-0.7105434f, 0.85f, 0.4124395f);
     private float DESK_FREE_AREA_LENGTH = 0.4f;
 
-    //List<MapData> allMaps = new List<MapData>();
-
     Dictionary<string, Dictionary<string, List<MapData>>> subCats = new Dictionary<string, Dictionary<string, List<MapData>>>();
     // Use this for initialization
     void Start() {
         loader = GetComponent<Loader>();
-
-        // TESTING //
-        MapData map1 = new MapData(1960, "language", "coordinate", "title", "source", new int[] { 21, 21 }, "property", "description", "astronomie", "astronomie", "location", "HK 1305");
-        MapData map2 = new MapData(1960, "language2", "coordinate2", "title2", "source2", new int[] { 21, 21 }, "property2", "description2", "bauplaene", "bauplaene", "location2", "HK 0188");
-        MapData map3 = new MapData(1960, "language2", "coordinate2", "title2", "source2", new int[] { 21, 21 }, "property2", "description2", "geografische_regionen", "landkarten", "location2", "HK 0188");
-        MapData map4 = new MapData(1960, "language2", "coordinate2", "title2", "source2", new int[] { 21, 21 }, "property2", "description2", "geografische_regionen", "inselkarte", "location2", "HK 0188");
-        MapData map5 = new MapData(1960, "language2", "coordinate2", "title2", "source2", new int[] { 21, 21 }, "property2", "description2", "geografische_regionen", "kontinent", "location2", "HK 0188");
-        MapData map6 = new MapData(1960, "language2", "coordinate2", "title2", "source2", new int[] { 21, 21 }, "property2", "description2", "geografische_regionen", "stadtplan", "location2", "HK 0188");
-        MapData[] maps = { map1, map1, map2 };
-        MapData[][] maps2 = { maps, maps, maps, maps };
-        /*for (int i = 0; i < 7; i++) {
-            allMaps.Add(map1);
-            allMaps.Add(map2);
-            allMaps.Add(map3);
-            allMaps.Add(map4);
-            allMaps.Add(map5);
-            allMaps.Add(map6);
-        }*/
-
         sortMaps();
-        spawnInArea(DESK_FREE_AREA_LEFT_CORNER, maps, DESK_FREE_AREA_LENGTH, DESK_FREE_AREA_LENGTH);
 
         foreach (KeyValuePair<string, Dictionary<string, List<MapData>>> domCat in subCats)
         {
@@ -217,13 +195,10 @@ public class MapGenerator : MonoBehaviour {
      * category: drawer which its category is assigned to where row should spawn 
      * */
     public void spawnStacksInRow(float horLength, float verLength, MapData[][] stacks, string category) {
-        float x = getDrawerVectorByCategory(category).x;
-        float z = getDrawerVectorByCategory(category).z;
-        float y = getDrawerVectorByCategory(category).y;
         for (int i = 0; i < stacks.Length; i++) {
-            float newX = x - horLength/2;
-            float newZ = z + (stacks.Length-i)* verLength/stacks.Length;
-            spawnAsStack(new Vector3(newX, y, newZ), stacks[i], category);
+            float newX = getDrawerVectorByCategory(category).x - horLength/2;
+            float newZ = getDrawerVectorByCategory(category).z + (stacks.Length-i)* verLength/stacks.Length;
+            spawnAsStack(new Vector3(newX, getDrawerVectorByCategory(category).y, newZ), stacks[i], category);
         }
     }
 
@@ -236,15 +211,12 @@ public class MapGenerator : MonoBehaviour {
      * */
     public void spawnStacksInRow(float horLength, float verLength, List<List<MapData>> stacks, string category)
     {
-        float x = getDrawerVectorByCategory(category).x;
-        float z = getDrawerVectorByCategory(category).z;
-        float y = getDrawerVectorByCategory(category).y;
         int i = 0;
         foreach (List<MapData> domCategory in stacks)
         {
-            float newX = x - horLength / 2;
-            float newZ = z + (stacks.Count - i) * verLength / stacks.Count;
-            spawnAsStack(new Vector3(newX, y, newZ), stacks[i], category);
+            float newX = getDrawerVectorByCategory(category).x - horLength / 2;
+            float newZ = getDrawerVectorByCategory(category).z + (stacks.Count - i) * verLength / stacks.Count;
+            spawnAsStack(new Vector3(newX, getDrawerVectorByCategory(category).y, newZ), stacks[i], category);
             i++;
         }
     }
