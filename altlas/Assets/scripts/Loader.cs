@@ -12,7 +12,7 @@ public class Loader : MonoBehaviour {
 
 	XmlDocument xmlDoc;
     XmlNodeList items;
-    public List <MapClass> data = new List <MapClass>();
+    public List <MapData> data = new List <MapData>();
     string[] mainCategory = new string[12] {
         "astronomie",
         "weltkarten",
@@ -57,7 +57,7 @@ public class Loader : MonoBehaviour {
         new string []{"HK 0947", "HK 1106", "HK 1165", "HK 0005", "HK 0062"},
         new string []{"HK 0308", "HK 0746", "HK 1546", "HK 1574", "HK 1623"},
         new string []{"HK 0150", "HK 1643", "HK 0096", "HK 0560", "HK 0874"},
-        new string []{"HK 1548 - 01", "HK 1593", "HK 0225", "HK 0137", "HK 0868"},
+        new string []{"HK 1548 - 01", "HK 1593",  "HK 0225", "HK 0137", "HK 0868"},
         new string []{"HK 0453", "HK 0884", "HK 1450", "HK 0662", "HK 0679"},
         new string []{"HK 0057", "HK 1098", "HK 0062", "HK 0196", "HK 0200"},
         new string []{"HK 0942", "HK 0632", "HK 1567", "HK 1572"},
@@ -70,7 +70,7 @@ public class Loader : MonoBehaviour {
         new string []{"HK 0321", "HK 0325", "HK 0324", "HK 0326", "HK 0327"}
     };
     int iteration = 0;
-	bool finishedLoading = false;
+	public bool finishedLoading = false;
 
     int year;
     string language;
@@ -97,7 +97,7 @@ public class Loader : MonoBehaviour {
 		if (finishedLoading)
 		{
            //SceneManager.LoadScene("SampleScene");
-           finishedLoading = false;
+           //finishedLoading = false;
 		}
 	}
 
@@ -105,7 +105,6 @@ public class Loader : MonoBehaviour {
 	{
 	    xmlDoc = new XmlDocument();
         xmlDoc.Load("Assets/res/maps_meta.xml");
-        Debug.Log(xmlDoc.InnerXml);
         items = xmlDoc.SelectNodes("/collection/record");
 	}
 
@@ -141,8 +140,6 @@ public class Loader : MonoBehaviour {
 
     IEnumerator AssignData()
 	{
-        Debug.Log("Assignstart \n");
-        Debug.Log(items.Count);
         foreach (XmlNode item in items)
         {
             var node = item.SelectSingleNode("datafield[@tag=\"852\"]/subfield[@code=\"m\"]");
@@ -256,7 +253,7 @@ public class Loader : MonoBehaviour {
                 node = item.SelectSingleNode("datafield[@tag=\"651\"][5]/subfield[@code=\"a\"]");
                 if (node != null)
                     location = location + node.InnerText;
-                data.Add(new MapClass(year, language, coordinate, title, source, imageSize, property, description, category, subCategory, location, id));
+                data.Add(new MapData(year, language, coordinate, title, source, imageSize, property, description, category, subCategory, location, id));
             }
             
             iteration++;

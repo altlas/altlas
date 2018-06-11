@@ -3,20 +3,12 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using UnityEngine;
 
-public class cordsParser : MonoBehaviour
+public class cordsParser
 {
-
-    // Use this for initialization
-    void Start()
-    {
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
+    public cordsParser(){
 
     }
-
+    
     float[] parse(string cords)
     {
         string pattern = @"(\d+)";
