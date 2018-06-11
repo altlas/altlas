@@ -14,7 +14,7 @@ public class MapGenerator : MonoBehaviour {
 
     private float DRAWER_Z_POSITION = 0.37f;
     private float STARTING_DRAWER_X_POSITION = 0.70f;
-    private float STARTING_DRAWER_Y_POSITION = 0.64f;
+    private float STARTING_DRAWER_Y_POSITION = 0.6f;
     private float MAPS_Y_OFFSET = 0.01f;
 
     /* TODO: make this to acceptable code and not hardcoded like this */
@@ -51,7 +51,8 @@ public class MapGenerator : MonoBehaviour {
         "geschichtskarte",
         "bauplaene"
     };
-    string[][] subCategoryInside = new string[12][]{
+
+   string[][] subCategoryInside = new string[12][]{
         new string[]{ "" },
         new string[]{ "" },
         new string[]{ "kontinentkarten", "landkarten", "stadtplan", "inselkarte" },
@@ -67,19 +68,25 @@ public class MapGenerator : MonoBehaviour {
     };
 
 
+    Dictionary<string, Dictionary<string, List<MapClass>>> sortedMaps = new Dictionary<string, Dictionary<string, List<MapClass>>>();
+
+   
+
 
 
     // Use this for initialization
     void Start() {
-        
+
         MapClass map1 = new MapClass(1960, "language", "coordinate", "title", "source", new int[] { 21, 21 }, "property", "description", "astronomie", "astronomie", "location", "HK 1305");
         MapClass map2 = new MapClass(1960, "language2", "coordinate2", "title2", "source2", new int[] { 21, 21 }, "property2", "description2", "geografische_regionen", "landkarten", "location2", "HK 0188");
+        MapClass map3 = new MapClass(1960, "language2", "coordinate2", "title2", "source2", new int[] { 21, 21 }, "property2", "description2", "geografische_regionen", "landkarten", "location2", "HK 0188");
         MapClass[] maps = { map1, map1, map2 };
         MapClass[][] maps2 = { maps, maps, maps, maps };
-        /* for (int i = 0; i < 12; i++)
-            spawnRowInDrawer(maps2, category[i]); */
-        allMaps.Add(map1);
-        allMaps.Add(map2);
+        for (int i = 0; i < 6; i++) {
+            allMaps.Add(map1);
+            allMaps.Add(map2);
+        }
+            //spawnRowInDrawer(maps2, category[i]); 
 
         foreach (MapClass map in allMaps) {
             switch (map.m_category) {
@@ -196,20 +203,12 @@ public class MapGenerator : MonoBehaviour {
             }
         }
         for (int i = 0; i < categories.GetLength(0); i++) {
-            MapClass[][] catData = new MapClass[numbOfSubs[i]][];
-            for (int k = 0; null != categories[i, k]; k++) {
-                MapClass[] subCatData = new MapClass[categories[i, k].Count];
-                Debug.Log(categories[i, k].Count);
-                Debug.Log("i" +i);
-                Debug.Log("k" +k);
-                int j = 0;
-                foreach (MapClass map in categories[i, k]) {
-                    subCatData[j] = map;
-                    j++;
+            List<List<MapClass>> catData = new List<List<MapClass>>();
+            for (int k = 0; k < categories.GetLength(1); k++) {
+                if (categories[i, k] != null) {
+                    catData.Add(categories[i,k]);
                 }
-                catData[k] = subCatData;
             }
-            
             spawnRowInDrawer(catData, category[i]);
         }
 
@@ -237,8 +236,17 @@ public class MapGenerator : MonoBehaviour {
     public void spawnAsStack(Vector3 position, MapClass[] mapData, string category) {
         for (int i = 0; i < mapData.Length; i++)
         {
-            position.y = position.y + i * MAPS_Y_OFFSET;
+            position.y = position.y + MAPS_Y_OFFSET;
             spawnMap(position, mapData[i], category);
+        }
+    }
+
+    public void spawnAsStack(Vector3 position, List<MapClass> mapData, string category)
+    {
+        foreach (MapClass map in mapData)
+        {
+            position.y = position.y + MAPS_Y_OFFSET;
+            spawnMap(position, map, category);
         }
     }
 
@@ -257,11 +265,56 @@ public class MapGenerator : MonoBehaviour {
         }
     }
 
+    public void spawnStacksInRow(float horLength, float verLength, List<List<MapClass>> stacks, string category)
+    {
+        float x = getDrawerVectorByCategory(category).x;
+        float z = getDrawerVectorByCategory(category).z;
+        float y = getDrawerVectorByCategory(category).y;
+        int i = 0;
+        foreach (List<MapClass> domCategory in stacks)
+        {
+            float newX = x - horLength / 2;
+            float newZ = z + (stacks.Count - i) * verLength / stacks.Count;
+            spawnAsStack(new Vector3(newX, y, newZ), stacks[i], category);
+            i++;
+        }
+    }
+
+    public void spawnStacksInRow(float horLength, float verLength, List<MapClass>[] stacks, string category)
+    {
+        float x = getDrawerVectorByCategory(category).x;
+        float z = getDrawerVectorByCategory(category).z;
+        float y = getDrawerVectorByCategory(category).y;
+        for (int i = 0; i < stacks.GetLength(0); i++)
+        {
+            float newX = x - horLength / 2;
+            float newZ = z + (stacks.GetLength(0) - i) * verLength / stacks.GetLength(0);
+            spawnAsStack(new Vector3(newX, y, newZ), stacks[i], category);
+            i++;
+        }
+    }
+
     public void spawnRowInDrawer(MapClass[][] stacks, string category) {
         int x = getDrawerIndexByCategory(category)[0];
         int y= getDrawerIndexByCategory(category)[1];
         spawnStacksInRow(DRAWER_HOR_LEN, DRAWER_VER_LEN, stacks, category);
     }
+
+    public void spawnRowInDrawer(List<List<MapClass>> stacks, string category)
+    {
+        int x = getDrawerIndexByCategory(category)[0];
+        int y = getDrawerIndexByCategory(category)[1];
+        spawnStacksInRow(DRAWER_HOR_LEN, DRAWER_VER_LEN, stacks, category);
+    }
+
+    public void spawnRowInDrawer(List<MapClass>[] stacks, string category)
+    {
+        int x = getDrawerIndexByCategory(category)[0];
+        int y = getDrawerIndexByCategory(category)[1];
+        spawnStacksInRow(DRAWER_HOR_LEN, DRAWER_VER_LEN, stacks, category);
+    }
+
+
 
     /**
      * x e {0,3}
