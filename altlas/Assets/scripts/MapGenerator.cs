@@ -24,7 +24,7 @@ public class MapGenerator : MonoBehaviour {
     private Vector3 DESK_FREE_AREA_LEFT_CORNER = new Vector3(-0.7105434f, 0.85f, 0.4124395f);
     private float DESK_FREE_AREA_LENGTH = 0.4f;
 
-    List<MapData> allMaps = new List<MapData>();
+    //List<MapData> allMaps = new List<MapData>();
 
     Dictionary<string, Dictionary<string, List<MapData>>> subCats = new Dictionary<string, Dictionary<string, List<MapData>>>();
     // Use this for initialization
@@ -40,14 +40,14 @@ public class MapGenerator : MonoBehaviour {
         MapData map6 = new MapData(1960, "language2", "coordinate2", "title2", "source2", new int[] { 21, 21 }, "property2", "description2", "geografische_regionen", "stadtplan", "location2", "HK 0188");
         MapData[] maps = { map1, map1, map2 };
         MapData[][] maps2 = { maps, maps, maps, maps };
-        for (int i = 0; i < 7; i++) {
+        /*for (int i = 0; i < 7; i++) {
             allMaps.Add(map1);
             allMaps.Add(map2);
             allMaps.Add(map3);
             allMaps.Add(map4);
             allMaps.Add(map5);
             allMaps.Add(map6);
-        }
+        }*/
 
         sortMaps();
         spawnInArea(DESK_FREE_AREA_LEFT_CORNER, maps, DESK_FREE_AREA_LENGTH, DESK_FREE_AREA_LENGTH);
@@ -81,7 +81,7 @@ public class MapGenerator : MonoBehaviour {
     */
     private void sortMaps() {
         // Create Dic for every category / subcategory
-         foreach (MapData map in allMaps)
+         foreach (MapData map in loader.data)
             {
                 if (!subCats.ContainsKey(map.m_category))
                 {
