@@ -22,8 +22,8 @@ GameObject:
   - component: {fileID: 33419303764663426}
   - component: {fileID: 23282047421209194}
   - component: {fileID: 65802085699699740}
-  - component: {fileID: 114148739408749442}
   - component: {fileID: 54611382421704714}
+  - component: {fileID: 114894140433415078}
   m_Layer: 0
   m_Name: Map_alt
   m_TagString: Pickupable
@@ -113,7 +113,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &114148739408749442
+--- !u!114 &114894140433415078
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -121,19 +121,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 1141682715052752}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 33e9c43b9d87be94d87bf98d7065a27e, type: 3}
+  m_Script: {fileID: 11500000, guid: c32a57a6a8c877f43ba1d8bf79b314b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_year: 0
-  m_language: 
-  m_coordinate: 
-  m_title: 
-  m_source: 
-  m_imageSize: 
-  m_property: 
-  m_description: 
-  m_category: 
-  m_subCategory: 
-  m_location: 
-  m_id: 
-  texture: {fileID: 0}
