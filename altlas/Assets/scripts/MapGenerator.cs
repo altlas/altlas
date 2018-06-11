@@ -225,8 +225,6 @@ public class MapGenerator : MonoBehaviour {
      * spawnStackInRow with fixed drawer length
      * */
     public void spawnRowInDrawer(MapData[][] stacks, string category) {
-        int x = getDrawerIndexByCategory(category)[0];
-        int y= getDrawerIndexByCategory(category)[1];
         spawnStacksInRow(DRAWER_HOR_LEN, DRAWER_VER_LEN, stacks, category);
     }
 
@@ -235,8 +233,6 @@ public class MapGenerator : MonoBehaviour {
      * */
     public void spawnRowInDrawer(List<List<MapData>> stacks, string category)
     {
-        int x = getDrawerIndexByCategory(category)[0];
-        int y = getDrawerIndexByCategory(category)[1];
         spawnStacksInRow(DRAWER_HOR_LEN, DRAWER_VER_LEN, stacks, category);
     }
 
