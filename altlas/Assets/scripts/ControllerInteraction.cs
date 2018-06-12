@@ -46,8 +46,11 @@ public class ControllerInteraction : MonoBehaviour
 
 
         if (controller.GetPressDown(gripButton))
-        {   
-            gripButtonPressedAction();
+        {
+            if (heldObject != null)
+            {
+                holdObject();
+            }
         }
         if (controller.GetPressUp(gripButton))
         {
@@ -59,22 +62,13 @@ public class ControllerInteraction : MonoBehaviour
 
         }
         if (controller.GetPressDown(triggerButton)) {
-            if (MoveStack.removedStack != null) {
-                MoveStack.resetStack();
-                isHolding = false;
-                heldObject = null;
-            }
-            if (MoveStack.removedStack == null && MoveStack.objectIsFromAStack(heldObject))
-            {
-                isHolding = false;
-                heldObject = null;
-            }
+            triggerButtonPressedAction();
         }
 
 
     }
 
-    public void gripButtonPressedAction() {
+    public void triggerButtonPressedAction() {
         if (heldObject != null)
         {
             if (MoveStack.objectIsFromAStack(heldObject))
@@ -84,7 +78,6 @@ public class ControllerInteraction : MonoBehaviour
                 {
                     if (stack.name.Equals(MoveStack.removedStack.transform.name))  //maps on desk are being clicked
                     {
-                        holdObject();
                         return;
                     }
                     //another stack was selected while another was on the table, so first move back the maps        
@@ -93,9 +86,6 @@ public class ControllerInteraction : MonoBehaviour
                     heldObject = null;
                 }
                 MoveStack.moveStackToDesk(stack);
-            }
-            else {
-                holdObject();
             }
         }
     }
