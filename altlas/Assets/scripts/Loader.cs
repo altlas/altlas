@@ -41,9 +41,9 @@ public class Loader : MonoBehaviour {
         new string[]{ "" },
         new string[]{ "" }
     };
-    string[][] selectedMaps = new string[2][] {
+    string[][] selectedMaps = new string[26][] {
         new string []{"HK 1300", "HK 1303"  , "HK 1304", "HK 1305", "HK 1306", "HK 1308"},
-        new string []{"HK 1123", "HK 0423", "HK 0907", "HK 0422a", "HK 0422b", "HK 0908", "HK 0909"}/*,
+        new string []{"HK 1123", "HK 0423", "HK 0907", "HK 0422a", "HK 0422b", "HK 0908", "HK 0909",
         new string []{"HK 0883", "HK 0912", "HK 1641", "HK 0003", "HK 0914"},
         new string []{"HK 0488", "HK 0198", "HK 0258", "HK 0281", "HK 0188"},
         new string []{"HK 0322", "HK 0443", "HK 0469", "HK 0373", "HK 0136"},
@@ -67,7 +67,7 @@ public class Loader : MonoBehaviour {
         new string []{"HK 1477", "HK 1481", "HK 1490", "HK 1496", "HK 1503"},
         new string []{"HK 1594", "HK 1604", "HK 1587", "HK 0312", "HK 1614"},
         new string []{"HK 0140", "HK 0168", "HK 0171", "HK 0172", "HK 0216"},
-        new string []{"HK 0321", "HK 0325", "HK 0324", "HK 0326", "HK 0327"}*/
+        new string []{"HK 0321", "HK 0325", "HK 0324", "HK 0326", "HK 0327"}
     };
     int iteration = 0;
 	public bool finishedLoading = false;
