@@ -24,19 +24,23 @@ public class DesktopCam : MonoBehaviour {
     Ray ray = cam.ViewportPointToRay(new Vector3(0.5F, 0.5F, 0));
     RaycastHit hit;
     if (Physics.Raycast(ray, out hit)){
-      if(hit.transform.name.ToString() == "Map_alt(Clone)"){
+      if(hit.transform.name.ToString() != "floor"){
         var tempGameObject = hit.transform.gameObject;
         if(gameObject == null || tempGameObject == gameObject){
-          tempGameObject.GetComponent<MapScript>().OnRayEnter();
+          tempGameObject.GetComponent<HighlightScript>().OnRayEnter();
         } else{
-          gameObject.GetComponent<MapScript>().OnRayExit();
-          tempGameObject.GetComponent<MapScript>().OnRayEnter();
+          gameObject.GetComponent<HighlightScript>().OnRayExit();
+          tempGameObject.GetComponent<HighlightScript>().OnRayEnter();
         }
         gameObject = tempGameObject;
       } else if(gameObject != null){
-        gameObject.GetComponent<MapScript>().OnRayExit();
+        gameObject.GetComponent<HighlightScript>().OnRayExit();
       }
-
+    }else{
+      gameObject = null;
+    }
+    if(gameObject != null && Input.GetMouseButtonDown(0)){
+      print("click on " + gameObject.transform.name);
     } 
   }
 }
