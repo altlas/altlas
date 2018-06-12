@@ -21,6 +21,8 @@ GameObject:
   - component: {fileID: 4159272783308230}
   - component: {fileID: 33490160805644524}
   - component: {fileID: 23717805863982644}
+  - component: {fileID: 65855240272407354}
+  - component: {fileID: 114034098722129610}
   m_Layer: 0
   m_Name: drawer
   m_TagString: Untagged
@@ -156,3 +158,27 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1306103113985662}
   m_Mesh: {fileID: 4300000, guid: 2f422fd8772496a43b00dad5b65996ef, type: 3}
+--- !u!65 &65855240272407354
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1169669945387784}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.002900001, y: 0.0061000013, z: 0.0022999996}
+  m_Center: {x: -0.0013999987, y: -0.0030500006, z: 0.001099999}
+--- !u!114 &114034098722129610
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1169669945387784}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a010a2245178d45a3bce04e6a7eb0be1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rend: {fileID: 0}
