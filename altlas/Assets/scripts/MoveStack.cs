@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class MoveStack {
 
-    private static string rightControllerName = "Controller (right)"; //see resetStack() if you want another form of Input
-    private static string leftControllerName = "Controller (left)";
+    private static string inputDeviceName = "Controller"; //see resetStack() if you want another form of Input
     public static GameObject removedStack = null;
     public static Vector3 removedStackPosition;
     private static MapGenerator instance = new MapGenerator();
@@ -17,7 +16,7 @@ public class MoveStack {
         if (obj == null) return false;
         if (obj.transform.parent != null)
         {
-            if (ControllerInteraction.heldObject.transform.parent.name.Contains(instance.EMPTY_ENDING))
+            if (obj.transform.parent.name.Contains(instance.EMPTY_ENDING))
             {
                 return true;
             }
@@ -42,7 +41,7 @@ public class MoveStack {
         {
             if (map.name.Equals(nameOfMapsObjects))
             {
-                if (map.transform.parent == null || map.transform.parent.Equals(rightControllerName) || map.transform.parent.Equals(leftControllerName))
+                if (map.transform.parent == null || map.transform.parent.name.Contains("Controller"))
                 {
                     map.transform.parent = removedStack.transform;
                 }

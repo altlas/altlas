@@ -10,7 +10,7 @@ public class ControllerInteraction : MonoBehaviour
     private Vector3 removedStackPosition;
     MapGenerator instance = new MapGenerator();*/
 
-    public static GameObject heldObject;
+    public GameObject heldObject;
     public bool isHolding;
 
     private Valve.VR.EVRButtonId gripButton = Valve.VR.EVRButtonId.k_EButton_Grip;
@@ -20,7 +20,7 @@ public class ControllerInteraction : MonoBehaviour
     private Valve.VR.EVRButtonId rightPadButton = Valve.VR.EVRButtonId.k_EButton_DPad_Right;
     private Valve.VR.EVRButtonId downPadButton = Valve.VR.EVRButtonId.k_EButton_DPad_Down;
 
-    private SteamVR_Controller.Device controller {
+     SteamVR_Controller.Device controller {
         get {
             return SteamVR_Controller.Input((int)trackedObj.index);
         }
@@ -61,6 +61,13 @@ public class ControllerInteraction : MonoBehaviour
         if (controller.GetPressDown(triggerButton)) {
             if (MoveStack.removedStack != null) {
                 MoveStack.resetStack();
+                isHolding = false;
+                heldObject = null;
+            }
+            if (MoveStack.removedStack == null && MoveStack.objectIsFromAStack(heldObject))
+            {
+                isHolding = false;
+                heldObject = null;
             }
         }
 
@@ -83,6 +90,7 @@ public class ControllerInteraction : MonoBehaviour
                     //another stack was selected while another was on the table, so first move back the maps        
                     MoveStack.resetStack();
                     isHolding = false;
+                    heldObject = null;
                 }
                 MoveStack.moveStackToDesk(stack);
             }
