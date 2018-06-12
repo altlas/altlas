@@ -8,7 +8,7 @@ public class cordsParser
     public cordsParser(){
 
     }
-    
+
     float[] parse(string cords)
     {
         string pattern = @"(\d+)";
