@@ -99,13 +99,16 @@ public class ControllerInteraction : MonoBehaviour
     private void OnTriggerEnter(Collider collider) {
         if (collider.tag.Equals("Pickupable") && !isHolding) {
             heldObject = collider.gameObject;
-            collider.gameObject.GetComponent<HighlightScript>().OnRayEnter();
+            if (heldObject.GetComponent<HighlightScript>() != null)
+            heldObject.GetComponent<HighlightScript>().OnRayEnter();
         }
     }
 
     private void OnTriggerExit(Collider collider)
     {
         if(!isHolding)
-            heldObject = null;
+            if (collider.gameObject.GetComponent<HighlightScript>() != null)
+                collider.gameObject.GetComponent<HighlightScript>().OnRayExit();
+        heldObject = null;
     }
 }
