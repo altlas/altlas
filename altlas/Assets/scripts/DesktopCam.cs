@@ -23,20 +23,17 @@ public class DesktopCam : MonoBehaviour {
     transform.eulerAngles = new Vector3(pitch, yaw, 0.0f);
     Ray ray = cam.ViewportPointToRay(new Vector3(0.5F, 0.5F, 0));
     RaycastHit hit;
-    if (Physics.Raycast(ray, out hit)){
-      if(hit.transform.name.ToString() != "floor"){
-        var tempGameObject = hit.transform.gameObject;
-        if(gameObject == null || tempGameObject == gameObject){
-          tempGameObject.GetComponent<HighlightScript>().OnRayEnter();
-        } else{
-          gameObject.GetComponent<HighlightScript>().OnRayExit();
-          tempGameObject.GetComponent<HighlightScript>().OnRayEnter();
-        }
-        gameObject = tempGameObject;
-      } else if(gameObject != null){
+    if (Physics.Raycast(ray, out hit) && hit.transform.name.ToString() != "floor"){
+      var tempGameObject = hit.transform.gameObject;
+      if(gameObject == null || tempGameObject == gameObject){
+        tempGameObject.GetComponent<HighlightScript>().OnRayEnter();
+      } else{
         gameObject.GetComponent<HighlightScript>().OnRayExit();
+        tempGameObject.GetComponent<HighlightScript>().OnRayEnter();
       }
-    }else{
+      gameObject = tempGameObject;
+    }else if(gameObject != null){
+      gameObject.GetComponent<HighlightScript>().OnRayExit();
       gameObject = null;
     }
     if(gameObject != null && Input.GetMouseButtonDown(0)){
