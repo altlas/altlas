@@ -25,9 +25,9 @@ public class DesktopCam : MonoBehaviour {
     RaycastHit hit;
     if (Physics.Raycast(ray, out hit) && hit.transform.gameObject.GetComponent<HighlightScript>()!= null){
       var tempGameObject = hit.transform.gameObject;
-      if(gameObject == null || tempGameObject == gameObject){
+      if(gameObject == null){
         tempGameObject.GetComponent<HighlightScript>().OnRayEnter();
-      } else{
+      } else if(tempGameObject != gameObject){
         gameObject.GetComponent<HighlightScript>().OnRayExit();
         tempGameObject.GetComponent<HighlightScript>().OnRayEnter();
       }
