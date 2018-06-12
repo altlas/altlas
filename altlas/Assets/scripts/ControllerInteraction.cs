@@ -39,13 +39,16 @@ public class ControllerInteraction : MonoBehaviour
             Debug.Log("Controller not initialized");
             return;
         }
+
+        gripButtonPressedAction();
+
         if (removedStack != null) {
             removedStackPosition = removedStack.transform.position;
         }
 
 
         if (controller.GetPressDown(gripButton))
-        {
+        {   
             gripButtonPressedAction();
         }
         if (controller.GetPressUp(gripButton))
@@ -69,46 +72,45 @@ public class ControllerInteraction : MonoBehaviour
     public void gripButtonPressedAction() {
         if (heldObject != null)
         {
-            if (heldObject.transform.parent != null)
+            if (objectIsFromAStack(heldObject))
             {
-                if (heldObject.transform.parent.name.Contains(instance.EMPTY_ENDING))
+                GameObject stack = heldObject.transform.parent.gameObject;
+                if (removedStack != null)
                 {
-                    GameObject stack = heldObject.transform.parent.gameObject;
-                    GameObject lowestMap = gameObject.transform.GetChild(0).gameObject;
-                    if (removedStack != null) { //maps on desk are being clicked
-                        if (stack.name.Equals(removedStack.transform.name)) {
-                            holdObject();
-                            return;
-                        }
-                        //another stack was selected while another was on the table, so first move back the maps
+                    if (stack.name.Equals(removedStack.transform.name))  //maps on desk are being clicked
+                    {
+                        holdObject();
+                        return;
+                    } else //another stack was selected while another was on the table, so first move back the maps
+                    {                        
                         resetStack();
                     }
-                    for (int i = 0; i < stack.transform.childCount; i++)
-                    {
-                        instance.spreadGameObjectOnDesk(stack.transform.GetChild(i).gameObject);
-                    }
-                    removedStack = stack;
-                    return;
                 }
+                moveStackToDesk(stack);
             }
-            holdObject();
+            else {
+                holdObject();
+            }
         }
     }
 
-    private void moveStackToDesk() {
-        MapGenerator instance = new MapGenerator();
-        if (heldObject.transform.parent.name.Contains(instance.EMPTY_ENDING))
-        {
-            GameObject stack = heldObject.transform.parent.gameObject;
-            GameObject lowestMap = gameObject.transform.GetChild(0).gameObject;
-            for (int i = 0; i < stack.transform.childCount; i++)
-            {
-                instance.spreadGameObjectOnDesk(stack.transform.GetChild(i).gameObject);
+    
+    public bool objectIsFromAStack(GameObject obj) {
+        if (obj == null) return false;
+        if (obj.transform.parent != null) {
+            if (heldObject.transform.parent.name.Contains(instance.EMPTY_ENDING)) {
+                return true;
             }
-
-            removedStackPosition = lowestMap.transform.position;
-            removedStack = stack;
         }
+        return false;
+    }
+
+    private void moveStackToDesk(GameObject stackToMove) {
+        for (int i = 0; i < stackToMove.transform.childCount; i++)
+        {
+            instance.spreadGameObjectOnDesk(stackToMove.transform.GetChild(i).gameObject);
+        }
+        removedStack = stackToMove;
     }
 
     public void resetStack() {
@@ -116,14 +118,14 @@ public class ControllerInteraction : MonoBehaviour
         int i = 0;
         foreach (GameObject map in GameObject.FindGameObjectsWithTag("Pickupable"))
             {
-                if (map.name == nameOfMapsObjects)
+                if (map.name.Equals(nameOfMapsObjects))
                 {
                     map.transform.position = new Vector3(removedStackPosition.x, removedStackPosition.y + i* instance.MAPS_Y_OFFSET, removedStackPosition.z);
                     map.transform.localScale = new Vector3(0.1f, map.transform.localScale.y, 0.1f);
                     map.transform.localRotation = Quaternion.identity;
-                if (map.transform.parent == null) {
+                    if (map.transform.parent == null) {
                     map.transform.parent = removedStack.transform;
-                }
+                    }
                 }
              i++;
          }
