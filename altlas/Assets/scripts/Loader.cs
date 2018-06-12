@@ -42,8 +42,8 @@ public class Loader : MonoBehaviour {
         new string[]{ "" }
     };
     string[][] selectedMaps = new string[26][] {
-        new string []{"HK 1300", "HK 1303"  , "HK 1304", "HK 1305", "HK 1306", "HK 1308"},
-        new string []{"HK 1123", "HK 0423", "HK 0907", "HK 0422a", "HK 0422b", "HK 0908", "HK 0909",
+        new string []{"HK 1300", "HK 1303" , "HK 1304", "HK 1305", "HK 1306", "HK 1308"},
+        new string []{"HK 1123", "HK 0423", "HK 0907", "HK 0422a", "HK 0422b", "HK 0908", "HK 0909",},
         new string []{"HK 0883", "HK 0912", "HK 1641", "HK 0003", "HK 0914"},
         new string []{"HK 0488", "HK 0198", "HK 0258", "HK 0281", "HK 0188"},
         new string []{"HK 0322", "HK 0443", "HK 0469", "HK 0373", "HK 0136"},
