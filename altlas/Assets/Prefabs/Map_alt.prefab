@@ -24,6 +24,7 @@ GameObject:
   - component: {fileID: 65802085699699740}
   - component: {fileID: 54611382421704714}
   - component: {fileID: 114894140433415078}
+  - component: {fileID: 114710479800696528}
   m_Layer: 0
   m_Name: Map_alt
   m_TagString: Pickupable
@@ -113,6 +114,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &114710479800696528
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1141682715052752}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a010a2245178d45a3bce04e6a7eb0be1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rend: {fileID: 0}
 --- !u!114 &114894140433415078
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -124,3 +137,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c32a57a6a8c877f43ba1d8bf79b314b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  data:
+    m_year: 0
+    m_language: 
+    m_coordinate: 
+    m_title: 
+    m_source: 
+    m_imageSize: 
+    m_property: 
+    m_description: 
+    m_category: 
+    m_subCategory: 
+    m_location: 
+    m_id: 
+    texture: {fileID: 0}
