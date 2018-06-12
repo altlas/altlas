@@ -10,16 +10,16 @@ public class MapScript : MonoBehaviour {
   void start(){
   }
 
-  public void OnMouseEnter()
+  public void OnRayEnter()
   {
     rend = GetComponent<MeshRenderer>();
-    startcolor = rend.material.color;
-    rend.material.color = Color.red;
+    rend.material.SetColor("_EmissionColor", Color.red);
   }
 
-  public void OnMouseExit()
+  public void OnRayExit()
   {
+    print("remove me oh noez");
     rend = GetComponent<MeshRenderer>();
-    //rend.material.color = startcolor;
+    rend.material.SetColor("_EmissionColor", Color.black);
   }
 }

@@ -9,6 +9,7 @@ public class DesktopCam : MonoBehaviour {
   private float yaw = 0.0f;
   private float pitch = 0.0f;
   private Camera cam;
+  private GameObject gameObject;
 
   void Start () {
     Cursor.lockState = CursorLockMode.Locked;
@@ -24,12 +25,18 @@ public class DesktopCam : MonoBehaviour {
     RaycastHit hit;
     if (Physics.Raycast(ray, out hit)){
       if(hit.transform.name.ToString() == "Map_alt(Clone)"){
-        var gameObject = hit.transform.gameObject;
-        gameObject.GetComponent<MapScript>().OnMouseEnter();
+        var tempGameObject = hit.transform.gameObject;
+        if(gameObject == null || tempGameObject == gameObject){
+          tempGameObject.GetComponent<MapScript>().OnRayEnter();
+        } else{
+          gameObject.GetComponent<MapScript>().OnRayExit();
+          tempGameObject.GetComponent<MapScript>().OnRayEnter();
+        }
+        gameObject = tempGameObject;
+      } else if(gameObject != null){
+        gameObject.GetComponent<MapScript>().OnRayExit();
       }
 
-    }
-      //print("I'm looking at nothing!");
-  
+    } 
   }
 }
