@@ -6,6 +6,10 @@ public class ControllerInteraction : MonoBehaviour
 
     private SteamVR_TrackedObject trackedObj;
 
+    private GameObject removedStack = null;
+    private Vector3 removedStackPosition;
+    MapGenerator instance = new MapGenerator();
+
     public GameObject heldObject;
     public bool isHolding;
 
@@ -35,29 +39,101 @@ public class ControllerInteraction : MonoBehaviour
             Debug.Log("Controller not initialized");
             return;
         }
+        if (removedStack != null) {
+            removedStackPosition = removedStack.transform.position;
+        }
+
 
         if (controller.GetPressDown(gripButton))
         {
-            if (heldObject != null) {
-                heldObject.transform.parent = this.transform;
-                heldObject.GetComponent<Rigidbody>().isKinematic = true;
-                isHolding = true;
-                Debug.Log("ja");
-            }
+            gripButtonPressedAction();
         }
         if (controller.GetPressUp(gripButton))
         {
-            if (heldObject != null)
+            if (heldObject != null && isHolding)
             {
                 heldObject.transform.parent = null;
-                heldObject.GetComponent<Rigidbody>().isKinematic = false;
                 isHolding = false;
             }
-            
+
+        }
+        if (controller.GetPressDown(triggerButton)) {
+            if (removedStack != null) {
+                resetStack();
+            }
         }
 
 
+    }
 
+    public void gripButtonPressedAction() {
+        if (heldObject != null)
+        {
+            if (heldObject.transform.parent != null)
+            {
+                if (heldObject.transform.parent.name.Contains(instance.EMPTY_ENDING))
+                {
+                    GameObject stack = heldObject.transform.parent.gameObject;
+                    GameObject lowestMap = gameObject.transform.GetChild(0).gameObject;
+                    if (removedStack != null) { //maps on desk are being clicked
+                        if (stack.name.Equals(removedStack.transform.name)) {
+                            holdObject();
+                            return;
+                        }
+                        //another stack was selected while another was on the table, so first move back the maps
+                        resetStack();
+                    }
+                    for (int i = 0; i < stack.transform.childCount; i++)
+                    {
+                        instance.spreadGameObjectOnDesk(stack.transform.GetChild(i).gameObject);
+                    }
+                    removedStack = stack;
+                    return;
+                }
+            }
+            holdObject();
+        }
+    }
+
+    private void moveStackToDesk() {
+        MapGenerator instance = new MapGenerator();
+        if (heldObject.transform.parent.name.Contains(instance.EMPTY_ENDING))
+        {
+            GameObject stack = heldObject.transform.parent.gameObject;
+            GameObject lowestMap = gameObject.transform.GetChild(0).gameObject;
+            for (int i = 0; i < stack.transform.childCount; i++)
+            {
+                instance.spreadGameObjectOnDesk(stack.transform.GetChild(i).gameObject);
+            }
+
+            removedStackPosition = lowestMap.transform.position;
+            removedStack = stack;
+        }
+    }
+
+    public void resetStack() {
+        string nameOfMapsObjects = removedStack.transform.name.Remove(removedStack.transform.name.Length - instance.EMPTY_ENDING.Length);
+        int i = 0;
+        foreach (GameObject map in GameObject.FindGameObjectsWithTag("Pickupable"))
+            {
+                if (map.name == nameOfMapsObjects)
+                {
+                    map.transform.position = new Vector3(removedStackPosition.x, removedStackPosition.y + i* instance.MAPS_Y_OFFSET, removedStackPosition.z);
+                    map.transform.localScale = new Vector3(0.1f, map.transform.localScale.y, 0.1f);
+                    map.transform.localRotation = Quaternion.identity;
+                if (map.transform.parent == null) {
+                    map.transform.parent = removedStack.transform;
+                }
+                }
+             i++;
+         }
+        removedStack = null;
+    }
+
+    private void holdObject() {
+        heldObject.transform.parent = this.transform;
+        heldObject.GetComponent<Rigidbody>().isKinematic = true;
+        isHolding = true;
     }
 
     private void OnTriggerEnter(Collider collider) {
