@@ -71,6 +71,13 @@ public class ControllerInteraction : MonoBehaviour
     public void triggerButtonPressedAction() {
         if (heldObject != null)
         {
+            Debug.Log("triggerButtonPressedAction" + heldObject);
+            var clickable = heldObject.GetComponent<ClickableInterface>();
+            if(clickable != null)
+            {
+                Debug.Log(clickable);
+                clickable.onClick();
+            }
             if (MoveStack.objectIsFromAStack(heldObject))
             {
                 GameObject stack = heldObject.transform.parent.gameObject;
@@ -97,7 +104,8 @@ public class ControllerInteraction : MonoBehaviour
     }
 
     private void OnTriggerEnter(Collider collider) {
-        if (collider.tag.Equals("Pickupable") && !isHolding) {
+        Debug.Log(collider.gameObject.name);
+        if (!isHolding && (collider.tag.Equals("Pickupable") || collider.gameObject.GetComponent<ClickableInterface>() != null) ) {
             heldObject = collider.gameObject;
         }
     }
