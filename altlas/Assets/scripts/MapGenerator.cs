@@ -8,7 +8,7 @@ public class MapGenerator : MonoBehaviour {
     private Loader loader;
     private bool once = true;
 
-    public string EMPTY_ENDING = "_container";
+    public static string EMPTY_ENDING = "_container";
 
     //SCENE CONSTANTS FOR PLACING
     private float DRAWER_HOR_LEN = 0.12f;
@@ -20,10 +20,7 @@ public class MapGenerator : MonoBehaviour {
     private float DRAWER_Z_POSITION = 0.37f;
     private float STARTING_DRAWER_X_POSITION = 0.70f;
     private float STARTING_DRAWER_Y_POSITION = 0.6f;
-    public float MAPS_Y_OFFSET = 0.01f;
-
-    private Vector3 DESK_FREE_AREA_LEFT_CORNER = new Vector3(-0.7105434f, 0.85f, 0.4124395f);
-    private float DESK_FREE_AREA_LENGTH = 0.4f;
+    public static float MAPS_Y_OFFSET = 0.01f;
 
     Dictionary<string, Dictionary<string, List<MapData>>> subCats = new Dictionary<string, Dictionary<string, List<MapData>>>();
     // Use this for initialization
@@ -207,19 +204,6 @@ public class MapGenerator : MonoBehaviour {
             float newX = leftCorner.x - Random.Range(0, horLength);
             float newZ = leftCorner.z + Random.Range(0, verLength);
             obj.transform.position = (new Vector3(newX, leftCorner.y, newZ));
-    }
-
-    /**
-     * randomly spreads given game objext on desk
-     * maps: game object to be spread
-     */
-    public void spreadGameObjectOnDesk(GameObject obj)
-    {
-        float newX = DESK_FREE_AREA_LEFT_CORNER.x - Random.Range(0, DESK_FREE_AREA_LENGTH);
-        float newZ = DESK_FREE_AREA_LEFT_CORNER.z + Random.Range(0, DESK_FREE_AREA_LENGTH);
-        float newY = DESK_FREE_AREA_LEFT_CORNER.y + +Random.Range(0, 0.01f);
-        obj.transform.position = (new Vector3(newX, newY, newZ));
-        obj.transform.localScale = new Vector3(0.2f, obj.transform.localScale.y, 0.2f);
     }
 
     /**

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 public class ControllerInteraction : MonoBehaviour
 {
-
     private SteamVR_TrackedObject trackedObj;
 
     /*private GameObject removedStack = null;
@@ -49,7 +48,14 @@ public class ControllerInteraction : MonoBehaviour
         {
             if (heldObject != null)
             {
-                holdObject();
+                if (heldObject.tag.Equals(MoveStack.MAPTAG) ) {
+                    var clickable = heldObject.GetComponent<ClickableInterface>();
+                    if (clickable != null)
+                    {
+                        clickable.onClick();
+                        return;
+                    }
+                }
             }
         }
         if (controller.GetPressUp(gripButton))
@@ -105,14 +111,19 @@ public class ControllerInteraction : MonoBehaviour
 
     private void OnTriggerEnter(Collider collider) {
         Debug.Log(collider.gameObject.name);
-        if (!isHolding && (collider.tag.Equals("Pickupable") || collider.gameObject.GetComponent<ClickableInterface>() != null) ) {
+        if (!isHolding && (collider.tag.Equals(MoveStack.MAPTAG) || collider.gameObject.GetComponent<ClickableInterface>() != null) ) {
             heldObject = collider.gameObject;
         }
+        if (collider.gameObject.GetComponent<HighlightScript>() != null)
+            collider.gameObject.GetComponent<HighlightScript>().OnRayEnter();
     }
 
     private void OnTriggerExit(Collider collider)
     {
         if(!isHolding)
             heldObject = null;
-    }
+
+        if (collider.gameObject.GetComponent<HighlightScript>() != null)
+            collider.gameObject.GetComponent<HighlightScript>().OnRayExit();
+    }   
 }
