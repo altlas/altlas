@@ -36,7 +36,6 @@ public class ControllerInteraction : MonoBehaviour
 
         if (controller == null)
         {
-            Debug.Log("Controller not initialized");
             return;
         }
         if (MoveStack.removedStack != null) {
@@ -77,6 +76,11 @@ public class ControllerInteraction : MonoBehaviour
     public void triggerButtonPressedAction() {
         if (heldObject != null)
         {
+            var clickable = heldObject.GetComponent<ClickableInterface>();
+            if(clickable != null)
+            {
+                clickable.onClick();
+            }
             if (MoveStack.objectIsFromAStack(heldObject))
             {
                 GameObject stack = heldObject.transform.parent.gameObject;
@@ -103,7 +107,7 @@ public class ControllerInteraction : MonoBehaviour
     }
 
     private void OnTriggerEnter(Collider collider) {
-        if (collider.tag.Equals(MoveStack.MAPTAG) && !isHolding) {
+        if (!isHolding && (collider.tag.Equals(MoveStack.MAPTAG) || collider.gameObject.GetComponent<ClickableInterface>() != null) ) {
             heldObject = collider.gameObject;
         }
         if (collider.gameObject.GetComponent<HighlightScript>() != null)
