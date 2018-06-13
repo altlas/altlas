@@ -48,8 +48,8 @@ public class MoveStack {
                 map.transform.position = new Vector3(removedStackPosition.x, removedStackPosition.y + i * instance.MAPS_Y_OFFSET, removedStackPosition.z);
                 map.transform.localScale = new Vector3(0.1f, map.transform.localScale.y, 0.1f);
                 map.transform.localRotation = Quaternion.identity;
+                i++;
             }
-            i++;
         }
         removedStack = null;
     }

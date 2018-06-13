@@ -49,7 +49,14 @@ public class ControllerInteraction : MonoBehaviour
         {
             if (heldObject != null)
             {
-                holdObject();
+                if (MoveStack.objectIsFromAStack(heldObject)) {
+                    var clickable = heldObject.GetComponent<ClickableInterface>();
+                    if (clickable != null)
+                    {
+                        clickable.onClick();
+                        return;
+                    }
+                }
             }
         }
         if (controller.GetPressUp(gripButton))
@@ -100,11 +107,16 @@ public class ControllerInteraction : MonoBehaviour
         if (collider.tag.Equals("Pickupable") && !isHolding) {
             heldObject = collider.gameObject;
         }
+        if (collider.gameObject.GetComponent<HighlightScript>() != null)
+            collider.gameObject.GetComponent<HighlightScript>().OnRayEnter();
     }
 
     private void OnTriggerExit(Collider collider)
     {
         if(!isHolding)
             heldObject = null;
-    }
+
+        if (collider.gameObject.GetComponent<HighlightScript>() != null)
+            collider.gameObject.GetComponent<HighlightScript>().OnRayExit();
+    }   
 }

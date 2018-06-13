@@ -11,6 +11,6 @@ public class GlobeRotation : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        //globe.transform.Rotate(0, 0, 10 * Time.deltaTime);
+        globe.transform.Rotate(0, 0, 10 * Time.deltaTime);
     }
 }
