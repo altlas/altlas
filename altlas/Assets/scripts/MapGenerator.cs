@@ -47,7 +47,7 @@ public class MapGenerator : MonoBehaviour {
         { "physisch", "Physisch" },
         { "geologisch", "Geologisch" },
         { "gewaesser", "Gewässer" },
-        { "politische_oekonomische_regionen", "Politisch-\n ökonomische\n Regionen" },
+        { "politische_oekonomische_regionen", "Polit.-ökon.\n Regionen" },
         { "infrastruktur", "Infrastruktur" },
         { "forschungsreisen", "Forschungsreisen" },
         { "koloniekarte", "Koloniekarte" },
@@ -352,9 +352,10 @@ public class MapGenerator : MonoBehaviour {
             tm.text = categoryText[mainCategory[i]];
             tm.transform.localScale = drawer.transform.Find("knob").transform.localScale;
             tm.transform.localScale *= tm.transform.localScale.x * 0.25f;
-            tm.transform.position = drawer.transform.Find("knob").transform.position + new Vector3(0, 0, 0);
+            tm.transform.position = drawer.transform.Find("knob").transform.position + new Vector3(0.08f, 0.08f, 0);
             tm.transform.Rotate(new Vector3(0, 1, 0), 180);
-            tm.transform.Translate(new Vector3(-0.07f, 0.06f, 0));
+            tm.font = Resources.GetBuiltinResource(typeof(Font), "Arial.ttf") as Font;
+            tm.font.material.shader = Shader.Find("Custom/Text Shader");
         }
 
     }

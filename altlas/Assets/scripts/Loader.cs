@@ -104,7 +104,7 @@ public class Loader : MonoBehaviour {
 	void LoadXML()
 	{
 	    xmlDoc = new XmlDocument();
-        xmlDoc.Load("Assets/res/maps_meta.xml");
+        xmlDoc.Load("Assets/Resources/maps_meta.xml");
         items = xmlDoc.SelectNodes("/collection/record");
 	}
 
