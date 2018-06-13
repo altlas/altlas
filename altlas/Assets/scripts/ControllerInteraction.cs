@@ -41,22 +41,7 @@ public class ControllerInteraction : MonoBehaviour
         if (MoveStack.removedStack != null) {
             MoveStack.removedStackPosition = MoveStack.removedStack.transform.position;
         }
-
-
-        if (controller.GetPressDown(gripButton))
-        {
-            if (heldObject != null)
-            {
-                if (heldObject.tag.Equals(MoveStack.MAPTAG) ) {
-                    var clickable = heldObject.GetComponent<ClickableInterface>();
-                    if (clickable != null)
-                    {
-                        clickable.onClick();
-                        return;
-                    }
-                }
-            }
-        }
+        
         if (controller.GetPressUp(gripButton))
         {
             if (heldObject != null && isHolding)
@@ -88,7 +73,11 @@ public class ControllerInteraction : MonoBehaviour
                 {
                     if (stack.name.Equals(MoveStack.removedStack.transform.name))  //maps on desk are being clicked
                     {
-                        return;
+                        if (heldObject.GetComponent<ClickableInterface>() != null)
+                        {
+                            heldObject.GetComponent<ClickableInterface>().onClick();
+                            return;
+                        }
                     }
                     //another stack was selected while another was on the table, so first move back the maps        
                     MoveStack.resetStack();
