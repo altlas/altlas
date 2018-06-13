@@ -107,13 +107,11 @@ public class ControllerInteraction : MonoBehaviour
     }
 
     private void OnTriggerEnter(Collider collider) {
-        print("outside if: " + collider.gameObject);
         if (!isHolding && (collider.tag.Equals(MoveStack.MAPTAG) || collider.gameObject.GetComponent<ClickableInterface>() != null) ) {
             heldObject = collider.gameObject;
         }
         if (collider.gameObject.GetComponent<HighlightScript>() != null){
             collider.gameObject.GetComponent<HighlightScript>().OnRayEnter();
-            print("in if: " + collider.gameObject);
         }
     }
 
