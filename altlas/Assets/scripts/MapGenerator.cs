@@ -242,7 +242,7 @@ public class MapGenerator : MonoBehaviour {
         for (int i = 0; i < mapData.Length; i++)
         {
             position.y = position.y + MAPS_Y_OFFSET;
-            spawnMap(position, mapData[i], category, subcat);
+            spawnMap(position, mapData[i], subcat);
         }
     }
 
