@@ -8,6 +8,7 @@ public class MoveStack {
     public static GameObject removedStack = null;
     public static Vector3 removedStackPosition;
     private static MapGenerator instance = new MapGenerator();
+    public static string MAPTAG = "Pickupable";
     
 
 
@@ -26,9 +27,11 @@ public class MoveStack {
 
     public static void moveStackToDesk(GameObject stackToMove)
     {
-        for (int i = 0; i < stackToMove.transform.childCount; i++)
+        int numberOfMapsInStack = stackToMove.transform.childCount;
+        for (int i = 0; i < numberOfMapsInStack; i++)
         {
-            instance.spreadGameObjectOnDesk(stackToMove.transform.GetChild(i).gameObject);
+            instance.spreadGameObjectOnDesk(stackToMove.transform.GetChild(0).gameObject);
+            stackToMove.transform.GetChild(0).gameObject.transform.parent = null;
         }
         removedStack = stackToMove;
     }
@@ -37,11 +40,11 @@ public class MoveStack {
     {
         string nameOfMapsObjects = removedStack.transform.name.Remove(removedStack.transform.name.Length - instance.EMPTY_ENDING.Length);
         int i = 0;
-        foreach (GameObject map in GameObject.FindGameObjectsWithTag("Pickupable"))
+        foreach (GameObject map in GameObject.FindGameObjectsWithTag(MAPTAG))
         {
             if (map.name.Equals(nameOfMapsObjects))
             {
-                if (map.transform.parent == null || map.transform.parent.name.Contains("Controller"))
+                if (map.transform.parent == null || map.transform.parent.name.Contains(inputDeviceName))
                 {
                     map.transform.parent = removedStack.transform;
                 }

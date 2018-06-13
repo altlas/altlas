@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 public class ControllerInteraction : MonoBehaviour
 {
-
     private SteamVR_TrackedObject trackedObj;
 
     /*private GameObject removedStack = null;
@@ -49,7 +48,7 @@ public class ControllerInteraction : MonoBehaviour
         {
             if (heldObject != null)
             {
-                if (MoveStack.objectIsFromAStack(heldObject)) {
+                if (heldObject.tag.Equals(MoveStack.MAPTAG) ) {
                     var clickable = heldObject.GetComponent<ClickableInterface>();
                     if (clickable != null)
                     {
@@ -104,7 +103,7 @@ public class ControllerInteraction : MonoBehaviour
     }
 
     private void OnTriggerEnter(Collider collider) {
-        if (collider.tag.Equals("Pickupable") && !isHolding) {
+        if (collider.tag.Equals(MoveStack.MAPTAG) && !isHolding) {
             heldObject = collider.gameObject;
         }
         if (collider.gameObject.GetComponent<HighlightScript>() != null)
