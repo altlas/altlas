@@ -6,6 +6,10 @@ public class ControllerInteraction : MonoBehaviour
 
     private SteamVR_TrackedObject trackedObj;
 
+    /*private GameObject removedStack = null;
+    private Vector3 removedStackPosition;
+    MapGenerator instance = new MapGenerator();*/
+
     public GameObject heldObject;
     public bool isHolding;
 
@@ -16,7 +20,7 @@ public class ControllerInteraction : MonoBehaviour
     private Valve.VR.EVRButtonId rightPadButton = Valve.VR.EVRButtonId.k_EButton_DPad_Right;
     private Valve.VR.EVRButtonId downPadButton = Valve.VR.EVRButtonId.k_EButton_DPad_Down;
 
-    private SteamVR_Controller.Device controller {
+     SteamVR_Controller.Device controller {
         get {
             return SteamVR_Controller.Input((int)trackedObj.index);
         }
@@ -30,34 +34,66 @@ public class ControllerInteraction : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         if (controller == null)
         {
             Debug.Log("Controller not initialized");
             return;
         }
+        if (MoveStack.removedStack != null) {
+            MoveStack.removedStackPosition = MoveStack.removedStack.transform.position;
+        }
+
 
         if (controller.GetPressDown(gripButton))
         {
-            if (heldObject != null) {
-                heldObject.transform.parent = this.transform;
-                heldObject.GetComponent<Rigidbody>().isKinematic = true;
-                isHolding = true;
-                Debug.Log("ja");
+            if (heldObject != null)
+            {
+                holdObject();
             }
         }
         if (controller.GetPressUp(gripButton))
         {
-            if (heldObject != null)
+            if (heldObject != null && isHolding)
             {
                 heldObject.transform.parent = null;
-                heldObject.GetComponent<Rigidbody>().isKinematic = false;
                 isHolding = false;
             }
-            
+
+        }
+        if (controller.GetPressDown(triggerButton)) {
+            triggerButtonPressedAction();
         }
 
 
+    }
 
+    public void triggerButtonPressedAction() {
+        if (heldObject != null)
+        {
+            if (MoveStack.objectIsFromAStack(heldObject))
+            {
+                GameObject stack = heldObject.transform.parent.gameObject;
+                if (MoveStack.removedStack != null)
+                {
+                    if (stack.name.Equals(MoveStack.removedStack.transform.name))  //maps on desk are being clicked
+                    {
+                        return;
+                    }
+                    //another stack was selected while another was on the table, so first move back the maps        
+                    MoveStack.resetStack();
+                    isHolding = false;
+                    heldObject = null;
+                }
+                MoveStack.moveStackToDesk(stack);
+            }
+        }
+    }
+
+    private void holdObject() {
+        heldObject.transform.parent = this.transform;
+        heldObject.GetComponent<Rigidbody>().isKinematic = true;
+        isHolding = true;
     }
 
     private void OnTriggerEnter(Collider collider) {

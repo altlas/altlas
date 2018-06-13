@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class MapGenerator : MonoBehaviour {
@@ -80,7 +79,7 @@ public class MapGenerator : MonoBehaviour {
     {
         var MapToSpawn = Instantiate(map, position, Quaternion.identity).GetComponent<MapScript>();
         MapToSpawn.data = mapData;
-        MapToSpawn.GetComponent<Renderer>().material.mainTexture = mapData.texture;
+        MapToSpawn.GetComponent<Renderer>().material.mainTexture = mapData.thumbnail;
         MapToSpawn.name = mapData.m_subCategory;
         if (mapData.m_subCategory.Equals(""))
             MapToSpawn.name = mapData.m_category;
@@ -95,7 +94,7 @@ public class MapGenerator : MonoBehaviour {
     {
         var MapToSpawn = Instantiate(map,getDrawerVectorByCategory(category), Quaternion.identity).GetComponent<MapScript>();
         MapToSpawn.data = mapData;
-        MapToSpawn.GetComponent<Renderer>().material.mainTexture = mapData.texture;
+        MapToSpawn.GetComponent<Renderer>().material.mainTexture = mapData.thumbnail;
         MapToSpawn.name = mapData.m_subCategory;
         if (mapData.m_subCategory.Equals(""))
             MapToSpawn.name = mapData.m_category;
@@ -112,7 +111,7 @@ public class MapGenerator : MonoBehaviour {
     {
         var MapToSpawn = Instantiate(map, position, Quaternion.identity).GetComponent<MapScript>();
         MapToSpawn.data = mapData;
-        MapToSpawn.GetComponent<Renderer>().material.mainTexture = mapData.texture;
+        MapToSpawn.GetComponent<Renderer>().material.mainTexture = mapData.thumbnail;
         MapToSpawn.name = mapData.m_subCategory;
         if (mapData.m_subCategory.Equals(""))
             MapToSpawn.name = mapData.m_category;
@@ -130,7 +129,7 @@ public class MapGenerator : MonoBehaviour {
     {
         var MapToSpawn = Instantiate(map, position, Quaternion.identity).GetComponent<MapScript>();
         MapToSpawn.data = mapData;
-        MapToSpawn.GetComponent<Renderer>().material.mainTexture = mapData.texture;
+        MapToSpawn.GetComponent<Renderer>().material.mainTexture = mapData.thumbnail;
         MapToSpawn.name = mapData.m_subCategory;
         if (mapData.m_subCategory.Equals(""))
             MapToSpawn.name = mapData.m_category;
