@@ -26,40 +26,23 @@ public class MapGenerator : MonoBehaviour {
     private Vector3 DESK_FREE_AREA_LEFT_CORNER = new Vector3(-0.7105434f, 0.85f, 0.4124395f);
     private float DESK_FREE_AREA_LENGTH = 0.4f;
 
-    string[] mainCategory = new string[12] {
-        "astronomie",
-        "weltkarten",
-        "geografische_regionen",
-        "physisch",
-        "geologisch",
-        "gewaesser",
-        "politische_oekonomische_regionen",
-        "infrastruktur",
-        "forschungsreisen",
-        "koloniekarte",
-        "geschichtskarte",
-        "bauplaene"
-    };
     Dictionary<string, string> categoryText = new Dictionary<string, string> {
-        { "astronomie", "Astronomie"},
-        { "weltkarten", "Weltkarten" },
-        { "geografische_regionen", "Geografische\n Regionen" },
-        { "physisch", "Physisch" },
-        { "geologisch", "Geologisch" },
-        { "gewaesser", "Gewässer" },
-        { "politische_oekonomische_regionen", "Polit.-ökon.\n Regionen" },
-        { "infrastruktur", "Infrastruktur" },
-        { "forschungsreisen", "Forschungsreisen" },
-        { "koloniekarte", "Koloniekarte" },
-        { "geschichtskarte", "Geschichtskarte" },
-        { "bauplaene", "Baupläne" }
+        { "astronomie", "Astronomie"}, { "weltkarten", "Weltkarten" }, { "geografische_regionen", "Geografische\n Regionen" },
+        { "physisch", "Physische\n Karten" }, { "geologisch", "Geologische\n Karten" }, { "gewaesser", "Gewässer" },
+        { "politische_oekonomische_regionen", "Polit.-ökon.\n Regionen" }, { "infrastruktur", "Infrastruktur" },
+        { "forschungsreisen", "Forschungsreisen" }, { "koloniekarte", "Koloniekarten" }, { "geschichtskarte", "Geschichtskarten" },
+        { "bauplaene", "Baupläne" }, { "kontinentkarten", "Kontinentkarten"}, { "landkarten", "Landkarten"}, { "stadtplan", "Stadtpläne"},
+        { "inselkarte", "Inselkarten"}, { "vulkankarte", "Vulkankarten"}, {"hochgebirge", "Hochgebirge" }, {"gebirge", "Gebirge" },
+        { "topographische_karte", "Topograf.\n Karten" }, {"bodenkarten", "Bodenkarten"}, {"relief", "Reliefkarten"}, { "meerkarten", "Meerkarten"},
+        { "flusskarte", "Flusskarten" }, {"hafenkarte", "Hafenkarten" }, {"kueste", "Küsten"}, { "verwaltungskarte", "Verwaltungskarten" },
+        { "politische_karte", "Politische\n Karten" }, {"katasterplan", "Katasterpläne" }, { "kreiskarte", "Kreiskarten" },
+        { "verkehrskarten", "Verkehrskarten" }, {"eisenbahn", "Eisenbahn" }, {"militaerkartographie", "Militärkartographie" }
     };
 
     Dictionary<string, Dictionary<string, List<MapData>>> subCats = new Dictionary<string, Dictionary<string, List<MapData>>>();
     // Use this for initialization
     void Start() {
         loader = GetComponent<Loader>();
-        setLabelOnDraw();
     }
 
     void Update()
@@ -67,10 +50,11 @@ public class MapGenerator : MonoBehaviour {
         if (once && loader.finishedLoading)
         {
             once = false;
-            sortMaps();
-
+            sortMaps();            
+            
             foreach (KeyValuePair<string, Dictionary<string, List<MapData>>> domCat in subCats)
             {
+                setLabelOnDraw(domCat);
                 List<List<MapData>> catData = new List<List<MapData>>();
                 foreach (KeyValuePair<string, List<MapData>> subCat in subCats[domCat.Key])
                 {
@@ -78,6 +62,8 @@ public class MapGenerator : MonoBehaviour {
                 }
                 spawnRowInDrawer(catData, domCat.Key);
             }
+
+            setLabelOnStack();
         }
     }
 
@@ -156,7 +142,7 @@ public class MapGenerator : MonoBehaviour {
      * category: the drawer which contains all maps of this category.
      * parent: the game object which will determine the dependency of the map's movement
      */
-    public void spawnMap(Vector3 position, MapData mapData, string category, GameObject parent)
+    public void spawnMap(Vector3 position, MapData mapData, GameObject parent)
     {
         var MapToSpawn = Instantiate(map, position, Quaternion.identity).GetComponent<MapScript>();
         MapToSpawn.data = mapData;
@@ -254,30 +240,6 @@ public class MapGenerator : MonoBehaviour {
     }
 
     /**
-     * Will spawn given maps as a stack at a given position.
-     * position: the position the map object should be spawned in the scene
-     * mapData: the data the map object will have
-     * category: the drawer which contains all maps of this category.
-     * */
-    public void spawnAsStack(Vector3 position, MapData[] mapData, string category) {
-        //bind spawn stack to empty object
-        if (mapData.Length == 0) {
-            return;
-        }
-        GameObject subcat = new GameObject();
-        subcat.transform.position = position;
-        subcat.name = (!mapData[0].m_subCategory.Equals("")) ? mapData[0].m_subCategory : (mapData[0].m_category);
-        subcat.name += EMPTY_ENDING;
-        subcat.transform.parent = getDrawerObjectFromCategory(category).transform;
-
-        for (int i = 0; i < mapData.Length; i++)
-        {
-            position.y = position.y + MAPS_Y_OFFSET;
-            spawnMap(position, mapData[i], category, subcat);
-        }
-    }
-
-    /**
      * Will spawn given maps as a stack in the drawer
      * position: the position the map object should be spawned in the scene
      * mapData: the data the map object will have
@@ -299,22 +261,7 @@ public class MapGenerator : MonoBehaviour {
         foreach (MapData map in mapData)
         {
             position.y = position.y + MAPS_Y_OFFSET;
-            spawnMap(position, map, category, subcat);
-        }
-    }
-
-    /**
-     * Will spawn multiple map stacks aligned in a row
-     * horLength: width of area
-     * verLength: height of area
-     * stacks: stacks of maps to spawn, first dimension: category, second: subcategories belonging to category
-     * category: drawer which its category is assigned to where row should spawn
-     * */
-    public void spawnStacksInRow(float horLength, float verLength, MapData[][] stacks, string category) {
-        for (int i = 0; i < stacks.Length; i++) {
-            float newX = getDrawerVectorByCategory(category).x - horLength/2;
-            float newZ = getDrawerVectorByCategory(category).z + (stacks.Length-i)* verLength/stacks.Length;
-            spawnAsStack(new Vector3(newX, getDrawerVectorByCategory(category).y, newZ), stacks[i], category);
+            spawnMap(position, map, subcat);                                      
         }
     }
 
@@ -333,37 +280,50 @@ public class MapGenerator : MonoBehaviour {
             float newX = getDrawerVectorByCategory(category).x - horLength / 2;
             float newZ = getDrawerVectorByCategory(category).z + (stacks.Count - i) * verLength / stacks.Count;
             spawnAsStack(new Vector3(newX, getDrawerVectorByCategory(category).y, newZ), stacks[i], category);
-            i++;            
+            i++;
         }
     }
 
-    void setLabelOnDraw()
-    {       
-        for (int i = 0; i < mainCategory.Length; i++)
-        {
-            GameObject go = new GameObject("myText");
-            go.AddComponent<TextMesh>();
-            TextMesh tm = go.GetComponent(typeof(TextMesh)) as TextMesh;
-            go.name = mainCategory[i] + "_label";
+    void setLabelOnDraw(KeyValuePair<string, Dictionary<string, List<MapData>>> category)
+    {     
+        GameObject go = new GameObject("myText");
+        go.AddComponent<TextMesh>();
+        TextMesh tm = go.GetComponent(typeof(TextMesh)) as TextMesh;
+        go.name = category.Key + "_label";
+        var drawer = getDrawerObjectFromCategory(category.Key);
+        go.transform.parent = drawer.transform;
 
-            var drawer = getDrawerObjectFromCategory(mainCategory[i]);
-            go.transform.parent = drawer.transform;
-
-            tm.text = categoryText[mainCategory[i]];
-            tm.transform.localScale = drawer.transform.Find("knob").transform.localScale;
-            tm.transform.localScale *= tm.transform.localScale.x * 0.25f;
-            tm.transform.position = drawer.transform.Find("knob").transform.position + new Vector3(0.08f, 0.08f, 0);
-            tm.transform.Rotate(new Vector3(0, 1, 0), 180);
-            tm.font = Resources.GetBuiltinResource(typeof(Font), "Arial.ttf") as Font;
-            tm.font.material.shader = Shader.Find("Custom/Text Shader");
-        }
-
+        tm.text = categoryText[category.Key];
+        tm.transform.localScale = drawer.transform.Find("knob").transform.localScale;
+        tm.transform.localScale *= tm.transform.localScale.x * 0.25f;
+        tm.transform.position = drawer.transform.Find("knob").transform.position + new Vector3(0.08f, 0.08f, 0);
+        tm.transform.Rotate(new Vector3(0, 1, 0), 180);
+        tm.font = Resources.GetBuiltinResource(typeof(Font), "Arial.ttf") as Font;
+        tm.font.material.shader = Shader.Find("Custom/Text Shader");
     }
 
     void setLabelOnStack()
     {
-
-
+        foreach (KeyValuePair<string, string> stack in categoryText)
+        {
+            var stackContainer = GameObject.Find(stack.Key + EMPTY_ENDING);
+            if (stackContainer == null)
+                continue;
+            GameObject go = new GameObject("myText");
+            go.AddComponent<TextMesh>();
+            TextMesh tm = go.GetComponent(typeof(TextMesh)) as TextMesh;
+            go.name = stack.Key + "_stack";
+            go.transform.parent = stackContainer.transform;
+                    
+            tm.text = stack.Value;
+            tm.transform.localScale = GameObject.Find("knob").transform.localScale;
+            tm.transform.localScale *= tm.transform.localScale.x * 0.25f;
+            tm.transform.position = stackContainer.transform.position + new Vector3(0, 0.08f, 0);
+            tm.transform.Rotate(new Vector3(0, 1, 0), 180);
+            tm.font = Resources.GetBuiltinResource(typeof(Font), "Arial.ttf") as Font;
+            tm.font.material.shader = Shader.Find("Custom/Text Shader");
+        }
+        
     }
 
     public static Transform Search(Transform target, string name)
@@ -378,13 +338,6 @@ public class MapGenerator : MonoBehaviour {
         }
 
         return null;
-    }
-
-    /**
-     * spawnStackInRow with fixed drawer length
-     * */
-    public void spawnRowInDrawer(MapData[][] stacks, string category) {
-        spawnStacksInRow(DRAWER_HOR_LEN, DRAWER_VER_LEN, stacks, category);
     }
 
     /**
