@@ -92,6 +92,7 @@ public class ControllerInteraction : MonoBehaviour
                     }
                     //another stack was selected while another was on the table, so first move back the maps        
                     MoveStack.resetStack();
+                    GameObject.Find(MoveStack.textDisplayName).GetComponent<TextMesh>().text = "Select a map!";
                     isHolding = false;
                     heldObject = null;
                 }
@@ -107,17 +108,27 @@ public class ControllerInteraction : MonoBehaviour
     }
 
     private void OnTriggerEnter(Collider collider) {
-        if (!isHolding && (collider.tag.Equals(MoveStack.MAPTAG) || collider.gameObject.GetComponent<ClickableInterface>() != null) ) {
-            heldObject = collider.gameObject;
-        }
         if (collider.gameObject.GetComponent<HighlightScript>() != null)
             collider.gameObject.GetComponent<HighlightScript>().OnRayEnter();
+        if (!isHolding && collider.gameObject.GetComponent<ClickableInterface>() != null) {
+            heldObject = collider.gameObject;
+            var mapScript = heldObject.GetComponent<MapScript>();
+            if (!MoveStack.objectIsFromAStack(heldObject) && mapScript != null)
+                GameObject.Find(MoveStack.textDisplayName).GetComponent<TextMesh>().text = mapScript.data.userRelevantDataToString();
+        }
     }
 
     private void OnTriggerExit(Collider collider)
     {
-        if(!isHolding)
+        if (!isHolding)
             heldObject = null;
+
+        if (MoveStack.MAP_ON_MIDDLE_OF_DESK == null) {
+            GameObject.Find(MoveStack.textDisplayName).GetComponent<TextMesh>().text = "Select a map!";
+        }
+        else {
+            GameObject.Find(MoveStack.textDisplayName).GetComponent<TextMesh>().text = MoveStack.MAP_ON_MIDDLE_OF_DESK.GetComponent<MapScript>().data.userRelevantDataToString(); ;
+        }
 
         if (collider.gameObject.GetComponent<HighlightScript>() != null)
             collider.gameObject.GetComponent<HighlightScript>().OnRayExit();
