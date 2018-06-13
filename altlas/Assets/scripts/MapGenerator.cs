@@ -26,10 +26,40 @@ public class MapGenerator : MonoBehaviour {
     private Vector3 DESK_FREE_AREA_LEFT_CORNER = new Vector3(-0.7105434f, 0.85f, 0.4124395f);
     private float DESK_FREE_AREA_LENGTH = 0.4f;
 
+    string[] mainCategory = new string[12] {
+        "astronomie",
+        "weltkarten",
+        "geografische_regionen",
+        "physisch",
+        "geologisch",
+        "gewaesser",
+        "politische_oekonomische_regionen",
+        "infrastruktur",
+        "forschungsreisen",
+        "koloniekarte",
+        "geschichtskarte",
+        "bauplaene"
+    };
+    Dictionary<string, string> categoryText = new Dictionary<string, string> {
+        { "astronomie", "Astronomie"},
+        { "weltkarten", "Weltkarten" },
+        { "geografische_regionen", "Geografische\n Regionen" },
+        { "physisch", "Physisch" },
+        { "geologisch", "Geologisch" },
+        { "gewaesser", "Gewässer" },
+        { "politische_oekonomische_regionen", "Politisch-\n ökonomische\n Regionen" },
+        { "infrastruktur", "Infrastruktur" },
+        { "forschungsreisen", "Forschungsreisen" },
+        { "koloniekarte", "Koloniekarte" },
+        { "geschichtskarte", "Geschichtskarte" },
+        { "bauplaene", "Baupläne" }
+    };
+
     Dictionary<string, Dictionary<string, List<MapData>>> subCats = new Dictionary<string, Dictionary<string, List<MapData>>>();
     // Use this for initialization
     void Start() {
         loader = GetComponent<Loader>();
+        setLabelOnDraw();
     }
 
     void Update()
@@ -303,8 +333,50 @@ public class MapGenerator : MonoBehaviour {
             float newX = getDrawerVectorByCategory(category).x - horLength / 2;
             float newZ = getDrawerVectorByCategory(category).z + (stacks.Count - i) * verLength / stacks.Count;
             spawnAsStack(new Vector3(newX, getDrawerVectorByCategory(category).y, newZ), stacks[i], category);
-            i++;
+            i++;            
         }
+    }
+
+    void setLabelOnDraw()
+    {       
+        for (int i = 0; i < mainCategory.Length; i++)
+        {
+            GameObject go = new GameObject("myText");
+            go.AddComponent<TextMesh>();
+            TextMesh tm = go.GetComponent(typeof(TextMesh)) as TextMesh;
+            go.name = mainCategory[i] + "_label";
+
+            var drawer = getDrawerObjectFromCategory(mainCategory[i]);
+            go.transform.parent = drawer.transform;
+
+            tm.text = categoryText[mainCategory[i]];
+            tm.transform.localScale = drawer.transform.Find("knob").transform.localScale;
+            tm.transform.localScale *= tm.transform.localScale.x * 0.25f;
+            tm.transform.position = drawer.transform.Find("knob").transform.position + new Vector3(0, 0, 0);
+            tm.transform.Rotate(new Vector3(0, 1, 0), 180);
+            tm.transform.Translate(new Vector3(-0.07f, 0.06f, 0));
+        }
+
+    }
+
+    void setLabelOnStack()
+    {
+
+
+    }
+
+    public static Transform Search(Transform target, string name)
+    {
+        if (target.name == name) return target;
+
+        for (int i = 0; i < target.childCount; ++i)
+        {
+            var result = Search(target.GetChild(i), name);
+
+            if (result != null) return result;
+        }
+
+        return null;
     }
 
     /**
