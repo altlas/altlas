@@ -72,7 +72,7 @@ public class MoveStack {
     {
         float newX = DESK_FREE_AREA_LEFT_CORNER.x - Random.Range(0, DESK_FREE_AREA_LENGTH);
         float newZ = DESK_FREE_AREA_LEFT_CORNER.z + Random.Range(0, DESK_FREE_AREA_LENGTH);
-        float newY = DESK_FREE_AREA_LEFT_CORNER.y + +Random.Range(0, 0.01f);
+        float newY = DESK_FREE_AREA_LEFT_CORNER.y + Random.Range(0, 0.01f);
         map.transform.position = (new Vector3(newX, newY, newZ));
         map.transform.localScale = MAP_ON_FREE_AREA_OF_DESK_SCALE;
     }
