@@ -5,20 +5,34 @@ using UnityEngine.UI;
 
 public class MapOnClick : MonoBehaviour, ClickableInterface
 {
+    public float speed = 1f;
+    public Vector3 targetLocation = new Vector3(-0.2f, 0.858f, 0.65f);
+    private bool isMoving = false;
+    private Vector3 startPosition;
+
+
     // Use this for initialization
     void Start()
     {
-
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
+    void Update() {
+        if (isMoving)
+        {
+            var target = MoveStack.MAP_ON_MIDDLE_OF_DESK!=null ? targetLocation : startPosition;
+            if (transform.position == target)
+            {
+                isMoving = false;
+                return;
+            }
+            var step = speed * Time.deltaTime;
+            transform.position = Vector3.MoveTowards(transform.position, target, step);
+        }
     }
 
     void ClickableInterface.onClick()
     {
+        isMoving = true;
         if (MoveStack.removedStack != null) {
             if (MoveStack.MAP_ON_MIDDLE_OF_DESK != null) {
                 MoveStack.MAP_ON_MIDDLE_OF_DESK.transform.position = this.transform.position;
