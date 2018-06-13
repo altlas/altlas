@@ -32,7 +32,6 @@ public class DrawerOnClick : MonoBehaviour, ClickableInterface
 
     void ClickableInterface.onClick()
     {
-        Debug.Log("drawer clicked");
         isMoving = true;
         isOpen = !isOpen;
     }

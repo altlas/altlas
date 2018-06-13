@@ -36,7 +36,6 @@ public class ControllerInteraction : MonoBehaviour
 
         if (controller == null)
         {
-            Debug.Log("Controller not initialized");
             return;
         }
         if (MoveStack.removedStack != null) {
@@ -77,11 +76,9 @@ public class ControllerInteraction : MonoBehaviour
     public void triggerButtonPressedAction() {
         if (heldObject != null)
         {
-            Debug.Log("triggerButtonPressedAction" + heldObject);
             var clickable = heldObject.GetComponent<ClickableInterface>();
             if(clickable != null)
             {
-                Debug.Log(clickable);
                 clickable.onClick();
             }
             if (MoveStack.objectIsFromAStack(heldObject))
@@ -110,7 +107,6 @@ public class ControllerInteraction : MonoBehaviour
     }
 
     private void OnTriggerEnter(Collider collider) {
-        Debug.Log(collider.gameObject.name);
         if (!isHolding && (collider.tag.Equals(MoveStack.MAPTAG) || collider.gameObject.GetComponent<ClickableInterface>() != null) ) {
             heldObject = collider.gameObject;
         }
