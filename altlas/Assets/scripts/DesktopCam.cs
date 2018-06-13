@@ -38,6 +38,10 @@ public class DesktopCam : MonoBehaviour {
     }
     if(gameObject != null && Input.GetMouseButtonDown(0)){
       print("click on " + gameObject.transform.name);
+      var clickable = gameObject.GetComponent<ClickableInterface>();
+            if (clickable != null) {
+                clickable.onClick();
+            }
     } 
   }
 }
