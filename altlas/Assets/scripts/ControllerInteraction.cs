@@ -105,6 +105,7 @@ public class ControllerInteraction : MonoBehaviour
     private void OnTriggerEnter(Collider collider) {
         if (collider.tag.Equals(MoveStack.MAPTAG) && !isHolding) {
             heldObject = collider.gameObject;
+            GameObject.Find(MoveStack.textDisplayName).GetComponent<TextMesh>().text = heldObject.GetComponent<MapScript>().data.userRelevantDataToString();
         }
         if (collider.gameObject.GetComponent<HighlightScript>() != null)
             collider.gameObject.GetComponent<HighlightScript>().OnRayEnter();
@@ -112,8 +113,10 @@ public class ControllerInteraction : MonoBehaviour
 
     private void OnTriggerExit(Collider collider)
     {
-        if(!isHolding)
+        if (!isHolding)
             heldObject = null;
+
+        //if ()
 
         if (collider.gameObject.GetComponent<HighlightScript>() != null)
             collider.gameObject.GetComponent<HighlightScript>().OnRayExit();

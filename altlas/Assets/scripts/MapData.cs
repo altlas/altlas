@@ -77,4 +77,16 @@ public class MapData
     {
         texture = null;
     }
+    /**
+     * displays 
+     */
+    public string userRelevantDataToString() {
+        return ""
+           + "Titel: " + m_title + "\n"
+           + "Ort: " + m_location + "\n"
+           + "Jahr: " + m_year +"\n"
+           + "Beschreibung: " + m_title + "\n"
+           + "Sprache: " + m_language + "\n"
+           + "Quelle " + m_source;
+    }
 }
