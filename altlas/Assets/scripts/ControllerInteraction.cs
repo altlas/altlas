@@ -88,6 +88,7 @@ public class ControllerInteraction : MonoBehaviour
                     }
                     //another stack was selected while another was on the table, so first move back the maps        
                     MoveStack.resetStack();
+                    GameObject.Find(MoveStack.textDisplayName).GetComponent<TextMesh>().text = "Select a map!";
                     isHolding = false;
                     heldObject = null;
                 }
@@ -105,6 +106,7 @@ public class ControllerInteraction : MonoBehaviour
     private void OnTriggerEnter(Collider collider) {
         if (collider.tag.Equals(MoveStack.MAPTAG) && !isHolding) {
             heldObject = collider.gameObject;
+            if (!MoveStack.objectIsFromAStack(heldObject))
             GameObject.Find(MoveStack.textDisplayName).GetComponent<TextMesh>().text = heldObject.GetComponent<MapScript>().data.userRelevantDataToString();
         }
         if (collider.gameObject.GetComponent<HighlightScript>() != null)
@@ -120,7 +122,7 @@ public class ControllerInteraction : MonoBehaviour
             GameObject.Find(MoveStack.textDisplayName).GetComponent<TextMesh>().text = "Select a map!";
         }
         else {
-            GameObject.Find(MoveStack.textDisplayName).GetComponent<TextMesh>().text = MoveStack.MAP_ON_MIDDLE_OF_DESK.GetComponent<MapScript>().data.userRelevantDataToString();
+            GameObject.Find(MoveStack.textDisplayName).GetComponent<TextMesh>().text = MoveStack.MAP_ON_MIDDLE_OF_DESK.GetComponent<MapScript>().data.userRelevantDataToString(); ;
         }
 
         if (collider.gameObject.GetComponent<HighlightScript>() != null)

@@ -77,16 +77,46 @@ public class MapData
     {
         texture = null;
     }
-    /**
-     * displays 
-     */
+
     public string userRelevantDataToString() {
-        return ""
-           + "Titel: " + m_title + "\n"
-           + "Ort: " + m_location + "\n"
-           + "Jahr: " + m_year +"\n"
-           + "Beschreibung: " + m_title + "\n"
-           + "Sprache: " + m_language + "\n"
-           + "Quelle " + m_source;
+        int lineLimit = 80;
+        string result = "";
+        string richTextStart = "<b><i>";
+        string richTextEnd = "</i></b>";
+        string[] userRelevantData = {m_title, m_location , m_year.ToString(), m_description, m_language, m_source};
+        string attribut = null;
+
+        for (int i = 0; i < userRelevantData.Length; i++) {
+            result += richTextStart;
+            switch (i) {
+                case 0: attribut = "Titel: ";
+                    break;
+                case 1: attribut = "Ort: ";
+                    break;
+                case 2:
+                    attribut = "Jahr: ";
+                    break;
+                case 3:
+                    attribut = "Beschreibung: ";
+                    break;
+                case 4:
+                    attribut = "Sprache: ";
+                    break;
+                case 5:
+                    attribut = "Quelle: ";
+                    break;
+            }
+            result += attribut + richTextEnd;
+            int k = 0;
+            for (; k < (userRelevantData[i].Length / lineLimit)-1; k++) {
+                result += userRelevantData[i].Substring(k * lineLimit, lineLimit) + "\n";
+            }
+            if (userRelevantData[i].Length % lineLimit != 0)
+            result += userRelevantData[i].Substring(k*lineLimit, (userRelevantData[i].Length % lineLimit));
+            
+            result += "\n";
+        }
+        return result;
+           
     }
 }

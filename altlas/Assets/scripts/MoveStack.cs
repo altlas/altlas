@@ -63,6 +63,8 @@ public class MoveStack {
             }
         }
         removedStack = null;
+        MAP_ON_MIDDLE_OF_DESK = null;
+        GameObject.Find(textDisplayName).GetComponent<TextMesh>().text = "Select a map!";
     }
 
     /**
