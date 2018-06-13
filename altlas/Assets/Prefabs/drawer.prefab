@@ -23,6 +23,7 @@ GameObject:
   - component: {fileID: 23717805863982644}
   - component: {fileID: 65855240272407354}
   - component: {fileID: 114034098722129610}
+  - component: {fileID: 114888511482265970}
   m_Layer: 0
   m_Name: drawer
   m_TagString: Untagged
@@ -182,3 +183,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rend: {fileID: 0}
+--- !u!114 &114888511482265970
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1169669945387784}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37d1fe7db023a7347881fb657e8c6c4e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
