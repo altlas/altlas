@@ -116,7 +116,12 @@ public class ControllerInteraction : MonoBehaviour
         if (!isHolding)
             heldObject = null;
 
-        //if ()
+        if (MoveStack.MAP_ON_MIDDLE_OF_DESK == null) {
+            GameObject.Find(MoveStack.textDisplayName).GetComponent<TextMesh>().text = "Select a map!";
+        }
+        else {
+            GameObject.Find(MoveStack.textDisplayName).GetComponent<TextMesh>().text = MoveStack.MAP_ON_MIDDLE_OF_DESK.GetComponent<MapScript>().data.userRelevantDataToString();
+        }
 
         if (collider.gameObject.GetComponent<HighlightScript>() != null)
             collider.gameObject.GetComponent<HighlightScript>().OnRayExit();
