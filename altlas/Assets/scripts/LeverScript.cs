@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class LeverScript : MonoBehaviour, ClickableInterface {
-  GameObject globe;
+  public GlobeMovingScript globeMovingScript;
 
 	void Start () {
-		globe = GameObject.Find("globe");
 	}
 	
 	void Update () {
@@ -14,7 +13,7 @@ public class LeverScript : MonoBehaviour, ClickableInterface {
 	}
 
   void ClickableInterface.onClick(){
-    globe.GetComponent<GlobeMovingScript>().moving = true;
-    globe.GetComponent<GlobeMovingScript>().expanded = !globe.GetComponent<GlobeMovingScript>().expanded;
+    globeMovingScript.moving = true;
+    globeMovingScript.expanded = !globeMovingScript.expanded;
   }
 }
