@@ -108,13 +108,14 @@ public class ControllerInteraction : MonoBehaviour
     }
 
     private void OnTriggerEnter(Collider collider) {
-        if (!isHolding && (collider.tag.Equals(MoveStack.MAPTAG) || collider.gameObject.GetComponent<ClickableInterface>() != null) ) {
-            heldObject = collider.gameObject;
-            if (!MoveStack.objectIsFromAStack(heldObject))
-            GameObject.Find(MoveStack.textDisplayName).GetComponent<TextMesh>().text = heldObject.GetComponent<MapScript>().data.userRelevantDataToString();
-        }
         if (collider.gameObject.GetComponent<HighlightScript>() != null)
             collider.gameObject.GetComponent<HighlightScript>().OnRayEnter();
+        if (!isHolding && collider.gameObject.GetComponent<ClickableInterface>() != null) {
+            heldObject = collider.gameObject;
+            var mapScript = heldObject.GetComponent<MapScript>();
+            if (!MoveStack.objectIsFromAStack(heldObject) && mapScript != null)
+                GameObject.Find(MoveStack.textDisplayName).GetComponent<TextMesh>().text = mapScript.data.userRelevantDataToString();
+        }
     }
 
     private void OnTriggerExit(Collider collider)
