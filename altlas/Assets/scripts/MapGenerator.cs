@@ -330,7 +330,7 @@ public class MapGenerator : MonoBehaviour {
             tm.anchor = TextAnchor.MiddleCenter;
             tm.transform.localScale = GameObject.Find("knob").transform.localScale;
             tm.transform.localScale *= 0.003f;
-            tm.transform.position = stackContainer.transform.position + new Vector3(0, 0.06f, 0);
+            tm.transform.position = stackContainer.transform.position + new Vector3(0, 0.08f, 0);
             tm.transform.eulerAngles = new Vector3(90, 180, 0);
             tm.font = Resources.GetBuiltinResource(typeof(Font), "Arial.ttf") as Font;
             tm.font.material.shader = Shader.Find("Custom/Text Shader");
