@@ -301,9 +301,11 @@ public class MapGenerator : MonoBehaviour {
         go.transform.parent = drawer.transform;
 
         tm.text = categoryText[category.Key];
+        tm.anchor = TextAnchor.UpperCenter;
+        tm.alignment = TextAlignment.Center;
         tm.transform.localScale = drawer.transform.Find("knob").transform.localScale;
         tm.transform.localScale *= tm.transform.localScale.x * 0.25f;
-        tm.transform.position = drawer.transform.Find("knob").transform.position + new Vector3(0.08f, 0.08f, 0);
+        tm.transform.position = drawer.transform.Find("knob").transform.position + new Vector3(0f, 0.08f, 0);
         tm.transform.Rotate(new Vector3(0, 1, 0), 180);
         tm.font = Resources.GetBuiltinResource(typeof(Font), "Arial.ttf") as Font;
         tm.font.material.shader = Shader.Find("Custom/Text Shader");
@@ -321,12 +323,15 @@ public class MapGenerator : MonoBehaviour {
             TextMesh tm = go.GetComponent(typeof(TextMesh)) as TextMesh;
             go.name = stack.Key + "_stack";
             go.transform.parent = stackContainer.transform;
-                    
+
+            Debug.Log(stack.Value);
             tm.text = stack.Value;
+            tm.anchor = TextAnchor.MiddleCenter;
             tm.transform.localScale = GameObject.Find("knob").transform.localScale;
-            tm.transform.localScale *= tm.transform.localScale.x * 0.25f;
-            tm.transform.position = stackContainer.transform.position + new Vector3(0, 0.08f, 0);
-            tm.transform.Rotate(new Vector3(0, 1, 0), 180);
+            tm.transform.localScale *= 0.3f;
+            tm.transform.position = stackContainer.transform.position + new Vector3(0, 0.06f, 0);
+            //tm.transform.Rotate(new Vector3(0, 1, 0), 90);
+            tm.transform.eulerAngles = new Vector3(90, 180, 0);
             tm.font = Resources.GetBuiltinResource(typeof(Font), "Arial.ttf") as Font;
             tm.font.material.shader = Shader.Find("Custom/Text Shader");
         }
