@@ -22,6 +22,19 @@ public class MapGenerator : MonoBehaviour {
     private float STARTING_DRAWER_Y_POSITION = 0.6f;
     public static float MAPS_Y_OFFSET = 0.01f;
 
+    Dictionary<string, string> categoryText = new Dictionary<string, string> {
+        { "astronomie", "Astronomie"}, { "weltkarten", "Weltkarten" }, { "geografische_regionen", "Geografische\n Regionen" },
+        { "physisch", "Physische\n Karten" }, { "geologisch", "Geologische\n Karten" }, { "gewaesser", "Gewässer" },
+        { "politische_oekonomische_regionen", "Polit.-ökon.\n Regionen" }, { "infrastruktur", "Infrastruktur" },
+        { "forschungsreisen", "Forschungsreisen" }, { "koloniekarte", "Koloniekarten" }, { "geschichtskarte", "Geschichtskarten" },
+        { "bauplaene", "Baupläne" }, { "kontinentkarten", "Kontinentkarten"}, { "landkarten", "Landkarten"}, { "stadtplan", "Stadtpläne"},
+        { "inselkarte", "Inselkarten"}, { "vulkankarte", "Vulkankarten"}, {"hochgebirge", "Hochgebirge" }, {"gebirge", "Gebirge" },
+        { "topographische_karte", "Topograf.\n Karten" }, {"bodenkarten", "Bodenkarten"}, {"relief", "Reliefkarten"}, { "meerkarten", "Meerkarten"},
+        { "flusskarte", "Flusskarten" }, {"hafenkarte", "Hafenkarten" }, {"kueste", "Küsten"}, { "verwaltungskarte", "Verwaltungskarten" },
+        { "politische_karte", "Politische\n Karten" }, {"katasterplan", "Katasterpläne" }, { "kreiskarte", "Kreiskarten" },
+        { "verkehrskarten", "Verkehrskarten" }, {"eisenbahn", "Eisenbahn" }, {"militaerkartographie", "Militärkartographie" }
+    };
+
     Dictionary<string, Dictionary<string, List<MapData>>> subCats = new Dictionary<string, Dictionary<string, List<MapData>>>();
     // Use this for initialization
     void Start() {
@@ -33,10 +46,11 @@ public class MapGenerator : MonoBehaviour {
         if (once && loader.finishedLoading)
         {
             once = false;
-            sortMaps();
-
+            sortMaps();            
+            
             foreach (KeyValuePair<string, Dictionary<string, List<MapData>>> domCat in subCats)
             {
+                setLabelOnDraw(domCat);
                 List<List<MapData>> catData = new List<List<MapData>>();
                 foreach (KeyValuePair<string, List<MapData>> subCat in subCats[domCat.Key])
                 {
@@ -44,6 +58,8 @@ public class MapGenerator : MonoBehaviour {
                 }
                 spawnRowInDrawer(catData, domCat.Key);
             }
+
+            setLabelOnStack();
         }
     }
 
@@ -122,7 +138,7 @@ public class MapGenerator : MonoBehaviour {
      * category: the drawer which contains all maps of this category.
      * parent: the game object which will determine the dependency of the map's movement
      */
-    public void spawnMap(Vector3 position, MapData mapData, string category, GameObject parent)
+    public void spawnMap(Vector3 position, MapData mapData, GameObject parent)
     {
         var MapToSpawn = Instantiate(map, position, Quaternion.identity).GetComponent<MapScript>();
         MapToSpawn.data = mapData;
@@ -226,7 +242,7 @@ public class MapGenerator : MonoBehaviour {
         for (int i = 0; i < mapData.Length; i++)
         {
             position.y = position.y + MAPS_Y_OFFSET;
-            spawnMap(position, mapData[i], category, subcat);
+            spawnMap(position, mapData[i], subcat);
         }
     }
 
@@ -252,22 +268,7 @@ public class MapGenerator : MonoBehaviour {
         foreach (MapData map in mapData)
         {
             position.y = position.y + MAPS_Y_OFFSET;
-            spawnMap(position, map, category, subcat);
-        }
-    }
-
-    /**
-     * Will spawn multiple map stacks aligned in a row
-     * horLength: width of area
-     * verLength: height of area
-     * stacks: stacks of maps to spawn, first dimension: category, second: subcategories belonging to category
-     * category: drawer which its category is assigned to where row should spawn
-     * */
-    public void spawnStacksInRow(float horLength, float verLength, MapData[][] stacks, string category) {
-        for (int i = 0; i < stacks.Length; i++) {
-            float newX = getDrawerVectorByCategory(category).x - horLength/2;
-            float newZ = getDrawerVectorByCategory(category).z + (stacks.Length-i)* verLength/stacks.Length;
-            spawnAsStack(new Vector3(newX, getDrawerVectorByCategory(category).y, newZ), stacks[i], category);
+            spawnMap(position, map, subcat);                                      
         }
     }
 
@@ -290,11 +291,58 @@ public class MapGenerator : MonoBehaviour {
         }
     }
 
-    /**
-     * spawnStackInRow with fixed drawer length
-     * */
-    public void spawnRowInDrawer(MapData[][] stacks, string category) {
-        spawnStacksInRow(DRAWER_HOR_LEN, DRAWER_VER_LEN, stacks, category);
+    void setLabelOnDraw(KeyValuePair<string, Dictionary<string, List<MapData>>> category)
+    {     
+        GameObject go = new GameObject(category.Key + "_label");
+        TextMesh tm = go.AddComponent<TextMesh>();
+        var drawer = getDrawerObjectFromCategory(category.Key);
+        go.transform.parent = drawer.transform;
+
+        tm.text = categoryText[category.Key];
+        tm.anchor = TextAnchor.UpperCenter;
+        tm.alignment = TextAlignment.Center;
+        tm.transform.localScale = new Vector3(1,1,1) * 0.0002f;
+        tm.transform.position = drawer.transform.Find("knob").transform.position + new Vector3(0f, 0.08f, 0);
+        tm.transform.Rotate(new Vector3(0, 1, 0), 180);
+        tm.font = Resources.GetBuiltinResource(typeof(Font), "Arial.ttf") as Font;
+        tm.font.material.shader = Shader.Find("Custom/Text Shader");
+    }
+
+    void setLabelOnStack()
+    {
+        foreach (KeyValuePair<string, string> stack in categoryText)
+        {
+            var stackContainer = GameObject.Find(stack.Key + EMPTY_ENDING);
+            if (stackContainer == null)
+                continue;
+            GameObject go = new GameObject(stack.Key + "_stack");
+            TextMesh tm = go.AddComponent<TextMesh>();
+            go.transform.parent = stackContainer.transform.parent;
+            go.transform.position = stackContainer.transform.position;
+
+            tm.text = stack.Value;
+            tm.anchor = TextAnchor.MiddleCenter;
+            tm.transform.localScale = new Vector3(1, 1, 1) * 0.0002f;
+            tm.transform.position = stackContainer.transform.position + new Vector3(0, 0.08f, 0);
+            tm.transform.eulerAngles = new Vector3(90, 180, 0);
+            tm.font = Resources.GetBuiltinResource(typeof(Font), "Arial.ttf") as Font;
+            tm.font.material.shader = Shader.Find("Custom/Text Shader");
+        }
+        
+    }
+
+    public static Transform Search(Transform target, string name)
+    {
+        if (target.name == name) return target;
+
+        for (int i = 0; i < target.childCount; ++i)
+        {
+            var result = Search(target.GetChild(i), name);
+
+            if (result != null) return result;
+        }
+
+        return null;
     }
 
     /**
