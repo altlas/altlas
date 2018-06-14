@@ -33,17 +33,17 @@ public class Loader : MonoBehaviour {
         new string[]{ "kontinentkarten", "landkarten", "stadtplan", "inselkarte" },
         new string[]{ "vulkankarte", "hochgebirge", "gebirge" },
         new string[]{ "topographische_karte", "bodenkarten", "relief" },
-        new string[]{ "meerarten", "flusskarte", "hafenkarte", "kueste" },
-        new string[]{ "verwaltungskarte", "politische_karte", "Katasterpläne", "kreiskarte" },
+        new string[]{ "meerkarten", "flusskarte", "hafenkarte", "kueste" },
+        new string[]{ "verwaltungskarte", "politische_karte", "katasterplan", "kreiskarte" },
         new string[]{ "verkehrskarten", "eisenbahn", "militaerkartographie" },
         new string[]{ "" },
         new string[]{ "" },
         new string[]{ "" },
         new string[]{ "" }
     };
-    string[][] selectedMaps = new string[26][] {
-        new string []{"HK 1300", "HK 1303", "HK 1304", "HK 1305", "HK 1306", "HK 1308"},
-        new string []{"HK 1123", "HK 0423", "HK 0907", "HK 0422a", "HK 0422b", "HK 0908", "HK 0909"},
+    string[][] selectedMaps = new string[27][] {
+        new string []{"HK 1300", "HK 1303" , "HK 1304", "HK 1305", "HK 1306", "HK 1308"},
+        new string []{"HK 1123", "HK 0423", "HK 0907", "HK 0422a", "HK 0422b", "HK 0908", "HK 0909",},
         new string []{"HK 0883", "HK 0912", "HK 1641", "HK 0003", "HK 0914"},
         new string []{"HK 0488", "HK 0198", "HK 0258", "HK 0281", "HK 0188"},
         new string []{"HK 0322", "HK 0443", "HK 0469", "HK 0373", "HK 0136"},
@@ -67,7 +67,8 @@ public class Loader : MonoBehaviour {
         new string []{"HK 1477", "HK 1481", "HK 1490", "HK 1496", "HK 1503"},
         new string []{"HK 1594", "HK 1604", "HK 1587", "HK 0312", "HK 1614"},
         new string []{"HK 0140", "HK 0168", "HK 0171", "HK 0172", "HK 0216"},
-        new string []{"HK 0321", "HK 0325", "HK 0324", "HK 0326", "HK 0327"}
+        new string []{"HK 0321", "HK 0325", "HK 0324", "HK 0326", "HK 0327"},
+        new string []{"HK 1474", "HK 1475", "HK 1476", "HK 0712"}
     };
     int iteration = 0;
 	public bool finishedLoading = false;
@@ -104,7 +105,7 @@ public class Loader : MonoBehaviour {
 	void LoadXML()
 	{
 	    xmlDoc = new XmlDocument();
-        xmlDoc.Load("Assets/res/maps_meta.xml");
+        xmlDoc.Load("Assets/Resources/maps_meta.xml");
         items = xmlDoc.SelectNodes("/collection/record");
 	}
 
@@ -135,7 +136,7 @@ public class Loader : MonoBehaviour {
                 }
             }
         }
-        return 27;
+        return selectedMaps.Length + 1;
     }
 
     IEnumerator AssignData()
@@ -217,7 +218,7 @@ public class Loader : MonoBehaviour {
                 category = "";
                 subCategory = "";
                 int tempID = getIndexOfMap(id) + 1;
-                if (tempID < 27)
+                if (tempID < selectedMaps.Length + 1)
                 {
                     int indexSum = 0;
                     int i;
