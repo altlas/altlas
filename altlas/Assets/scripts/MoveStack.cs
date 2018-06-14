@@ -5,19 +5,20 @@ using UnityEditor;
 
 public class MoveStack {
 
-    private static string inputDeviceName = "Controller"; //see resetStack() if you want another form of Input
-    public static GameObject removedStack = null;
     public static Vector3 removedStackPosition;
-    public static string MAPTAG = "Pickupable";
-
     public static Vector3 DESK_FREE_AREA_LEFT_CORNER = new Vector3(-0.7105434f, 0.85f, 0.4124395f);
-    public static float DESK_FREE_AREA_LENGTH = 0.4f;
     public static Vector3 MAP_IN_DRAWER_SCALE = ((GameObject)AssetDatabase.LoadAssetAtPath("Assets/Prefabs/Map_alt.prefab", typeof(GameObject))).transform.localScale;
     public static Vector3 MAP_ON_FREE_AREA_OF_DESK_SCALE = MAP_IN_DRAWER_SCALE * 2;
     public static Vector3 MAP_ON_MIDDLE_OF_DESK_SCALE = MAP_ON_FREE_AREA_OF_DESK_SCALE * 3;
+    public static Vector3 MIDDLE_OF_DESK = new Vector3(-0.2f, 0.858f, 0.65f); //absolute positon
 
 
-
+    private static string inputDeviceName = "Controller"; //see resetStack() if you want another form of Input
+    public static GameObject removedStack = null;
+    public static string MAPTAG = "Pickupable";
+    public static float DESK_FREE_AREA_LENGTH = 0.4f;
+    public static string textDisplayName = "map-information";
+    public static GameObject MAP_ON_MIDDLE_OF_DESK = null;
 
     public static bool objectIsFromAStack(GameObject obj)
     {
@@ -62,6 +63,8 @@ public class MoveStack {
             }
         }
         removedStack = null;
+        MAP_ON_MIDDLE_OF_DESK = null;
+        GameObject.Find(textDisplayName).GetComponent<TextMesh>().text = "Select a map!";
     }
 
     /**
