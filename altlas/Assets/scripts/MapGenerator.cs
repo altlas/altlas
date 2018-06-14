@@ -293,18 +293,15 @@ public class MapGenerator : MonoBehaviour {
 
     void setLabelOnDraw(KeyValuePair<string, Dictionary<string, List<MapData>>> category)
     {     
-        GameObject go = new GameObject("myText");
-        go.AddComponent<TextMesh>();
-        TextMesh tm = go.GetComponent(typeof(TextMesh)) as TextMesh;
-        go.name = category.Key + "_label";
+        GameObject go = new GameObject(category.Key + "_label");
+        TextMesh tm = go.AddComponent<TextMesh>();
         var drawer = getDrawerObjectFromCategory(category.Key);
         go.transform.parent = drawer.transform;
 
         tm.text = categoryText[category.Key];
         tm.anchor = TextAnchor.UpperCenter;
         tm.alignment = TextAlignment.Center;
-        tm.transform.localScale = drawer.transform.Find("knob").transform.localScale;
-        tm.transform.localScale *= tm.transform.localScale.x * 0.25f;
+        tm.transform.localScale = new Vector3(1,1,1) * 0.0002f;
         tm.transform.position = drawer.transform.Find("knob").transform.position + new Vector3(0f, 0.08f, 0);
         tm.transform.Rotate(new Vector3(0, 1, 0), 180);
         tm.font = Resources.GetBuiltinResource(typeof(Font), "Arial.ttf") as Font;
@@ -318,18 +315,14 @@ public class MapGenerator : MonoBehaviour {
             var stackContainer = GameObject.Find(stack.Key + EMPTY_ENDING);
             if (stackContainer == null)
                 continue;
-            GameObject go = new GameObject("myText");
-            go.AddComponent<TextMesh>();
-            TextMesh tm = go.GetComponent(typeof(TextMesh)) as TextMesh;
-            go.name = stack.Key + "_stack";
+            GameObject go = new GameObject(stack.Key + "_stack");
+            TextMesh tm = go.AddComponent<TextMesh>();
             go.transform.parent = stackContainer.transform.parent;
             go.transform.position = stackContainer.transform.position;
 
-            Debug.Log(stack.Value);
             tm.text = stack.Value;
             tm.anchor = TextAnchor.MiddleCenter;
-            tm.transform.localScale = GameObject.Find("knob").transform.localScale;
-            tm.transform.localScale *= 0.003f;
+            tm.transform.localScale = new Vector3(1, 1, 1) * 0.0002f;
             tm.transform.position = stackContainer.transform.position + new Vector3(0, 0.08f, 0);
             tm.transform.eulerAngles = new Vector3(90, 180, 0);
             tm.font = Resources.GetBuiltinResource(typeof(Font), "Arial.ttf") as Font;
