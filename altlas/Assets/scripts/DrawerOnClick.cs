@@ -13,10 +13,10 @@ public class DrawerOnClick : MonoBehaviour, ClickableInterface
     // Use this for initialization
     void Start () {
         startPosition = transform.position;
-	}
-	
-	// Update is called once per frame
-	void Update () {
+    }
+    
+    // Update is called once per frame
+    void Update () {
         if (isMoving)
         {
             var target = isOpen ? startPosition + openOffset : startPosition;
@@ -28,7 +28,7 @@ public class DrawerOnClick : MonoBehaviour, ClickableInterface
             var step = speed * Time.deltaTime;
             transform.position = Vector3.MoveTowards(transform.position, target, step);
         }
-	}
+    }
 
     void ClickableInterface.onClick()
     {
