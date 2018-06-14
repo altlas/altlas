@@ -9,11 +9,16 @@ public class MapOnClick : MonoBehaviour, ClickableInterface
     public Vector3 targetLocation = new Vector3(-0.2f, 0.858f, 0.65f);
     private bool isMoving = false;
     private Vector3 startPosition;
+    public bool isNormlScale = true;
+    public bool isLargeScale = false;
+    public bool isGettingLarger = false;
+
 
 
     // Use this for initialization
     void Start()
     {
+
     }
 
     void Update() {
@@ -32,15 +37,15 @@ public class MapOnClick : MonoBehaviour, ClickableInterface
 
     void ClickableInterface.onClick()
     {
-        isMoving = true;
+        if (this.transform.parent == null) {
+            isMoving = true;
+        }
+           
         if (MoveStack.removedStack != null) {
             if (MoveStack.MAP_ON_MIDDLE_OF_DESK != null) {
                 MoveStack.MAP_ON_MIDDLE_OF_DESK.transform.position = this.transform.position;
                 MoveStack.MAP_ON_MIDDLE_OF_DESK.transform.localScale = MoveStack.MAP_ON_FREE_AREA_OF_DESK_SCALE;
             }
-            this.transform.position = MoveStack.MIDDLE_OF_DESK;
-            this.transform.localRotation = Quaternion.identity;
-            this.transform.localScale = MoveStack.MAP_ON_MIDDLE_OF_DESK_SCALE;
             MoveStack.MAP_ON_MIDDLE_OF_DESK = this.gameObject;
             GameObject.Find(MoveStack.textDisplayName).GetComponent<TextMesh>().text = MoveStack.MAP_ON_MIDDLE_OF_DESK.GetComponent<MapScript>().data.userRelevantDataToString();
         }
