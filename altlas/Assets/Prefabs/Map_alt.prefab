@@ -138,6 +138,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1754407cdad0e0448b4fc6966736c2b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  speed: 1
+  targetLocation: {x: -0.2, y: 0.857, z: 0.65}
+  isNormlScale: 1
+  isLargeScale: 0
+  isGettingLarger: 0
 --- !u!114 &114894140433415078
 MonoBehaviour:
   m_ObjectHideFlags: 1
