@@ -4,18 +4,19 @@ using UnityEngine;
 
 public class ZoomCameraFollow : MonoBehaviour
 {
-    public Transform MainCameramera;
+    private Transform _mainCamera;
     private Transform _lens;
 
     private void Start()
     {
+        _mainCamera = CameraManager.GetActiveCamera().transform;
         _lens = transform.parent;
     }
 
     private void Update()
     {
         // get vector from camera to lens and base lens direction
-        var mainCamToLens = _lens.position - MainCameramera.position;
+        var mainCamToLens = _lens.position - _mainCamera.position;
         var lensBaseDirection = _lens.forward;
         // fix x rotation of cylinder
         lensBaseDirection = Quaternion.AngleAxis(90, _lens.right) * lensBaseDirection;
