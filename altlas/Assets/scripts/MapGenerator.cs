@@ -322,15 +322,15 @@ public class MapGenerator : MonoBehaviour {
             go.AddComponent<TextMesh>();
             TextMesh tm = go.GetComponent(typeof(TextMesh)) as TextMesh;
             go.name = stack.Key + "_stack";
-            go.transform.parent = stackContainer.transform;
+            go.transform.parent = stackContainer.transform.parent;
+            go.transform.position = stackContainer.transform.position;
 
             Debug.Log(stack.Value);
             tm.text = stack.Value;
             tm.anchor = TextAnchor.MiddleCenter;
             tm.transform.localScale = GameObject.Find("knob").transform.localScale;
-            tm.transform.localScale *= 0.3f;
+            tm.transform.localScale *= 0.003f;
             tm.transform.position = stackContainer.transform.position + new Vector3(0, 0.06f, 0);
-            //tm.transform.Rotate(new Vector3(0, 1, 0), 90);
             tm.transform.eulerAngles = new Vector3(90, 180, 0);
             tm.font = Resources.GetBuiltinResource(typeof(Font), "Arial.ttf") as Font;
             tm.font.material.shader = Shader.Find("Custom/Text Shader");
