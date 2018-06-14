@@ -1,14 +1,69 @@
 fileFormatVersion: 2
-guid: a8eba6dea33f1224f8f31b024deedf03
+guid: df1d232aaed99c74f98c00548f4992e6
 ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
-    100000: //RootNode
-    400000: //RootNode
-    2100000: No Name
-    2300000: //RootNode
-    3300000: //RootNode
-    4300000: RenderStuff_Gapo_desk_Old
+    100000: Circle.000
+    100002: Circle.011
+    100004: Cylinder
+    100006: //RootNode
+    100008: pen
+    100010: Plane.001
+    100012: Plane.002
+    100014: Sphere
+    100016: Sphere.001
+    100018: Sphere.002
+    100020: Text
+    100022: Torus
+    400000: Circle.000
+    400002: Circle.011
+    400004: Cylinder
+    400006: //RootNode
+    400008: pen
+    400010: Plane.001
+    400012: Plane.002
+    400014: Sphere
+    400016: Sphere.001
+    400018: Sphere.002
+    400020: Text
+    400022: Torus
+    2100000: Material.003
+    2100002: Material.002
+    2100004: Material.008
+    2100006: Material.005
+    2300000: Circle.000
+    2300002: Circle.011
+    2300004: Cylinder
+    2300006: pen
+    2300008: Plane.001
+    2300010: Plane.002
+    2300012: Sphere
+    2300014: Sphere.001
+    2300016: Sphere.002
+    2300018: Text
+    2300020: Torus
+    3300000: Circle.000
+    3300002: Circle.011
+    3300004: Cylinder
+    3300006: pen
+    3300008: Plane.001
+    3300010: Plane.002
+    3300012: Sphere
+    3300014: Sphere.001
+    3300016: Sphere.002
+    3300018: Text
+    3300020: Torus
+    4300000: Text
+    4300002: Sphere.002
+    4300004: pen
+    4300006: Torus
+    4300008: Circle.000
+    4300010: Circle.011
+    4300012: Plane.002
+    4300014: Sphere.001
+    4300016: Cylinder
+    4300018: Sphere
+    4300020: Plane.001
   externalObjects: {}
   materials:
     importMaterials: 1
