@@ -29,6 +29,11 @@ public class CameraManager : MonoBehaviour
         DesktopCamera.enabled = !VrEnabled;
 
         ActiveCamera = VrEnabled ? VrCamera : DesktopCamera;
+
+        if (!VrEnabled)
+        {
+            DesktopCamera.GetComponentInChildren<Transform>().GetComponentInChildren<ZoomCameraFollow>().enabled = false;
+        }
     }
 
     public static Camera GetActiveCamera()
