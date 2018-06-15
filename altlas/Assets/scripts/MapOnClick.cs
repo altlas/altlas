@@ -85,6 +85,7 @@ public class MapOnClick : MonoBehaviour, ClickableInterface
                 }
             case MapState.ScaleDeskToGlobe:
                 {
+
                     var data = GetComponent<MapScript>().data;
                     var imageSize = data.m_imageSize;
                     var coordsString = data.m_coordinate;
@@ -92,18 +93,60 @@ public class MapOnClick : MonoBehaviour, ClickableInterface
                     var points = new CordsMapper().GenerateCords(coords, 1, 0.6f); // TODO get radius
 
                     var y = transform.localScale.y;
-                    var z = System.Math.Abs(points[0,0].z - points[1,1].z);
+                    var z = System.Math.Abs(points[0, 0].z - points[1, 1].z);
                     var x = z * imageSize[1] / imageSize[0];
 
-                    transform.localScale = new Vector3(x, y, z);
-                    transform.localRotation = Quaternion.AngleAxis(-90, Vector3.up);
-                    var globalPos = transform.position;
-                    var globe = GameObject.Find("globe").transform;
-                    transform.SetParent(globe);
+                    var target = new Vector3(x, y, z);
+                    if (transform.localScale == target)
+                    {
+                        transform.localRotation = Quaternion.AngleAxis(-90, Vector3.up);
+                        var globalPos = transform.position;
+                        var globe = GameObject.Find("globe").transform;
+                        transform.SetParent(globe);
+                        var globeMovingScript = GameObject.Find("globe stand").GetComponent<GlobeMovingScript>();
+                        globeMovingScript.moving = true;
 
-                    //transform.position = globalPos;
+                        state = MapState.OnGlobe;
+                        break;
+                    }
 
-                    state = MapState.OnGlobe;
+                    var step = speed * Time.deltaTime;
+                    transform.localScale = Vector3.MoveTowards(transform.localScale, new Vector3(x, y, z), step);
+                    break;
+                }
+            case MapState.OnGlobe:
+                {
+                    var globeMovingScript = GameObject.Find("globe stand").GetComponent<GlobeMovingScript>();
+                    if(!globeMovingScript.moving && !globeMovingScript.expanded)
+                    {
+                        transform.SetParent(null);
+
+                        transform.localRotation = Quaternion.AngleAxis(0, Vector3.up);
+                        var globalPos = transform.position;
+                        var globe = GameObject.Find("globe").transform;
+                        state = MapState.ScaleGlobeToDesk;
+                    }
+                    break;
+                }
+            case MapState.ScaleGlobeToDesk:
+                {
+                    var mapData = GetComponent<MapScript>().data;
+                    var imageSize = mapData.m_imageSize;
+
+                    var y = transform.localScale.y;
+                    var z = middleOfDeskMapDepth;
+                    var x = z * imageSize[1] / imageSize[0];
+
+                    var target = new Vector3(x, y, z);
+                    if (transform.localScale == target)
+                    {
+
+                        state = MapState.InMiddleOfDesk;
+                        break;
+                    }
+
+                    var step = speed * Time.deltaTime;
+                    transform.localScale = Vector3.MoveTowards(transform.localScale, new Vector3(x, y, z), step);
                     break;
                 }
             case MapState.ScalingFitDeskToPreview:
