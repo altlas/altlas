@@ -3,80 +3,80 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using UnityEngine;
 
-public class cordsParser
+public class CordsParser
 {
-    public cordsParser(){
+    public CordsParser(){
 
     }
 
-    float[] parse(string cords)
+    public float[] parse(string cords)
     {
         string pattern = @"(\d+)";
         int i = 0;
+        float upperLeftLatitude = 0;
         float upperLeftLongitute = 0;
-        float upperLeftLatitute = 0;
+        float lowerRightLatitude = 0;
         float lowerRightLongitute = 0;
-        float lowerRightLatitute = 0;
         foreach (Match m in Regex.Matches(cords, pattern))
         {
             int value = int.Parse(m.Groups[1].Value);
             switch (i)
             {
                 case 0:
-                    upperLeftLongitute += value;
+                    upperLeftLatitude += value;
                     break;
                 case 1:
-                    upperLeftLongitute += (float)value / 60;
+                    upperLeftLatitude += (float)value / 60;
                     break;
                 case 2:
-                    upperLeftLongitute += (float)value / 3600;
+                    upperLeftLatitude += (float)value / 3600;
                     break;
                 case 3:
-                    lowerRightLongitute += value;
+                    lowerRightLatitude += value;
                     break;
                 case 4:
-                    lowerRightLongitute += (float)value / 60;
+                    lowerRightLatitude += (float)value / 60;
                     break;
                 case 5:
-                    lowerRightLongitute += (float)value / 3600;
+                    lowerRightLatitude += (float)value / 3600;
                     break;
                 case 6:
-                    upperLeftLatitute += value;
+                    upperLeftLongitute += value;
                     break;
                 case 7:
-                    upperLeftLatitute += (float)value / 60;
+                    upperLeftLongitute += (float)value / 60;
                     break;
                 case 8:
-                    upperLeftLatitute += (float)value / 3600;
+                    upperLeftLongitute += (float)value / 3600;
                     break;
                 case 9:
-                    lowerRightLatitute += value;
+                    lowerRightLongitute += value;
                     break;
                 case 10:
-                    lowerRightLatitute += (float)value / 60;
+                    lowerRightLongitute += (float)value / 60;
                     break;
                 case 11:
-                    lowerRightLatitute += (float)value / 3600;
+                    lowerRightLongitute += (float)value / 3600;
                     break;
             }
             i++;
         }
         if (cords[0] == 'W')
         {
-            upperLeftLongitute = -upperLeftLongitute;
+            upperLeftLatitude = -upperLeftLatitude;
         }
         if (cords[12] == 'W')
         {
-            lowerRightLongitute = -upperLeftLongitute;
+            lowerRightLatitude = -lowerRightLatitude;
         }
         if (cords[24] == 'S')
         {
-            upperLeftLatitute = -upperLeftLatitute;
+            upperLeftLongitute = -upperLeftLongitute;
         }
         if (cords[36] == 'S')
         {
-            lowerRightLatitute = -lowerRightLatitute;
+            lowerRightLongitute = -lowerRightLongitute;
         }
-        return new float[] { upperLeftLongitute, lowerRightLongitute, upperLeftLatitute, lowerRightLongitute };
+        return new float[] { upperLeftLongitute, lowerRightLongitute, upperLeftLatitude, lowerRightLatitude };
     }
 }

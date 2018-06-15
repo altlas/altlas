@@ -18,6 +18,7 @@ public class MapOnClick : MonoBehaviour, ClickableInterface
     public bool isNormlScale = true;
     public bool isLargeScale = false;
     public bool isGettingLarger = false;
+    public LeverScript leverScript;
 
     private Vector3 moveTarget;
 
@@ -36,7 +37,7 @@ public class MapOnClick : MonoBehaviour, ClickableInterface
     // Use this for initialization
     void Start()
     {
-
+        leverScript = (LeverScript)Object.FindObjectOfType(typeof(LeverScript));
     }
 
     void Update() {
@@ -133,5 +134,6 @@ public class MapOnClick : MonoBehaviour, ClickableInterface
                 state = MapState.MovingSideToMiddle;
                 break;
         }
+            leverScript.setActiveGeoCords(gameObject.GetComponent<MapScript>().data.m_coordinate);
     }
 }
