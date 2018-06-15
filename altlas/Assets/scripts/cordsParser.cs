@@ -14,9 +14,9 @@ public class CordsParser
         string pattern = @"(\d+)";
         int i = 0;
         float upperLeftLatitude = 0;
-        float upperLeftLongitute = 0;
+        float upperLeftLongitude = 0;
         float lowerRightLatitude = 0;
-        float lowerRightLongitute = 0;
+        float lowerRightLongitude = 0;
         foreach (Match m in Regex.Matches(cords, pattern))
         {
             int value = int.Parse(m.Groups[1].Value);
@@ -41,22 +41,22 @@ public class CordsParser
                     lowerRightLatitude += (float)value / 3600;
                     break;
                 case 6:
-                    upperLeftLongitute += value;
+                    upperLeftLongitude += value;
                     break;
                 case 7:
-                    upperLeftLongitute += (float)value / 60;
+                    upperLeftLongitude += (float)value / 60;
                     break;
                 case 8:
-                    upperLeftLongitute += (float)value / 3600;
+                    upperLeftLongitude += (float)value / 3600;
                     break;
                 case 9:
-                    lowerRightLongitute += value;
+                    lowerRightLongitude += value;
                     break;
                 case 10:
-                    lowerRightLongitute += (float)value / 60;
+                    lowerRightLongitude += (float)value / 60;
                     break;
                 case 11:
-                    lowerRightLongitute += (float)value / 3600;
+                    lowerRightLongitude += (float)value / 3600;
                     break;
             }
             i++;
@@ -71,12 +71,12 @@ public class CordsParser
         }
         if (cords[24] == 'S')
         {
-            upperLeftLongitute = -upperLeftLongitute;
+            upperLeftLongitude = -upperLeftLongitude;
         }
         if (cords[36] == 'S')
         {
-            lowerRightLongitute = -lowerRightLongitute;
+            lowerRightLongitude = -lowerRightLongitude;
         }
-        return new float[] { upperLeftLongitute, lowerRightLongitute, upperLeftLatitude, lowerRightLatitude };
+        return new float[] { upperLeftLongitude, lowerRightLongitude, upperLeftLatitude, lowerRightLatitude };
     }
 }
