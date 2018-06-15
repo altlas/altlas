@@ -14,24 +14,33 @@ public class RotateGlobeToMapPositionScript : MonoBehaviour {
   Quaternion startRotationMount;
   Quaternion startRotationStand;
 
+    float progress = 0.0f;
+    float step = -0.5f;
+
+
   void Start () {
-   radius = gameObject.transform.localScale.x;
-   startRotationGlobe = gameObject.transform.rotation;
-   startRotationMount = mount.transform.rotation;
-   startRotationStand = stand.transform.rotation;
+   radius = -gameObject.transform.localScale.x;
+   startRotationGlobe = gameObject.transform.localRotation;
+   startRotationMount = mount.transform.localRotation;
+   startRotationStand = stand.transform.localRotation;
   }
   
   void Update () {
-    float[] points = parser.parse("W 23°03'04\"-W 22°48'57\"/N 16°54'34\"-N 16°32'50\"");
+        step = (progress > 0 && progress < 1) ? step : -step;
+        progress += Time.deltaTime * step;
+        float angle = progress * 90;
+    float[] points = parser.parse("E 68°53'00\"-E 90°52'00\"/N 34°22'00\"-N 05°00'00\"");
     float[] mapMiddlePoint = new float[]{(points[0] + points[1])/2 , (points[2] + points[3])/2};
-    Vector3 unityMapPoint = Vector3.Normalize(mapper.GeneratePoint(mapMiddlePoint[0], mapMiddlePoint[1], radius));
+        Debug.Log("First: " + mapMiddlePoint[0]);
+        Debug.Log("Second: " + mapMiddlePoint[1]);
+        Vector3 unityMapPoint = Vector3.Normalize(mapper.GeneratePoint(mapMiddlePoint[1], mapMiddlePoint[0], radius));
     switchPoints(unityMapPoint);
     Quaternion rot = Quaternion.FromToRotation(unityMapPoint, new Vector3(0, 0, 1));
     Vector3 eulerAngles = rot.eulerAngles;
     switchPoints(eulerAngles);
-    //gameObject.transform.rotation = Quaternion.AngleAxis(90, Vector3.right) * startRotationGlobe;
-    //mount.transform.rotation = Quaternion.AngleAxis(90, Vector3.back) * startRotationMount;
-    stand.transform.rotation = Quaternion.AngleAxis(90, Vector3.up) * startRotationStand;
+    gameObject.transform.localRotation = Quaternion.AngleAxis(eulerAngles.x - 90, Vector3.forward) * startRotationGlobe;
+    mount.transform.localRotation = Quaternion.AngleAxis(-eulerAngles.y, Vector3.up) * startRotationMount;
+    stand.transform.localRotation = Quaternion.AngleAxis(eulerAngles.z, Vector3.forward) * startRotationStand;
     //stand z
     //mount y
     //globe z

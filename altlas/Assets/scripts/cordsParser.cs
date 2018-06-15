@@ -77,6 +77,6 @@ public class CordsParser
         {
             lowerRightLatitute = -lowerRightLatitute;
         }
-        return new float[] { upperLeftLongitute, lowerRightLongitute, upperLeftLatitute, lowerRightLongitute };
+        return new float[] { upperLeftLongitute, lowerRightLongitute, upperLeftLatitute, lowerRightLatitute };
     }
 }

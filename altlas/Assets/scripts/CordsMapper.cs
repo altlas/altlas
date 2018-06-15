@@ -25,7 +25,8 @@ public class CordsMapper{
 
     }
     public Vector3 GeneratePoint(float longitude, float latitude, float radius)
-    {   
-        return Quaternion.AngleAxis(longitude, -Vector3.up) * Quaternion.AngleAxis(latitude, -Vector3.right) * new Vector3(0, 0, radius);
+    {
+        Vector3 vec = new Vector3(0f, 0f, radius);
+        return Quaternion.AngleAxis(longitude, -Vector3.up) * Quaternion.AngleAxis(latitude, -Vector3.right) * vec;
     }
 }
