@@ -13,7 +13,7 @@ public class LeverScript : MonoBehaviour, ClickableInterface {
             {
                 AstronomyMovingScript astronomieScript = mapInMiddle.GetComponent<AstronomyMovingScript>();
                 astronomieScript.moving = true;
-                astronomieScript.expanded = !astronomieScript.expanded;
+                astronomieScript.expanded = !(astronomieScript.expanded);
                 return;
             }
         }

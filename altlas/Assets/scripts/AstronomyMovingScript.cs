@@ -17,12 +17,12 @@ public class AstronomyMovingScript : MonoBehaviour {
             if (transform.position == target)
             {
                 moving = false;
-                transform.localScale = ceilingSize;
+                transform.localScale = (expanded ? ceilingSize : MoveStack.MAP_ON_FREE_AREA_OF_DESK_SCALE);
                 return;
             }
             var step = speed * Time.deltaTime;
             transform.position = Vector3.MoveTowards(transform.position, target, step);
-            transform.localScale *= expandRate;
+            transform.localScale *= (!expanded ? expandRate : (2 - expandRate));
         }
     }
 }
