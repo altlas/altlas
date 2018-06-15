@@ -29,7 +29,9 @@ public class MapOnClick : MonoBehaviour, ClickableInterface
         ScalingPreviewToFitDesk,
         InMiddleOfDesk,
         ScaleDeskToGlobe,
+        WrapDeskToGlobe,
         OnGlobe,
+        WrapGlobeToDesk,
         ScaleGlobeToDesk,
         ScalingFitDeskToPreview,
         MovingMiddleToSide};
@@ -41,6 +43,8 @@ public class MapOnClick : MonoBehaviour, ClickableInterface
     void Start()
     {
         leverScript = (LeverScript)FindObjectOfType(typeof(LeverScript));
+        var stand = GameObject.Find("globe stand").transform.position;
+        targetLocation = new Vector3(stand.x, 0.858f, stand.z);
     }
 
     void Update() {
@@ -91,10 +95,11 @@ public class MapOnClick : MonoBehaviour, ClickableInterface
                     var z = System.Math.Abs(points[0,0].z - points[1,1].z);
                     var x = z * imageSize[1] / imageSize[0];
 
+                    transform.localScale = new Vector3(x, y, z);
+                    transform.localRotation = Quaternion.AngleAxis(-90, Vector3.up);
                     var globalPos = transform.position;
                     var globe = GameObject.Find("globe").transform;
                     transform.SetParent(globe);
-                    transform.localScale = new Vector3(x, y, z);
 
                     //transform.position = globalPos;
 
