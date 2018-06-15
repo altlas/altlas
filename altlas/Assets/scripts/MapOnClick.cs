@@ -54,6 +54,10 @@ public class MapOnClick : MonoBehaviour, ClickableInterface
                     if (transform.localScale.z >= middleOfDeskMapDepth)
                     {
                         state = MapState.InMiddleOfDesk;
+
+                        var data = GetComponent<MapScript>().data;
+                        data.loadTexture(); // data.disposeTexture()
+                        GetComponent<Renderer>().material.mainTexture = data.texture;
                     }
                     var step = speed * Time.deltaTime;
 
