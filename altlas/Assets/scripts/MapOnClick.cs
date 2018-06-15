@@ -37,17 +37,21 @@ public class MapOnClick : MonoBehaviour, ClickableInterface
 
     void ClickableInterface.onClick()
     {
-        if (this.transform.parent == null) {
-            isMoving = true;
-        }
-           
-        if (MoveStack.removedStack != null) {
-            if (MoveStack.MAP_ON_MIDDLE_OF_DESK != null) {
-                MoveStack.MAP_ON_MIDDLE_OF_DESK.transform.position = this.transform.position;
-                MoveStack.MAP_ON_MIDDLE_OF_DESK.transform.localScale = MoveStack.MAP_ON_FREE_AREA_OF_DESK_SCALE;
+        //a map from a stack is being clicked
+        if (transform.parent != null)
+        {
+            GameObject stack = transform.parent.gameObject;
+            //a map in a stack has been clicked even though there are already maps on the desk, so first reset the old stack
+            if (MoveStack.removedStack != null)
+            {
+                MoveStack.resetStack();
             }
-            MoveStack.MAP_ON_MIDDLE_OF_DESK = this.gameObject;
-            GameObject.Find(MoveStack.textDisplayName).GetComponent<TextMesh>().text = MoveStack.MAP_ON_MIDDLE_OF_DESK.GetComponent<MapScript>().data.userRelevantDataToString();
+            MoveStack.moveStackToDesk(stack);
+        }
+        else
+        { //a map from the desk is being clicked
+            MoveStack.moveMapToMiddleOfDesk(gameObject);
+            isMoving = true;
         }
     }
 }

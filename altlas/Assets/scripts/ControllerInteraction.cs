@@ -5,12 +5,7 @@ public class ControllerInteraction : MonoBehaviour
 {
     private SteamVR_TrackedObject trackedObj;
 
-    /*private GameObject removedStack = null;
-    private Vector3 removedStackPosition;
-    MapGenerator instance = new MapGenerator();*/
-
-    public GameObject heldObject;
-    public bool isHolding;
+    public static GameObject heldObject;
 
     private Valve.VR.EVRButtonId gripButton = Valve.VR.EVRButtonId.k_EButton_Grip;
     private Valve.VR.EVRButtonId triggerButton = Valve.VR.EVRButtonId.k_EButton_SteamVR_Trigger;
@@ -38,19 +33,6 @@ public class ControllerInteraction : MonoBehaviour
         {
             return;
         }
-        if (MoveStack.removedStack != null) {
-            MoveStack.removedStackPosition = MoveStack.removedStack.transform.position;
-        }
-        
-        if (controller.GetPressUp(gripButton))
-        {
-            if (heldObject != null && isHolding)
-            {
-                heldObject.transform.parent = null;
-                isHolding = false;
-            }
-
-        }
         if (controller.GetPressDown(triggerButton)) {
             triggerButtonPressedAction();
         }
@@ -66,40 +48,17 @@ public class ControllerInteraction : MonoBehaviour
             {
                 clickable.onClick();
             }
-            if (MoveStack.objectIsFromAStack(heldObject))
+            if (MoveStack.objectIsFromAStack(heldObject) && MoveStack.removedStack != null)
             {
-                GameObject stack = heldObject.transform.parent.gameObject;
-                if (MoveStack.removedStack != null)
-                {
-                    if (stack.name.Equals(MoveStack.removedStack.transform.name))  //maps on desk are being clicked
-                    {
-                        if (heldObject.GetComponent<ClickableInterface>() != null)
-                        {
-                            heldObject.GetComponent<ClickableInterface>().onClick();
-                            return;
-                        }
-                    }
-                    //another stack was selected while another was on the table, so first move back the maps        
-                    MoveStack.resetStack();
-                    GameObject.Find(MoveStack.textDisplayName).GetComponent<TextMesh>().text = "Select a map!";
-                    isHolding = false;
-                    heldObject = null;
-                }
-                MoveStack.moveStackToDesk(stack);
+                heldObject = null;
             }
         }
-    }
-
-    private void holdObject() {
-        heldObject.transform.parent = this.transform;
-        heldObject.GetComponent<Rigidbody>().isKinematic = true;
-        isHolding = true;
     }
 
     private void OnTriggerEnter(Collider collider) {
         if (collider.gameObject.GetComponent<HighlightScript>() != null)
             collider.gameObject.GetComponent<HighlightScript>().OnRayEnter();
-        if (!isHolding && collider.gameObject.GetComponent<ClickableInterface>() != null) {
+        if (collider.gameObject.GetComponent<ClickableInterface>() != null) {
             heldObject = collider.gameObject;
             var mapScript = heldObject.GetComponent<MapScript>();
             if (!MoveStack.objectIsFromAStack(heldObject) && mapScript != null)
@@ -109,8 +68,7 @@ public class ControllerInteraction : MonoBehaviour
 
     private void OnTriggerExit(Collider collider)
     {
-        if (!isHolding)
-            heldObject = null;
+        heldObject = null;
 
         if (MoveStack.MAP_ON_MIDDLE_OF_DESK == null) {
             GameObject.Find(MoveStack.textDisplayName).GetComponent<TextMesh>().text = "Select a map!";
