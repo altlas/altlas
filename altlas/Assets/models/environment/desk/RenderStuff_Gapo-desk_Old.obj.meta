@@ -1,15 +1,16 @@
 fileFormatVersion: 2
-guid: 9a88a0fe70670174693e8fbb91f74b77
+guid: a537ceb7224e6ab40b89489cdd49e420
 ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
     100000: //RootNode
+    100002: RenderStuff_Gapo_desk_Old
     400000: //RootNode
-    2100000: Material.002
-    2300000: //RootNode
-    3300000: //RootNode
-    4300000: Icosphere.010
-    2186277476908879412: ImportLogs
+    400002: RenderStuff_Gapo_desk_Old
+    2100000: RenderStuff_Gapo_desk_OldMat
+    2300000: RenderStuff_Gapo_desk_Old
+    3300000: RenderStuff_Gapo_desk_Old
+    4300000: RenderStuff_Gapo_desk_Old
   externalObjects: {}
   materials:
     importMaterials: 1

@@ -1,0 +1,292 @@
+fileFormatVersion: 2
+guid: 6ea5866dc49f15343b4edb66058cf510
+ModelImporter:
+  serializedVersion: 22
+  fileIDToRecycleName:
+    100000: AYAKLAR
+    100002: Cube.004
+    100004: Cube.005
+    100006: Cube.006
+    100008: Cube.007
+    100010: Cube.008
+    100012: Cube.009
+    100014: Cube.010
+    100016: Cube.011
+    100018: Cube.012
+    100020: Cube.013
+    100022: Cube.014
+    100024: Cube.015
+    100026: Cube.016
+    100028: Cube.017
+    100030: Cube.018
+    100032: Cube.019
+    100034: Cube.020
+    100036: Cube.021
+    100038: Cube.022
+    100040: Cube.023
+    100042: Cube.024
+    100044: Cube.025
+    100046: Cube.026
+    100048: Cube.027
+    100050: Cube.028
+    100052: Cube.029
+    100054: Cube.030
+    100056: Cube.031
+    100058: Cube.032
+    100060: Cube.033
+    100062: Cube.034
+    100064: Cube.035
+    100066: Cube.036
+    100068: //RootNode
+    100070: piano holz
+    100072: tuc
+    100074: tus 3
+    100076: tus 4
+    100078: tus ust
+    100080: tust iki
+    400000: AYAKLAR
+    400002: Cube.004
+    400004: Cube.005
+    400006: Cube.006
+    400008: Cube.007
+    400010: Cube.008
+    400012: Cube.009
+    400014: Cube.010
+    400016: Cube.011
+    400018: Cube.012
+    400020: Cube.013
+    400022: Cube.014
+    400024: Cube.015
+    400026: Cube.016
+    400028: Cube.017
+    400030: Cube.018
+    400032: Cube.019
+    400034: Cube.020
+    400036: Cube.021
+    400038: Cube.022
+    400040: Cube.023
+    400042: Cube.024
+    400044: Cube.025
+    400046: Cube.026
+    400048: Cube.027
+    400050: Cube.028
+    400052: Cube.029
+    400054: Cube.030
+    400056: Cube.031
+    400058: Cube.032
+    400060: Cube.033
+    400062: Cube.034
+    400064: Cube.035
+    400066: Cube.036
+    400068: //RootNode
+    400070: piano holz
+    400072: tuc
+    400074: tus 3
+    400076: tus 4
+    400078: tus ust
+    400080: tust iki
+    2100000: Material.003
+    2100002: Material.002
+    2100004: Material
+    2100006: Material.001
+    2300000: AYAKLAR
+    2300002: Cube.004
+    2300004: Cube.005
+    2300006: Cube.006
+    2300008: Cube.007
+    2300010: Cube.008
+    2300012: Cube.009
+    2300014: Cube.010
+    2300016: Cube.011
+    2300018: Cube.012
+    2300020: Cube.013
+    2300022: Cube.014
+    2300024: Cube.015
+    2300026: Cube.016
+    2300028: Cube.017
+    2300030: Cube.018
+    2300032: Cube.019
+    2300034: Cube.020
+    2300036: Cube.021
+    2300038: Cube.022
+    2300040: Cube.023
+    2300042: Cube.024
+    2300044: Cube.025
+    2300046: Cube.026
+    2300048: Cube.027
+    2300050: Cube.028
+    2300052: Cube.029
+    2300054: Cube.030
+    2300056: Cube.031
+    2300058: Cube.032
+    2300060: Cube.033
+    2300062: Cube.034
+    2300064: Cube.035
+    2300066: Cube.036
+    2300068: piano holz
+    2300070: tuc
+    2300072: tus 3
+    2300074: tus 4
+    2300076: tus ust
+    2300078: tust iki
+    3300000: AYAKLAR
+    3300002: Cube.004
+    3300004: Cube.005
+    3300006: Cube.006
+    3300008: Cube.007
+    3300010: Cube.008
+    3300012: Cube.009
+    3300014: Cube.010
+    3300016: Cube.011
+    3300018: Cube.012
+    3300020: Cube.013
+    3300022: Cube.014
+    3300024: Cube.015
+    3300026: Cube.016
+    3300028: Cube.017
+    3300030: Cube.018
+    3300032: Cube.019
+    3300034: Cube.020
+    3300036: Cube.021
+    3300038: Cube.022
+    3300040: Cube.023
+    3300042: Cube.024
+    3300044: Cube.025
+    3300046: Cube.026
+    3300048: Cube.027
+    3300050: Cube.028
+    3300052: Cube.029
+    3300054: Cube.030
+    3300056: Cube.031
+    3300058: Cube.032
+    3300060: Cube.033
+    3300062: Cube.034
+    3300064: Cube.035
+    3300066: Cube.036
+    3300068: piano holz
+    3300070: tuc
+    3300072: tus 3
+    3300074: tus 4
+    3300076: tus ust
+    3300078: tust iki
+    4300000: AYAKLAR
+    4300002: Cube.036
+    4300004: Cube.035
+    4300006: Cube.034
+    4300008: Cube.033
+    4300010: Cube.032
+    4300012: Cube.031
+    4300014: Cube.030
+    4300016: Cube.029
+    4300018: Cube.028
+    4300020: Cube.027
+    4300022: Cube.026
+    4300024: Cube.025
+    4300026: Cube.024
+    4300028: Cube.023
+    4300030: Cube.022
+    4300032: Cube.021
+    4300034: Cube.020
+    4300036: Cube.019
+    4300038: Cube.018
+    4300040: Cube.017
+    4300042: Cube.016
+    4300044: Cube.015
+    4300046: Cube.014
+    4300048: Cube.013
+    4300050: Cube.010
+    4300052: Cube.012
+    4300054: Cube.011
+    4300056: Cube.009
+    4300058: Cube.008
+    4300060: Cube.007
+    4300062: Cube.006
+    4300064: Cube.005
+    4300066: Cube.004
+    4300068: tus 3
+    4300070: tus 4
+    4300072: tust iki
+    4300074: tus ust
+    4300076: tuc
+    4300078: piano holz
+  externalObjects: {}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
