@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using UnityEngine;
 
-public class cordsParser
+public class CordsParser
 {
-    public cordsParser(){
+    public CordsParser(){
 
     }
 
-    float[] parse(string cords)
+    public float[] parse(string cords)
     {
         string pattern = @"(\d+)";
         int i = 0;
@@ -67,7 +67,7 @@ public class cordsParser
         }
         if (cords[12] == 'W')
         {
-            lowerRightLongitute = -upperLeftLongitute;
+            lowerRightLongitute = -lowerRightLongitute;
         }
         if (cords[24] == 'S')
         {
