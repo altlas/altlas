@@ -100,18 +100,24 @@ public class MapOnClick : MonoBehaviour, ClickableInterface
                     if (transform.localScale == target)
                     {
                         transform.localRotation = Quaternion.AngleAxis(-90, Vector3.up);
-                        var globalPos = transform.position;
                         var globe = GameObject.Find("globe").transform;
                         transform.SetParent(globe);
                         var globeMovingScript = GameObject.Find("globe stand").GetComponent<GlobeMovingScript>();
                         globeMovingScript.moving = true;
 
-                        state = MapState.OnGlobe;
+                        var localPos = transform.localPosition;
+                        targetLocation = new Vector3(localPos.x, localPos.y - 0.01f, localPos.z);
+                        state = MapState.WrapDeskToGlobe;
                         break;
                     }
 
                     var step = speed * Time.deltaTime;
                     transform.localScale = Vector3.MoveTowards(transform.localScale, new Vector3(x, y, z), step);
+                    break;
+                }
+            case MapState.WrapDeskToGlobe:
+                {
+                    state = MapState.OnGlobe;
                     break;
                 }
             case MapState.OnGlobe:
