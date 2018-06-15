@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RotateGlobeToMapPositionScript : MonoBehaviour, ClickableInterface {
+public class RotateGlobeToMapPositionScript : MonoBehaviour {
 
   public GameObject mount;
   public GameObject stand;
@@ -22,7 +22,11 @@ public class RotateGlobeToMapPositionScript : MonoBehaviour, ClickableInterface 
   }
   
   void Update () {
-    float[] points = parser.parse("E 68°53'00\"-E 90°52'00\"/N 34°22'00\"-N 05°00'00\"");
+    
+  }
+
+  public void rotateGlobe(string worldCords){
+    float[] points = parser.parse(worldCords);
     float[] mapMiddlePoint = new float[]{(points[0] + points[1])/2 , (points[2] + points[3])/2};
     Vector3 unityMapPoint = Vector3.Normalize(mapper.GeneratePoint(mapMiddlePoint[1], mapMiddlePoint[0], radius));
     switchPoints(unityMapPoint);
