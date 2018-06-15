@@ -6,8 +6,8 @@ using UnityEditor;
 public class MoveStack {
     public static Vector3 DESK_FREE_AREA_LEFT_CORNER = new Vector3(-0.7105434f, 0.85f, 0.4124395f);
     public static Vector3 MAP_IN_DRAWER_SCALE = ((GameObject)AssetDatabase.LoadAssetAtPath("Assets/Prefabs/Map_alt.prefab", typeof(GameObject))).transform.localScale;
-    public static Vector3 MAP_ON_FREE_AREA_OF_DESK_SCALE = MAP_IN_DRAWER_SCALE * 2;
-    public static Vector3 MAP_ON_MIDDLE_OF_DESK_SCALE = MAP_ON_FREE_AREA_OF_DESK_SCALE * 3;
+    public static float MAP_ON_FREE_AREA_OF_DESK_SCALE = .2f;
+    private static float MAP_ON_MIDDLE_OF_DESK_SCALE = .6f;
     public static Vector3 MIDDLE_OF_DESK = new Vector3(-0.2f, 0.858f, 0.65f); //absolute positon
     
     public static GameObject removedStack = null;
@@ -71,19 +71,32 @@ public class MoveStack {
      */
     public static void spreadMapOnDesk(GameObject map)
     {
+        var mapData = map.GetComponent<MapScript>().data;
+        var imageSize = mapData.m_imageSize;
+
         float newX = DESK_FREE_AREA_LEFT_CORNER.x - Random.Range(0, DESK_FREE_AREA_LENGTH);
         float newZ = DESK_FREE_AREA_LEFT_CORNER.z + Random.Range(0, DESK_FREE_AREA_LENGTH);
         float newY = DESK_FREE_AREA_LEFT_CORNER.y + Random.Range(0, 0.01f);
         map.transform.position = (new Vector3(newX, newY, newZ));
-        map.transform.localScale = MAP_ON_FREE_AREA_OF_DESK_SCALE;
+        var y = map.transform.localScale.y;
+        var z = MAP_ON_FREE_AREA_OF_DESK_SCALE;
+        var x = z * imageSize[1] / imageSize[0];
+        map.transform.localScale = new Vector3(x, y, z);// MAP_ON_FREE_AREA_OF_DESK_SCALE;
     }
 
     public static void moveMapToMiddleOfDesk(GameObject map) {
         //there already is a map on the middle of the desk, so first change its position
         if (MAP_ON_MIDDLE_OF_DESK != null)
         {
+            var mapData = map.GetComponent<MapScript>().data;
+            var imageSize = mapData.m_imageSize;
+
+            var y = map.transform.localScale.y;
+            var z = MAP_ON_MIDDLE_OF_DESK_SCALE;
+            var x = z * imageSize[1] / imageSize[0];
+
             MAP_ON_MIDDLE_OF_DESK.transform.position = map.transform.position;
-            MAP_ON_MIDDLE_OF_DESK.transform.localScale = MAP_ON_FREE_AREA_OF_DESK_SCALE;
+            MAP_ON_MIDDLE_OF_DESK.transform.localScale = new Vector3(x, y, z);
         }
         MAP_ON_MIDDLE_OF_DESK = map.gameObject;
         GameObject.Find(textDisplayName).GetComponent<TextMesh>().text = MAP_ON_MIDDLE_OF_DESK.GetComponent<MapScript>().data.userRelevantDataToString();
