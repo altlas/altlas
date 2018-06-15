@@ -60,6 +60,7 @@ public class MapOnClick : MonoBehaviour, ClickableInterface
                     if (transform.localScale.z >= middleOfDeskMapDepth)
                     {
                         state = MapState.InMiddleOfDesk;
+                        leverScript.setActiveGeoCords(gameObject.GetComponent<MapScript>().data.m_coordinate);
 
                         var data = GetComponent<MapScript>().data;
                         data.loadTexture(); // data.disposeTexture()
@@ -134,6 +135,5 @@ public class MapOnClick : MonoBehaviour, ClickableInterface
                 state = MapState.MovingSideToMiddle;
                 break;
         }
-            leverScript.setActiveGeoCords(gameObject.GetComponent<MapScript>().data.m_coordinate);
     }
 }
