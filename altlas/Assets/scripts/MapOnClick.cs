@@ -12,13 +12,14 @@ public class MapOnClick : MonoBehaviour, ClickableInterface
     public bool isNormlScale = true;
     public bool isLargeScale = false;
     public bool isGettingLarger = false;
+    public LeverScript leverScript;
 
 
 
     // Use this for initialization
     void Start()
     {
-
+        leverScript = (LeverScript)Object.FindObjectOfType(typeof(LeverScript));
     }
 
     void Update() {
@@ -52,6 +53,7 @@ public class MapOnClick : MonoBehaviour, ClickableInterface
         { //a map from the desk is being clicked
             MoveStack.moveMapToMiddleOfDesk(gameObject);
             isMoving = true;
+            leverScript.setActiveGeoCords(gameObject.GetComponent<MapScript>().data.m_coordinate);
         }
     }
 }

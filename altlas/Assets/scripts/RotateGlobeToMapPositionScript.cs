@@ -28,7 +28,7 @@ public class RotateGlobeToMapPositionScript : MonoBehaviour {
   public void rotateGlobe(string worldCords){
     float[] points = parser.parse(worldCords);
     float[] mapMiddlePoint = new float[]{(points[0] + points[1])/2 , (points[2] + points[3])/2};
-    Vector3 unityMapPoint = Vector3.Normalize(mapper.GeneratePoint(mapMiddlePoint[1], mapMiddlePoint[0], radius));
+    Vector3 unityMapPoint = Vector3.Normalize(mapper.GeneratePoint(mapMiddlePoint[0], mapMiddlePoint[1], radius));
     switchPoints(unityMapPoint);
     Quaternion rot = Quaternion.FromToRotation(unityMapPoint, new Vector3(0, 0, 1));
     Vector3 eulerAngles = rot.eulerAngles;
