@@ -7,12 +7,25 @@ public class MapOnClick : MonoBehaviour, ClickableInterface
 {
     public float speed = 1f;
     public Vector3 targetLocation = new Vector3(-0.2f, 0.858f, 0.65f);
-    private bool isMoving = false;
+
+    private float sideOfDeskMapDepth = .2f;
+    private float middleOfDeskMapDepth = .6f;
+
     private Vector3 startPosition;
     public bool isNormlScale = true;
     public bool isLargeScale = false;
     public bool isGettingLarger = false;
 
+    public enum MapState {
+        InDrawer,
+        OnSideOfDesk,
+        MovingSideToMiddle,
+        ScalingPreviewToFitDesk,
+        InMiddleOfDesk,
+        ScalingToFitDeskPreview,
+        MovingMiddleToSide };
+
+    public MapState state = MapState.InDrawer;
 
 
     // Use this for initialization
@@ -22,36 +35,37 @@ public class MapOnClick : MonoBehaviour, ClickableInterface
     }
 
     void Update() {
-        if (isMoving)
+        switch (state)
         {
-            var target = MoveStack.MAP_ON_MIDDLE_OF_DESK!=null ? targetLocation : startPosition;
-            if (transform.position == target)
-            {
-                isMoving = false;
-                return;
-            }
-            var step = speed * Time.deltaTime;
-            transform.position = Vector3.MoveTowards(transform.position, target, step);
+            case MapState.MovingSideToMiddle:
+                //var target = MoveStack.MAP_ON_MIDDLE_OF_DESK!=null ? targetLocation : startPosition;
+                if (transform.position == targetLocation)
+                {
+                    state = MapState.InMiddleOfDesk;
+                    break;
+                }
+                var step = speed * Time.deltaTime;
+                transform.position = Vector3.MoveTowards(transform.position, targetLocation, step);
+                break;
         }
     }
 
     void ClickableInterface.onClick()
     {
-        //a map from a stack is being clicked
-        if (transform.parent != null)
-        {
-            GameObject stack = transform.parent.gameObject;
-            //a map in a stack has been clicked even though there are already maps on the desk, so first reset the old stack
-            if (MoveStack.removedStack != null)
-            {
-                MoveStack.resetStack();
-            }
-            MoveStack.moveStackToDesk(stack);
-        }
-        else
-        { //a map from the desk is being clicked
-            MoveStack.moveMapToMiddleOfDesk(gameObject);
-            isMoving = true;
+        switch (state) {
+            case MapState.InDrawer:
+                GameObject stack = transform.parent.gameObject;
+                //a map in a stack has been clicked even though there are already maps on the desk, so first reset the old stack
+                if (MoveStack.removedStack != null)
+                {
+                    MoveStack.resetStack();
+                }
+                MoveStack.moveStackToDesk(stack);
+                break;
+            case MapState.OnSideOfDesk:
+                MoveStack.moveMapToMiddleOfDesk(gameObject);
+                state = MapState.MovingSideToMiddle;
+                break;
         }
     }
 }

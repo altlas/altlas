@@ -57,6 +57,7 @@ public class MoveStack {
                 map.transform.position = new Vector3(removedStackPosition.x, removedStackPosition.y + i * MapGenerator.MAPS_Y_OFFSET, removedStackPosition.z);
                 map.transform.localScale = MAP_IN_DRAWER_SCALE;
                 map.transform.localRotation = Quaternion.identity;
+                map.GetComponent<MapOnClick>().state = MapOnClick.MapState.InDrawer;
                 i++;
             }
         }
@@ -73,6 +74,8 @@ public class MoveStack {
     {
         var mapData = map.GetComponent<MapScript>().data;
         var imageSize = mapData.m_imageSize;
+
+        map.GetComponent<MapOnClick>().state =  MapOnClick.MapState.OnSideOfDesk;
 
         float newX = DESK_FREE_AREA_LEFT_CORNER.x - Random.Range(0, DESK_FREE_AREA_LENGTH);
         float newZ = DESK_FREE_AREA_LEFT_CORNER.z + Random.Range(0, DESK_FREE_AREA_LENGTH);
