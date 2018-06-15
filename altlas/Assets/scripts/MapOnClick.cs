@@ -28,8 +28,11 @@ public class MapOnClick : MonoBehaviour, ClickableInterface
         MovingSideToMiddle,
         ScalingPreviewToFitDesk,
         InMiddleOfDesk,
+        ScaleDeskToGlobe,
+        OnGlobe,
+        ScaleGlobeToDesk,
         ScalingFitDeskToPreview,
-        MovingMiddleToSide };
+        MovingMiddleToSide};
 
     public MapState state = MapState.InDrawer;
 
@@ -37,7 +40,7 @@ public class MapOnClick : MonoBehaviour, ClickableInterface
     // Use this for initialization
     void Start()
     {
-        leverScript = (LeverScript)Object.FindObjectOfType(typeof(LeverScript));
+        leverScript = (LeverScript)FindObjectOfType(typeof(LeverScript));
     }
 
     void Update() {
@@ -45,7 +48,6 @@ public class MapOnClick : MonoBehaviour, ClickableInterface
         {
             case MapState.MovingSideToMiddle:
                 {
-                    //var target = MoveStack.MAP_ON_MIDDLE_OF_DESK!=null ? targetLocation : startPosition;
                     if (transform.position == targetLocation)
                     {
                         state = MapState.ScalingPreviewToFitDesk;
@@ -60,10 +62,10 @@ public class MapOnClick : MonoBehaviour, ClickableInterface
                     if (transform.localScale.z >= middleOfDeskMapDepth)
                     {
                         state = MapState.InMiddleOfDesk;
-                        leverScript.setActiveGeoCords(gameObject.GetComponent<MapScript>().data.m_coordinate);
+                        leverScript.setActiveMap(gameObject);
 
                         var data = GetComponent<MapScript>().data;
-                        data.loadTexture(); // data.disposeTexture()
+                        data.loadTexture();
                         GetComponent<Renderer>().material.mainTexture = data.texture;
                     }
                     var step = speed * Time.deltaTime;
@@ -75,6 +77,28 @@ public class MapOnClick : MonoBehaviour, ClickableInterface
                     var z = middleOfDeskMapDepth;
                     var x = z * imageSize[1] / imageSize[0];
                     transform.localScale = Vector3.MoveTowards(transform.localScale, new Vector3(x, y, z), step);
+                    break;
+                }
+            case MapState.ScaleDeskToGlobe:
+                {
+                    var data = GetComponent<MapScript>().data;
+                    var imageSize = data.m_imageSize;
+                    var coordsString = data.m_coordinate;
+                    var coords = new CordsParser().parse(coordsString);
+                    var points = new CordsMapper().GenerateCords(coords, 1, 0.6f); // TODO get radius
+
+                    var y = transform.localScale.y;
+                    var z = System.Math.Abs(points[0,0].z - points[1,1].z);
+                    var x = z * imageSize[1] / imageSize[0];
+
+                    var globalPos = transform.position;
+                    var globe = GameObject.Find("globe").transform;
+                    transform.SetParent(globe);
+                    transform.localScale = new Vector3(x, y, z);
+
+                    //transform.position = globalPos;
+
+                    state = MapState.OnGlobe;
                     break;
                 }
             case MapState.ScalingFitDeskToPreview:
