@@ -1,15 +1,21 @@
 fileFormatVersion: 2
-guid: 9a88a0fe70670174693e8fbb91f74b77
+guid: 4d79014ab23acc846a494b8d1ddd41dc
 ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
-    100000: //RootNode
-    400000: //RootNode
-    2100000: Material.002
-    2300000: //RootNode
-    3300000: //RootNode
-    4300000: Icosphere.010
-    2186277476908879412: ImportLogs
+    100000: default
+    100002: //RootNode
+    400000: default
+    400002: //RootNode
+    2100000: phongE6
+    2100002: phongE5
+    2100004: phongE3
+    2100006: phongE2
+    2100008: phong3
+    2100010: phongE7
+    2300000: default
+    3300000: default
+    4300000: default
   externalObjects: {}
   materials:
     importMaterials: 1

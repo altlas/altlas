@@ -1,15 +1,31 @@
 fileFormatVersion: 2
-guid: 9a88a0fe70670174693e8fbb91f74b77
+guid: 3feee2b6a3ae9354da0c9ec3b9e3b3d9
 ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
     100000: //RootNode
+    100002: mona_lisa.000
+    100004: mona_lisa.001
+    100006: mona_lisa.002
+    100008: mona_lisa.026
     400000: //RootNode
+    400002: mona_lisa.000
+    400004: mona_lisa.001
+    400006: mona_lisa.002
+    400008: mona_lisa.026
     2100000: Material.002
-    2300000: //RootNode
-    3300000: //RootNode
-    4300000: Icosphere.010
-    2186277476908879412: ImportLogs
+    2300000: mona_lisa.000
+    2300002: mona_lisa.001
+    2300004: mona_lisa.002
+    2300006: mona_lisa.026
+    3300000: mona_lisa.000
+    3300002: mona_lisa.001
+    3300004: mona_lisa.002
+    3300006: mona_lisa.026
+    4300000: mona_lisa.002
+    4300002: mona_lisa.000
+    4300004: mona_lisa.001
+    4300006: mona_lisa.026
   externalObjects: {}
   materials:
     importMaterials: 1

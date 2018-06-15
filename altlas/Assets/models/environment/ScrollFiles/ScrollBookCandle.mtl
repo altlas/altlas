@@ -1,0 +1,73 @@
+# Blender MTL File: 'None'
+# Material Count: 6
+
+newmtl phong3
+Ns 100.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.250000 0.250000 0.250000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd Textures\\scrollinkdiffuse.jpg
+
+newmtl phongE2
+Ns 94.117647
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Bump -bm 0.350042 C:\\Users\\Liza\\Documents\\u9lsoac5cdts-ScrollFiles\\Textures\\scrollinknormal.jpg
+map_Kd Textures\\scrollinkdiffuse.jpg
+
+newmtl phongE3
+Ns 94.117647
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Bump -bm 0.350042 Textures\\scrollnormal.jpg
+map_Kd Textures\\scrollinkdiffuse.jpg
+
+newmtl phongE5
+Ns 94.117647
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Bump -bm 0.350042 Textures\\candlenormal.jpg
+map_Kd Textures\\candlediffuse.jpg
+
+newmtl phongE6
+Ns 94.117647
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Bump -bm 0.350042 Textures\\bookfeathernormal.jpg
+map_Kd Textures\\bookfeatherdiffuse.jpg
+
+newmtl phongE7
+Ns 94.117647
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Bump -bm 0.350042 Textures\\bookfeathernormal.jpg
+map_Kd Textures\\bookfeatherdiffuse.jpg

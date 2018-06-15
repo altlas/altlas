@@ -1,15 +1,23 @@
 fileFormatVersion: 2
-guid: 9a88a0fe70670174693e8fbb91f74b77
+guid: 95b593eef2aab0f4492533bde5939646
 ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
     100000: //RootNode
+    100002: Leaf.002
+    100004: Sphere.003
     400000: //RootNode
-    2100000: Material.002
-    2300000: //RootNode
-    3300000: //RootNode
-    4300000: Icosphere.010
-    2186277476908879412: ImportLogs
+    400002: Leaf.002
+    400004: Sphere.003
+    2100000: Leaf.001
+    2100002: Mutt
+    2100004: Pot
+    2300000: Leaf.002
+    2300002: Sphere.003
+    3300000: Leaf.002
+    3300002: Sphere.003
+    4300000: Leaf.002
+    4300002: Sphere.003
   externalObjects: {}
   materials:
     importMaterials: 1
