@@ -16,7 +16,6 @@ public class DesktopCam : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.Locked;
         cam = GetComponent<Camera>();
-        //cam.transform.GetChild(0).GetComponent<MeshRenderer>().enabled = false;
     }
 
     void Update()
