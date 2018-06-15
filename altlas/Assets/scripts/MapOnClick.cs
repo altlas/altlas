@@ -38,15 +38,34 @@ public class MapOnClick : MonoBehaviour, ClickableInterface
         switch (state)
         {
             case MapState.MovingSideToMiddle:
-                //var target = MoveStack.MAP_ON_MIDDLE_OF_DESK!=null ? targetLocation : startPosition;
-                if (transform.position == targetLocation)
                 {
-                    state = MapState.InMiddleOfDesk;
+                    //var target = MoveStack.MAP_ON_MIDDLE_OF_DESK!=null ? targetLocation : startPosition;
+                    if (transform.position == targetLocation)
+                    {
+                        state = MapState.ScalingPreviewToFitDesk;
+                        break;
+                    }
+                    var step = speed * Time.deltaTime;
+                    transform.position = Vector3.MoveTowards(transform.position, targetLocation, step);
                     break;
                 }
-                var step = speed * Time.deltaTime;
-                transform.position = Vector3.MoveTowards(transform.position, targetLocation, step);
-                break;
+            case MapState.ScalingPreviewToFitDesk:
+                {
+                    if (transform.localScale.z >= middleOfDeskMapDepth)
+                    {
+                        state = MapState.InMiddleOfDesk;
+                    }
+                    var step = speed * Time.deltaTime;
+
+                    var mapData = GetComponent<MapScript>().data;
+                    var imageSize = mapData.m_imageSize;
+
+                    var y = transform.localScale.y;
+                    var z = middleOfDeskMapDepth;
+                    var x = z * imageSize[1] / imageSize[0];
+                    transform.localScale = Vector3.MoveTowards(transform.localScale, new Vector3(x, y, z), step);
+                    break;
+                }
         }
     }
 
