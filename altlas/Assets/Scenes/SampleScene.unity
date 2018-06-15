@@ -2077,7 +2077,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 4d79014ab23acc846a494b8d1ddd41dc, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 25.724535
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 4d79014ab23acc846a494b8d1ddd41dc, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2958,6 +2958,10 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: a537ceb7224e6ab40b89489cdd49e420, type: 3}
       propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 100002, guid: a537ceb7224e6ab40b89489cdd49e420, type: 3}
+      propertyPath: m_StaticEditorFlags
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
