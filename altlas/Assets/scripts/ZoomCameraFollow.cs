@@ -9,6 +9,7 @@ public class ZoomCameraFollow : MonoBehaviour
 
     private void Start()
     {
+        Debug.Log(CameraManager.GetActiveCamera());
         _mainCamera = CameraManager.GetActiveCamera().transform;
         _lens = transform.parent;
     }
