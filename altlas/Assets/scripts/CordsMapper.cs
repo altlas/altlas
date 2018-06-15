@@ -6,7 +6,7 @@ public class CordsMapper{
     public CordsMapper(){
 
     }
-    public void GenerateCords(float[] cords, int dimension, float radius)
+    public Vector3[,] GenerateCords(float[] cords, int dimension, float radius)
     {
         float longituteRange = (cords[1] - cords[0]) / dimension;
         float latitudeRange = (cords[3] - cords[2]) / dimension;
@@ -16,13 +16,9 @@ public class CordsMapper{
             for (int j = 0; j <= dimension; j++)
             {
                 points[i, j] = GeneratePoint(cords[0] + j * longituteRange, cords[2] + i * latitudeRange, radius);
-                GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-                float scaleFactor =  .02f;
-                cube.transform.localScale = new Vector3(scaleFactor, scaleFactor, scaleFactor);
-                cube.transform.position = points[i, j];
             }
         }
-
+        return points;
     }
     public Vector3 GeneratePoint(float longitude, float latitude, float radius)
     {
