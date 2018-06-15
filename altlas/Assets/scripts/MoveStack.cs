@@ -4,21 +4,18 @@ using UnityEngine;
 using UnityEditor;
 
 public class MoveStack {
-
-    public static Vector3 removedStackPosition;
     public static Vector3 DESK_FREE_AREA_LEFT_CORNER = new Vector3(-0.7105434f, 0.85f, 0.4124395f);
     public static Vector3 MAP_IN_DRAWER_SCALE = ((GameObject)AssetDatabase.LoadAssetAtPath("Assets/Prefabs/Map_alt.prefab", typeof(GameObject))).transform.localScale;
     public static Vector3 MAP_ON_FREE_AREA_OF_DESK_SCALE = MAP_IN_DRAWER_SCALE * 2;
     public static Vector3 MAP_ON_MIDDLE_OF_DESK_SCALE = MAP_ON_FREE_AREA_OF_DESK_SCALE * 3;
     public static Vector3 MIDDLE_OF_DESK = new Vector3(-0.2f, 0.858f, 0.65f); //absolute positon
-
-
-    private static string inputDeviceName = "Controller"; //see resetStack() if you want another form of Input
+    
     public static GameObject removedStack = null;
-    public static string MAPTAG = "Pickupable";
+    public static string MAPTAG = "Pickupable"; 
     public static float DESK_FREE_AREA_LENGTH = 0.4f;
     public static string textDisplayName = "map-information";
     public static GameObject MAP_ON_MIDDLE_OF_DESK = null;
+
 
     public static bool objectIsFromAStack(GameObject obj)
     {
@@ -46,13 +43,14 @@ public class MoveStack {
 
     public static void resetStack()
     {
-        string nameOfMapsObjects = removedStack.transform.name.Remove(removedStack.transform.name.Length - MapGenerator.EMPTY_ENDING.Length);
+        string mapNamesOfStackToRemove = removedStack.transform.name.Remove(removedStack.transform.name.Length - MapGenerator.EMPTY_ENDING.Length);
+        Vector3 removedStackPosition = new Vector3(removedStack.transform.position.x, removedStack.transform.position.y, removedStack.transform.position.z);
         int i = 0;
         foreach (GameObject map in GameObject.FindGameObjectsWithTag(MAPTAG))
         {
-            if (map.name.Equals(nameOfMapsObjects))
+            if (map.name.Equals(mapNamesOfStackToRemove))
             {
-                if (map.transform.parent == null || map.transform.parent.name.Contains(inputDeviceName))
+                if (map.transform.parent == null)
                 {
                     map.transform.parent = removedStack.transform;
                 }
@@ -79,4 +77,16 @@ public class MoveStack {
         map.transform.position = (new Vector3(newX, newY, newZ));
         map.transform.localScale = MAP_ON_FREE_AREA_OF_DESK_SCALE;
     }
+
+    public static void moveMapToMiddleOfDesk(GameObject map) {
+        //there already is a map on the middle of the desk, so first change its position
+        if (MAP_ON_MIDDLE_OF_DESK != null)
+        {
+            MAP_ON_MIDDLE_OF_DESK.transform.position = map.transform.position;
+            MAP_ON_MIDDLE_OF_DESK.transform.localScale = MAP_ON_FREE_AREA_OF_DESK_SCALE;
+        }
+        MAP_ON_MIDDLE_OF_DESK = map.gameObject;
+        GameObject.Find(textDisplayName).GetComponent<TextMesh>().text = MAP_ON_MIDDLE_OF_DESK.GetComponent<MapScript>().data.userRelevantDataToString();
+    }
+
 }

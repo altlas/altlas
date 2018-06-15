@@ -9,8 +9,8 @@ public class ControllerInteraction : MonoBehaviour
     private Vector3 removedStackPosition;
     MapGenerator instance = new MapGenerator();*/
 
-    public GameObject heldObject;
-    public bool isHolding;
+    public static GameObject heldObject;
+    public static bool isHolding;
 
     private Valve.VR.EVRButtonId gripButton = Valve.VR.EVRButtonId.k_EButton_Grip;
     private Valve.VR.EVRButtonId triggerButton = Valve.VR.EVRButtonId.k_EButton_SteamVR_Trigger;
@@ -38,9 +38,6 @@ public class ControllerInteraction : MonoBehaviour
         {
             return;
         }
-        if (MoveStack.removedStack != null) {
-            MoveStack.removedStackPosition = MoveStack.removedStack.transform.position;
-        }
         
         if (controller.GetPressUp(gripButton))
         {
@@ -66,26 +63,10 @@ public class ControllerInteraction : MonoBehaviour
             {
                 clickable.onClick();
             }
-            if (MoveStack.objectIsFromAStack(heldObject))
+            if (MoveStack.objectIsFromAStack(heldObject) && MoveStack.removedStack != null)
             {
-                GameObject stack = heldObject.transform.parent.gameObject;
-                if (MoveStack.removedStack != null)
-                {
-                    if (stack.name.Equals(MoveStack.removedStack.transform.name))  //maps on desk are being clicked
-                    {
-                        if (heldObject.GetComponent<ClickableInterface>() != null)
-                        {
-                            heldObject.GetComponent<ClickableInterface>().onClick();
-                            return;
-                        }
-                    }
-                    //another stack was selected while another was on the table, so first move back the maps        
-                    MoveStack.resetStack();
-                    GameObject.Find(MoveStack.textDisplayName).GetComponent<TextMesh>().text = "Select a map!";
-                    isHolding = false;
-                    heldObject = null;
-                }
-                MoveStack.moveStackToDesk(stack);
+                isHolding = false;
+                heldObject = null;
             }
         }
     }
