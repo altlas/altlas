@@ -102,7 +102,7 @@ public class MapOnClick : MonoBehaviour, ClickableInterface
                     var target = new Vector3(x, y, z);
                     if (transform.localScale == target)
                     {
-                        transform.localRotation = Quaternion.AngleAxis(-90, Vector3.up);
+                        //transform.localRotation = Quaternion.AngleAxis(-90, Vector3.up);
                         var globe = GameObject.Find("globe").transform;
                         transform.SetParent(globe);
                         var globeMovingScript = GameObject.Find("globe stand").GetComponent<GlobeMovingScript>();
@@ -132,7 +132,7 @@ public class MapOnClick : MonoBehaviour, ClickableInterface
                     {
                         transform.SetParent(null);
 
-                        transform.localRotation = Quaternion.AngleAxis(0, Vector3.up);
+                        //transform.localRotation = Quaternion.AngleAxis(0, Vector3.up);
                         var globalPos = transform.position;
                         var globe = GameObject.Find("globe").transform;
                         laserEffect.shootLasers(gameObject);

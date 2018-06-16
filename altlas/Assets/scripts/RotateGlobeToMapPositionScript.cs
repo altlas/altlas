@@ -35,7 +35,7 @@ public class RotateGlobeToMapPositionScript : MonoBehaviour {
     switchPoints(eulerAngles);
     gameObject.transform.localRotation = Quaternion.AngleAxis(eulerAngles.x - 90, Vector3.forward) * startRotationGlobe;
     mount.transform.localRotation = Quaternion.AngleAxis(-eulerAngles.y, Vector3.up) * startRotationMount;
-    stand.transform.localRotation = Quaternion.AngleAxis(eulerAngles.z, Vector3.forward) * startRotationStand;
+    stand.transform.localRotation = Quaternion.AngleAxis(eulerAngles.z+90, Vector3.forward) * startRotationStand;
   }
 
   void switchPoints(Vector3 vector){
