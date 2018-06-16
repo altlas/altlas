@@ -5,15 +5,52 @@ using UnityEngine;
 public class LeverScript : MonoBehaviour, ClickableInterface {
   public GlobeMovingScript globeMovingScript;
   public RotateGlobeToMapPositionScript rotateScript;
-  string geoCords = "E 68°53'00\"-E 90°52'00\"/N 34°22'00\"-N 05°00'00\"";
+  public LaserEffect laserEffect;
+  float timeLeft;
+    bool trigger = false;
+  GameObject map;
+    bool moving = false;
+    bool active = false;
+    int step = 3;
   
+  
+    void Update()
+    {
+        if (moving)
+        {
+            var alpha = active ? 60 : -60; 
+            gameObject.transform.GetChild(0).Rotate(new Vector3(1, 0, 0), alpha);
+            step--;
+            if (step == 0)
+            {
+                active = !active;
+                moving = false;
+                step = 3;
+            }
+        }
+        timeLeft -= Time.deltaTime;
+        if(trigger && timeLeft < 0)
+        {
+            moveGlobe();
+            trigger = false;
+        }
+    }
   void ClickableInterface.onClick(){
-    globeMovingScript.moving = true;
-    globeMovingScript.expanded = !globeMovingScript.expanded;
-    rotateScript.rotateGlobe(geoCords);
+    if (map != null){
+      timeLeft = 2;
+      moving = true;
+      trigger = true;
+      laserEffect.shootLasers(map);
+      rotateScript.rotateGlobe(map.GetComponent<MapScript>().data.m_coordinate);
+    }
   }
-
-  public void setActiveGeoCords(string cords){
-    geoCords = cords;
+  
+  void moveGlobe()
+    {
+        globeMovingScript.moving = true;
+        globeMovingScript.expanded = !globeMovingScript.expanded;
+    }
+  public void setActiveMap(GameObject m){
+    map = m;
   }
 }
