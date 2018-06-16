@@ -31,13 +31,11 @@ public class LeverScript : MonoBehaviour, ClickableInterface {
         timeLeft -= Time.deltaTime;
         if(trigger && timeLeft < 0)
         {
-            //moveGlobe();
             trigger = false;
         }
     }
   void ClickableInterface.onClick(){
     if (globeMovingScript.expanded) {
-            //map.GetComponent<MapOnClick>().state = MapOnClick.MapState.ScaleGlobeToDesk;
             globeMovingScript.moving = true;
         }
     else {
@@ -50,7 +48,6 @@ public class LeverScript : MonoBehaviour, ClickableInterface {
       timeLeft = 2f;
       moving = true;
       trigger = true;
-      //rotateScript.rotateGlobe(map.GetComponent<MapScript>().data.m_coordinate);
     }
   }
   

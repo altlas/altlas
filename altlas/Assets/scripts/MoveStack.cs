@@ -84,14 +84,13 @@ public class MoveStack {
         var y = map.transform.localScale.y;
         var z = MAP_ON_FREE_AREA_OF_DESK_SCALE;
         var x = z * imageSize[1] / imageSize[0];
-        map.transform.localScale = new Vector3(x, y, z);// MAP_ON_FREE_AREA_OF_DESK_SCALE;
+        map.transform.localScale = new Vector3(x, y, z);
     }
 
     public static void moveMapToMiddleOfDesk(GameObject map) {
         //there already is a map on the middle of the desk, so first change its position
         if (MAP_ON_MIDDLE_OF_DESK != null)
         {
-            //MAP_ON_MIDDLE_OF_DESK.transform.position = map.transform.position;
             MAP_ON_MIDDLE_OF_DESK.GetComponent<MapOnClick>().state = MapOnClick.MapState.ScalingFitDeskToPreview;
 
             var laserEffect = (LaserEffect)GameObject.FindObjectOfType(typeof(LaserEffect));

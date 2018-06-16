@@ -102,7 +102,6 @@ public class MapOnClick : MonoBehaviour, ClickableInterface
                     var target = new Vector3(x, y, z);
                     if (transform.localScale == target)
                     {
-                        //transform.localRotation = Quaternion.AngleAxis(-90, Vector3.up);
                         var globe = GameObject.Find("globe").transform;
                         transform.SetParent(globe);
                         var globeMovingScript = GameObject.Find("globe stand").GetComponent<GlobeMovingScript>();
