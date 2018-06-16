@@ -6,7 +6,7 @@ public class GlobeMovingScript : MonoBehaviour {
   public float speed = 1f;
   public bool expanded = false;
   public bool moving = false;
-  private Vector3 outOffset = new Vector3(0, 0.86f, 0);
+  private Vector3 outOffset = new Vector3(0, 0.8f, 0);
   private Vector3 startPosition;
 
   void Start () {

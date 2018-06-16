@@ -31,17 +31,23 @@ public class LeverScript : MonoBehaviour, ClickableInterface {
         timeLeft -= Time.deltaTime;
         if(trigger && timeLeft < 0)
         {
-            moveGlobe();
             trigger = false;
         }
     }
   void ClickableInterface.onClick(){
+    if (globeMovingScript.expanded) {
+            globeMovingScript.moving = true;
+        }
+    else {
+        map.GetComponent<MapOnClick>().state = MapOnClick.MapState.ScaleDeskToGlobe;
+            laserEffect.shootLasers(map);
+            rotateScript.rotateGlobe(map.GetComponent<MapScript>().data.m_coordinate);
+    }
+    globeMovingScript.expanded = !globeMovingScript.expanded;
     if (map != null){
-      timeLeft = 2;
+      timeLeft = 2f;
       moving = true;
       trigger = true;
-      laserEffect.shootLasers(map);
-      rotateScript.rotateGlobe(map.GetComponent<MapScript>().data.m_coordinate);
     }
   }
   

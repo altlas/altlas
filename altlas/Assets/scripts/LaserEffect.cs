@@ -30,7 +30,7 @@ public class LaserEffect : MonoBehaviour {
 
     public void shootLasers(GameObject map)
     {
-        timeLeft = 2;
+        timeLeft = .75f;
         laser.enabled = true;
         laser.SetPosition(0, robotLeftStartPoint);
         laser.SetPosition(1, map.transform.position);
