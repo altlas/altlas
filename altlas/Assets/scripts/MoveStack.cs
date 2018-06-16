@@ -5,7 +5,7 @@ using UnityEditor;
 
 public class MoveStack {
     public static Vector3 DESK_FREE_AREA_LEFT_CORNER = new Vector3(-0.7105434f, 0.85f, 0.4124395f);
-    public static Vector3 MAP_IN_DRAWER_SCALE = ((GameObject)AssetDatabase.LoadAssetAtPath("Assets/Prefabs/Map_alt.prefab", typeof(GameObject))).transform.localScale;
+    public static Vector3 MAP_IN_DRAWER_SCALE = new Vector3(0.1f, 0.003f, 0.1f);
     public static float MAP_ON_FREE_AREA_OF_DESK_SCALE = .2f;
     private static float MAP_ON_MIDDLE_OF_DESK_SCALE = .6f;
     public static Vector3 MIDDLE_OF_DESK = new Vector3(-0.2f, 0.858f, 0.65f); //absolute positon
