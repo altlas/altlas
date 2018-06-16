@@ -19,6 +19,7 @@ public class MapOnClick : MonoBehaviour, ClickableInterface
     public bool isLargeScale = false;
     public bool isGettingLarger = false;
     public LeverScript leverScript;
+    public LaserEffect laserEffect;
 
     private Vector3 moveTarget;
 
@@ -43,6 +44,7 @@ public class MapOnClick : MonoBehaviour, ClickableInterface
     void Start()
     {
         leverScript = (LeverScript)FindObjectOfType(typeof(LeverScript));
+        laserEffect = (LaserEffect)FindObjectOfType(typeof(LaserEffect));
         var stand = GameObject.Find("globe stand").transform.position;
         targetLocation = new Vector3(stand.x, 0.858f, stand.z);
     }
@@ -55,6 +57,7 @@ public class MapOnClick : MonoBehaviour, ClickableInterface
                     if (transform.position == targetLocation)
                     {
                         state = MapState.ScalingPreviewToFitDesk;
+                        laserEffect.shootLasers(gameObject);
                         break;
                     }
                     var step = speed * Time.deltaTime;
@@ -123,13 +126,16 @@ public class MapOnClick : MonoBehaviour, ClickableInterface
             case MapState.OnGlobe:
                 {
                     var globeMovingScript = GameObject.Find("globe stand").GetComponent<GlobeMovingScript>();
-                    if(!globeMovingScript.moving && !globeMovingScript.expanded)
+                    Debug.Log("globeMovingScript.moving = " + globeMovingScript.moving);
+                    Debug.Log("globeMovingScript.expanded = " + globeMovingScript.expanded);
+                    if (!globeMovingScript.moving && !globeMovingScript.expanded)
                     {
                         transform.SetParent(null);
 
                         transform.localRotation = Quaternion.AngleAxis(0, Vector3.up);
                         var globalPos = transform.position;
                         var globe = GameObject.Find("globe").transform;
+                        laserEffect.shootLasers(gameObject);
                         state = MapState.ScaleGlobeToDesk;
                     }
                     break;

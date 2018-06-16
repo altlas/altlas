@@ -93,6 +93,9 @@ public class MoveStack {
         {
             //MAP_ON_MIDDLE_OF_DESK.transform.position = map.transform.position;
             MAP_ON_MIDDLE_OF_DESK.GetComponent<MapOnClick>().state = MapOnClick.MapState.ScalingFitDeskToPreview;
+
+            var laserEffect = (LaserEffect)GameObject.FindObjectOfType(typeof(LaserEffect));
+            laserEffect.shootLasers(MAP_ON_MIDDLE_OF_DESK);
         }
         MAP_ON_MIDDLE_OF_DESK = map.gameObject;
         GameObject.Find(textDisplayName).GetComponent<TextMesh>().text = MAP_ON_MIDDLE_OF_DESK.GetComponent<MapScript>().data.userRelevantDataToString();
