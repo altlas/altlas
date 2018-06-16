@@ -53,7 +53,7 @@ public class MapOnClick : MonoBehaviour, ClickableInterface
         { //a map from the desk is being clicked
             MoveStack.moveMapToMiddleOfDesk(gameObject);
             isMoving = true;
-            leverScript.setActiveGeoCords(gameObject.GetComponent<MapScript>().data.m_coordinate);
+            leverScript.setActiveMap(gameObject);
         }
     }
 }
